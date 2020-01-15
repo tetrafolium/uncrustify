@@ -33,7 +33,7 @@ inspecode:
             -   -whitespace
             -   -build/include
         thresholds:
-            num-issues: 999
+            num-issues: 773
 
     flake8:         ## for Python
         thresholds:
@@ -96,4 +96,4 @@ inspecode:
     yapf:           ## for Python
         auto-fix: true
         thresholds:
-            num-issues: 21
+            num-issues: 14
