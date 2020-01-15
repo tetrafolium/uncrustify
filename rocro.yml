@@ -43,11 +43,11 @@ inspecode:
     flake8:         ## for Python
         thresholds:
             num-issues: 295
-    
+
     grep:           ## for any-languages
         thresholds:
             num-issues: 177
-    
+
     #infer:          ## for C, C++
     #    thresholds:
     #        num-issues: 999
@@ -60,7 +60,7 @@ inspecode:
         auto-fix: true
         thresholds:
             num-issues: 17
-    
+
     nose2:          ## for Python
         thresholds:
             num-issues: 0
@@ -93,11 +93,11 @@ inspecode:
         auto-fix: true
         thresholds:
             num-issues: 95
-    
+
     #unused:         ## for C, C++, Python
     #    thresholds:
     #        num-issues: 999
-    
+
     yapf:           ## for Python
         auto-fix: true
         thresholds:
