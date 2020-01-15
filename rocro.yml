@@ -78,8 +78,10 @@ inspecode:
             num-issues: 8
 
     pylint:         ## for Python
+        ignore:
+        -   scripts/tokenizer.py    # 399 issues
         thresholds:
-            num-issues: 792
+            num-issues: 393
 
     pytest:         ## for Python
         thresholds:
