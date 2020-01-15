@@ -1051,6 +1051,12 @@ if __name__ == "__main__":
         required=True,
         help='Path to the config file.'
     )
+    group_general.add_argument(
+        '--outlinebuf',
+        default=False,
+        action='store_true',
+        help='Set stdout to line-buffered.'
+    )
 
     group_reduce = arg_parser.add_argument_group(
         'reduce mode', 'Options to reduce configuration file options')

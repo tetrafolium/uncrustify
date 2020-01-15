@@ -284,6 +284,7 @@ void usage(const char *argv0)
            " --frag       : Code fragment, assume the first line is indented correctly.\n"
            " --assume FN  : Uses the filename FN for automatic language detection if reading\n"
            "                from stdin unless -l is specified.\n"
+           " --outlinebuf : Set stdout to line-buffered.\n"
            "\n"
            "Config/Help Options:\n"
            " -h -? --help --usage     : Print this message and exit.\n"
@@ -485,6 +486,17 @@ int main(int argc, char *argv[])
    // tell Windows not to change what I write to stdout
    UNUSED(_setmode(_fileno(stdout), _O_BINARY));
 #endif
+
+   if (arg.Present("--outlinebuf"))
+   {
+      int err = setlinebuf(stdout);
+      if (err != 0)
+      {
+         fprintf(stderr, "Cannot set stdout to line-buffered.\n");
+         log_flush(true);
+         return(EXIT_FAILURE);
+      }
+   }
 
    // Init logging
    log_init(cpd.do_check ? stdout : stderr);
