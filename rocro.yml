@@ -2,22 +2,22 @@ inspecode:
 
     experimental:
         ignore:
-        -   tests
+        -   tests/
 
     astyle:         ## for C, C++, Python
         auto-fix: true
         thresholds:
-            num-issues: 999
+            num-issues: 90
 
     autopep8:       ## for Python
         auto-fix: true
         thresholds:
-            num-issues: 14
+            num-issues: 9
 
     clang-format:   ## for C, C++
         auto-fix: true
         thresholds:
-            num-issues: 999
+            num-issues: 132
 
     #cpd:            ## for C, C++, Python
     #    thresholds:
@@ -25,21 +25,21 @@ inspecode:
 
     cppcheck:       ## for C, C++
         thresholds:
-            num-issues: 227
+            num-issues: 31
 
     cpplint:        ## for C++
-        ignore:
-        -   tests
+        options:
+            --filer: -whitespace,-build/include
         thresholds:
             num-issues: 999
 
     flake8:         ## for Python
         thresholds:
-            num-issues: 361
+            num-issues: 295
     
     grep:           ## for any-languages
         thresholds:
-            num-issues: 239
+            num-issues: 177
     
     #infer:          ## for C, C++
     #    thresholds:
@@ -47,12 +47,12 @@ inspecode:
 
     jscpd:          ## for C, C++, Python
         thresholds:
-            num-issues: 704
+            num-issues: 15
 
     misspell:       ## for any-languages
         auto-fix: true
         thresholds:
-            num-issues: 29
+            num-issues: 17
     
     nose2:          ## for Python
         thresholds:
@@ -64,17 +64,15 @@ inspecode:
 
     pycodestyle:    ## for Python
         thresholds:
-            num-issues: 331
+            num-issues: 287
 
     pyflakes:       ## for Python
         thresholds:
-            num-issues: 30
+            num-issues: 8
 
     pylint:         ## for Python
-        ignore:
-        -   tests
         thresholds:
-            num-issues: 999
+            num-issues: 792
 
     pytest:         ## for Python
         thresholds:
@@ -87,7 +85,7 @@ inspecode:
     uncrustify:     ## for C, C++
         auto-fix: true
         thresholds:
-            num-issues: 999
+            num-issues: 95
     
     #unused:         ## for C, C++, Python
     #    thresholds:
