@@ -29,7 +29,9 @@ inspecode:
 
     cpplint:        ## for C++
         options:
-            --filer: -whitespace,-build/include
+            --filter:
+            -   -whitespace
+            -   -build/include
         thresholds:
             num-issues: 999
 
