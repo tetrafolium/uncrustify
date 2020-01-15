@@ -1,0 +1,110 @@
+inspecode:
+
+    experimental:
+        ignore:
+        -   tests/
+
+    astyle:         ## for C, C++, Python
+        auto-fix: true
+        thresholds:
+            num-issues: 90
+
+    autopep8:       ## for Python
+        auto-fix: true
+        thresholds:
+            num-issues: 9
+
+    clang-format:   ## for C, C++
+        auto-fix: true
+        thresholds:
+            num-issues: 132
+
+    #cpd:            ## for C, C++, Python
+    #    thresholds:
+    #        num-issues: 999
+
+    cppcheck:       ## for C, C++
+        thresholds:
+            num-issues: 31
+
+    cpplint:        ## for C++
+        options:
+            --filter:
+            -   -whitespace
+            -   -legal/copyright
+            -   -readability/todo
+            -   -build/include
+            -   -build/header_guard
+            -   -runtime/int
+            -   -runtime/references
+        thresholds:
+            num-issues: 103
+
+    flake8:         ## for Python
+        ignore:
+        -   scripts/tokenizer.py    # 244 issues
+        thresholds:
+            num-issues: 51
+
+    grep:           ## for any-languages
+        thresholds:
+            num-issues: 177
+
+    #infer:          ## for C, C++
+    #    thresholds:
+    #        num-issues: 999
+
+    jscpd:          ## for C, C++, Python
+        thresholds:
+            num-issues: 15
+
+    misspell:       ## for any-languages
+        auto-fix: true
+        thresholds:
+            num-issues: 17
+
+    nose2:          ## for Python
+        thresholds:
+            num-issues: 0
+
+    prospector:     ## for Python
+        thresholds:
+            num-issues: 74
+
+    pycodestyle:    ## for Python
+        ignore:
+        -   scripts/tokenizer.py    # 243 issues
+        thresholds:
+            num-issues: 44
+
+    pyflakes:       ## for Python
+        thresholds:
+            num-issues: 8
+
+    pylint:         ## for Python
+        ignore:
+        -   scripts/tokenizer.py    # 399 issues
+        thresholds:
+            num-issues: 393
+
+    pytest:         ## for Python
+        thresholds:
+            num-issues: 0
+
+    #scan-build:     ## for C, C++
+    #    thresholds:
+    #        num-issues: 999
+
+    uncrustify:     ## for C, C++
+        auto-fix: true
+        thresholds:
+            num-issues: 95
+
+    #unused:         ## for C, C++, Python
+    #    thresholds:
+    #        num-issues: 999
+
+    yapf:           ## for Python
+        auto-fix: true
+        thresholds:
+            num-issues: 14
