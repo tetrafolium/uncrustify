@@ -31,7 +31,12 @@ inspecode:
         options:
             --filter:
             -   -whitespace
+            -   -legal/copyright
+            -   -readability/todo
             -   -build/include
+            -   -build/header_guard
+            -   -runtime/int
+            -   -runtime/references
         thresholds:
             num-issues: 773
 
