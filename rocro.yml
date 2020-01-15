@@ -41,8 +41,10 @@ inspecode:
             num-issues: 103
 
     flake8:         ## for Python
+        ignore:
+        -   scripts/tokenizer.py    # 245 issues
         thresholds:
-            num-issues: 295
+            num-issues: 50
 
     grep:           ## for any-languages
         thresholds:
@@ -70,8 +72,10 @@ inspecode:
             num-issues: 74
 
     pycodestyle:    ## for Python
+        ignore:
+        -   scripts/tokenizer.py    # 244 issues
         thresholds:
-            num-issues: 287
+            num-issues: 43
 
     pyflakes:       ## for Python
         thresholds:
