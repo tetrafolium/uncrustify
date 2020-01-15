@@ -1,0 +1,92 @@
+inspecode:
+
+    astyle:         ## for C, C++, Python
+        auto-fix: true
+        thresholds:
+            num-issues: 999
+
+
+    autopep8:       ## for Python
+        auto-fix: true
+        thresholds:
+            num-issues: 999
+
+    cpd:            ## for C, C++, Python
+        thresholds:
+            num-issues: 999
+
+    clang-format:   ## for C, C++
+        auto-fix: true
+        thresholds:
+            num-issues: 999
+
+    cppcheck:       ## for C, C++
+        thresholds:
+            num-issues: 999
+
+    cpplint:        ## for C++
+        thresholds:
+            num-issues: 999
+
+    flake8:         ## for Python
+        thresholds:
+            num-issues: 999
+    
+    grep:           ## for any-languages
+        thresholds:
+            num-issues: 999
+    
+    infer:          ## for C, C++
+        thresholds:
+            num-issues: 999
+
+    jscpd:          ## for C, C++, Python
+        thresholds:
+            num-issues: 999
+
+    misspell:       ## for any-languages
+        auto-fix: true
+        thresholds:
+            num-issues: 999
+    
+    nose2:          ## for Python
+        thresholds:
+            num-issues: 999
+
+    scan-build:     ## for C, C++
+        thresholds:
+            num-issues: 999
+
+    prospector:     ## for Python
+        thresholds:
+            num-issues: 999
+
+    pycodestyle:    ## for Python
+        thresholds:
+            num-issues: 999
+
+    pyflakes:       ## for Python
+        thresholds:
+            num-issues: 999
+
+    pylint:         ## for Python
+        thresholds:
+            num-issues: 999
+
+    pytest:         ## for Python
+        thresholds:
+            num-issues: 999
+
+    uncrustify:     ## for C, C++
+        auto-fix: true
+        thresholds:
+            num-issues: 999
+    
+    unused:         ## for C, C++, Python
+        thresholds:
+            num-issues: 999
+    
+    yapf:           ## for Python
+        auto-fix: true
+        thresholds:
+            num-issues: 999
