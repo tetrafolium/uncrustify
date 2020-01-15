@@ -38,7 +38,7 @@ inspecode:
             -   -runtime/int
             -   -runtime/references
         thresholds:
-            num-issues: 773
+            num-issues: 103
 
     flake8:         ## for Python
         thresholds:
