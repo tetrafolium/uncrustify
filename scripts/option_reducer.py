@@ -127,8 +127,12 @@ def term_proc(proc, timeout):
     proc.terminate()
 
 
-def uncrustify(unc_bin_path, cfg_file_path, unformatted_file_path,
-               lang=None, debug_file=None, check=False):
+def uncrustify(unc_bin_path,
+               cfg_file_path,
+               unformatted_file_path,
+               lang=None,
+               debug_file=None,
+               check=False):
     """
     executes Uncrustify and captures its stdout
 
@@ -160,8 +164,9 @@ def uncrustify(unc_bin_path, cfg_file_path, unformatted_file_path,
         time (set to 5 sec)
     """
 
-    args = [unc_bin_path, "-q", "-c", cfg_file_path, '-f',
-            unformatted_file_path]
+    args = [
+        unc_bin_path, "-q", "-c", cfg_file_path, '-f', unformatted_file_path
+    ]
     if lang:
         args.extend(("-l", lang))
     if debug_file:
@@ -185,14 +190,18 @@ def uncrustify(unc_bin_path, cfg_file_path, unformatted_file_path,
 
     error = error_txt_b.decode("UTF-8")
     if error:
-        print("Uncrustify %s stderr:\n %s" % (unformatted_file_path, error),
-              file=stderr)
+        print(
+            "Uncrustify %s stderr:\n %s" % (unformatted_file_path, error),
+            file=stderr)
 
     return output_b
 
 
-def same_expected_generated(formatted_path, unc_bin_path, cfg_file_path,
-                            input_path, lang=None):
+def same_expected_generated(formatted_path,
+                            unc_bin_path,
+                            cfg_file_path,
+                            input_path,
+                            lang=None):
     """
     Calls uncrustify and compares its generated output with the content of a
     file
@@ -217,8 +226,8 @@ def same_expected_generated(formatted_path, unc_bin_path, cfg_file_path,
     with open(formatted_path, 'rb') as f:
         expected_string = f.read()
 
-    formatted_string = uncrustify(
-        unc_bin_path, cfg_file_path, input_path, lang)
+    formatted_string = uncrustify(unc_bin_path, cfg_file_path, input_path,
+                                  lang)
 
     return True if formatted_string == expected_string else False
 
@@ -445,10 +454,11 @@ def sanity_raw_run(args):
         config_file_path = args[2]
         input_file_path = args[3]
 
-        print("\nprovided config does not create formatted source file:\n"
-              "    %s\n    %s\n->| %s"
-              % (input_file_path, config_file_path, formatted_file_path),
-              file=stderr)
+        print(
+            "\nprovided config does not create formatted source file:\n"
+            "    %s\n    %s\n->| %s" % (input_file_path, config_file_path,
+                                        formatted_file_path),
+            file=stderr)
     return res
 
 
@@ -474,9 +484,10 @@ def sanity_run(args):
         formatted_file_path = args[0]
         input_file_path = args[3]
 
-        print("\ngenerated config does not create formatted source file:\n"
-              "    %s\n    %s"
-              % (input_file_path, formatted_file_path), file=stderr)
+        print(
+            "\ngenerated config does not create formatted source file:\n"
+            "    %s\n    %s" % (input_file_path, formatted_file_path),
+            file=stderr)
     return res
 
 
@@ -574,8 +585,10 @@ def print_config(config_list, target_file_obj=stdout, exclude_idx=()):
     # extracted first loop round:
     # do not print '\n' for the ( here non-existing) previous line
     if exclude_idx[0] != 0:
-        print("%s = %s" % (config_list[0][0].ljust(31, ' '), config_list[0][1]),
-              end='', file=target_file_obj)
+        print(
+            "%s = %s" % (config_list[0][0].ljust(31, ' '), config_list[0][1]),
+            end='',
+            file=target_file_obj)
     # also print space if a single option was provided and it is going to be
     # excluded. This is done in order to be able to differentiate between
     # --empty-nochange and the case where all options can be removed
@@ -588,17 +601,21 @@ def print_config(config_list, target_file_obj=stdout, exclude_idx=()):
         end = min(end, config_list_len)
 
         for idx in range(start_idx, end):
-            print("\n%s = %s"
-                  % (config_list[idx][0].ljust(31, ' '), config_list[idx][1]),
-                  end='', file=target_file_obj)
+            print(
+                "\n%s = %s" % (config_list[idx][0].ljust(31, ' '),
+                               config_list[idx][1]),
+                end='',
+                file=target_file_obj)
 
         start_idx = min(end + 1, config_list_len)
 
     # after
     for idx in range(start_idx, config_list_len):
-        print("\n%s = %s"
-              % (config_list[idx][0].ljust(31, ' '), config_list[idx][1]),
-              end='', file=target_file_obj)
+        print(
+            "\n%s = %s" % (config_list[idx][0].ljust(31, ' '),
+                           config_list[idx][1]),
+            end='',
+            file=target_file_obj)
 
 
 def get_non_default_options(unc_bin_path, cfg_file_path):
@@ -626,8 +643,12 @@ def get_non_default_options(unc_bin_path, cfg_file_path):
 
     with make_raw_temp_file(suffix='.unc') as (fd, file_path):
         # make debug file
-        uncrustify(unc_bin_path, cfg_file_path, NULL_DEV, debug_file=file_path,
-                   check=True)
+        uncrustify(
+            unc_bin_path,
+            cfg_file_path,
+            NULL_DEV,
+            debug_file=file_path,
+            check=True)
 
         # extract non comment lines -> non default config lines
         with open_fd(fd, 'r') as fp:
@@ -661,8 +682,10 @@ def parse_config_file(file_obj):
 
     # special keys may not have this limitation, as for example
     # 'set x y' and 'set x z' do not overwrite each other
-    special_keys = {'macro-open', 'macro-else', 'macro-close', 'set', 'type',
-                    'file_ext', 'define'}
+    special_keys = {
+        'macro-open', 'macro-else', 'macro-close', 'set', 'type', 'file_ext',
+        'define'
+    }
     special_list = []
 
     for line in file_obj:
@@ -738,9 +761,9 @@ def reduce(options_list):
         for idx in range(file_count):
             lang = None if idx > lang_max_idx else FLAGS.lang[idx]
 
-            args.append((FLAGS.formatted_file_path[idx],
-                         FLAGS.uncrustify_binary_path, FLAGS.config_file_path,
-                         FLAGS.input_file_path[idx], lang))
+            args.append(
+                (FLAGS.formatted_file_path[idx], FLAGS.uncrustify_binary_path,
+                 FLAGS.config_file_path, FLAGS.input_file_path[idx], lang))
         sr = pool.map(sanity_raw_run, args)
         del args[:]
 
@@ -794,10 +817,14 @@ def reduce(options_list):
         del results[:]
         # endregion
 
-        options_r = [options_list[idx] for idx, x in enumerate(option_flags)
-                     if x == RESTULTSFLAG.REMOVE]
-        options_list = [options_list[idx] for idx, x in enumerate(option_flags)
-                        if x == RESTULTSFLAG.KEEP]
+        options_r = [
+            options_list[idx] for idx, x in enumerate(option_flags)
+            if x == RESTULTSFLAG.REMOVE
+        ]
+        options_list = [
+            options_list[idx] for idx, x in enumerate(option_flags)
+            if x == RESTULTSFLAG.KEEP
+        ]
 
         del option_flags[:]
 
@@ -807,22 +834,24 @@ def reduce(options_list):
         # combination of multiple options is missing
         s_flag = True
         if options_r:
-            s_flag = sanity_run_splitter(
-                FLAGS.uncrustify_binary_path, options_list,
-                FLAGS.input_file_path, FLAGS.formatted_file_path, FLAGS.lang,
-                tmp_dir, FLAGS.jobs)
+            s_flag = sanity_run_splitter(FLAGS.uncrustify_binary_path,
+                                         options_list, FLAGS.input_file_path,
+                                         FLAGS.formatted_file_path, FLAGS.lang,
+                                         tmp_dir, FLAGS.jobs)
 
         if not s_flag:
             ret_flag = ERROR_CODE.SANITY1
-            print("\n\nstumbled upon complex option dependencies in \n"
-                  "    %s\n"
-                  "trying to add back minimal amount of removed options\n"
-                  % FLAGS.config_file_path, file=stderr)
+            print(
+                "\n\nstumbled upon complex option dependencies in \n"
+                "    %s\n"
+                "trying to add back minimal amount of removed options\n" %
+                FLAGS.config_file_path,
+                file=stderr)
 
-            ret_options = add_back(
-                FLAGS.uncrustify_binary_path, FLAGS.input_file_path,
-                FLAGS.formatted_file_path, FLAGS.lang, options_r,
-                options_list, tmp_dir)
+            ret_options = add_back(FLAGS.uncrustify_binary_path,
+                                   FLAGS.input_file_path,
+                                   FLAGS.formatted_file_path, FLAGS.lang,
+                                   options_r, options_list, tmp_dir)
 
             if ret_options:
                 options_list.extend(ret_options)
@@ -872,8 +901,8 @@ def reduce_mode():
                 print("# initial config lines: %d,\n"
                       "# default options and unneeded lines: %d,\n"
                       "# unneeded options: 0,\n"
-                      "# kept options: 0"
-                      % (config_lines_init, config_lines_init))
+                      "# kept options: 0" % (config_lines_init,
+                                             config_lines_init))
         print("ret_flag: 0", file=stderr)
         return ERROR_CODE.NONE
 
@@ -908,14 +937,13 @@ def reduce_mode():
 
             if not FLAGS.quiet:
                 print("\n%s" % '# '.ljust(78, '-'))
-                print("# initial config lines: %d,\n"
-                      "# default options and unneeded lines: %d,\n"
-                      "# unneeded options: %d,\n"
-                      "# kept options: %d"
-                      % (config_lines_init,
-                         config_lines_init - config_lines_ndef,
-                         config_lines_ndef - config_lines_redu,
-                         config_lines_redu))
+                print(
+                    "# initial config lines: %d,\n"
+                    "# default options and unneeded lines: %d,\n"
+                    "# unneeded options: %d,\n"
+                    "# kept options: %d" %
+                    (config_lines_init, config_lines_init - config_lines_ndef,
+                     config_lines_ndef - config_lines_redu, config_lines_redu))
 
     print("ret_flag: %d" % ret_flag, file=stderr)
     return ret_flag
@@ -928,8 +956,10 @@ def no_default_mode():
     accesses global var(s): FLAGS, ERROR_CODE
     """
 
-    lines = get_non_default_options(FLAGS.uncrustify_binary_path,
-                                    FLAGS.config_file_path, )
+    lines = get_non_default_options(
+        FLAGS.uncrustify_binary_path,
+        FLAGS.config_file_path,
+    )
     config_lines_ndef = len(lines)
     config_lines_init = count_lines(FLAGS.config_file_path)
 
@@ -946,8 +976,8 @@ def no_default_mode():
         if not FLAGS.quiet:
             print("%s" % '# '.ljust(78, '-'))
             print("# initial config lines: %d,\n"
-                  "# default options and unneeded lines: %d,\n"
-                  % (config_lines_init, config_lines_init - config_lines_ndef))
+                  "# default options and unneeded lines: %d,\n" %
+                  (config_lines_init, config_lines_init - config_lines_ndef))
 
     return ERROR_CODE.NONE
 
@@ -1012,95 +1042,89 @@ if __name__ == "__main__":
         'general options', 'Options used by both modes')
 
     group_general.add_argument(
-        '-q', '--quiet',
+        '-q',
+        '--quiet',
         default=False,
         action='store_true',
         help='Whether or not messages, other than the actual config output, '
-             'should be printed to stdout.'
-    )
+        'should be printed to stdout.')
     group_general.add_argument(
         '--empty-nochange',
         default=False,
         action='store_true',
-        help='Do not print anything to stdout if no options could be removed'
-    )
+        help='Do not print anything to stdout if no options could be removed')
     group_general.add_argument(
-        '-m', '--mode',
+        '-m',
+        '--mode',
         type=str,
         choices=MODES,
         default=MODES[0],
-        help="The script operation mode. Defaults to '%s'" % MODES[0]
-    )
+        help="The script operation mode. Defaults to '%s'" % MODES[0])
     group_general.add_argument(
-        '-b', '--uncrustify_binary_path',
+        '-b',
+        '--uncrustify_binary_path',
         metavar='<path>',
-        type=lambda x: valid_file(
-            arg_parser, x,
-            "../build/uncrustify.exe",
-            "../build/Debug/uncrustify",
-            "../build/Debug/uncrustify.exe",
-            "../build/Release/uncrustify",
-            "../build/Release/uncrustify.exe"),
+        type=
+        lambda x: valid_file(arg_parser, x, "../build/uncrustify.exe", "../build/Debug/uncrustify", "../build/Debug/uncrustify.exe", "../build/Release/uncrustify", "../build/Release/uncrustify.exe"),
         default="../build/uncrustify",
         help="The Uncrustify binary file path. Is searched in known locations "
-             "in the 'Uncrustify/build/' directory if no <path> is provided."
-    )
+        "in the 'Uncrustify/build/' directory if no <path> is provided.")
     group_general.add_argument(
-        '-c', '--config_file_path',
+        '-c',
+        '--config_file_path',
         metavar='<path>',
         type=lambda x: valid_file(arg_parser, x),
         required=True,
-        help='Path to the config file.'
-    )
+        help='Path to the config file.')
 
     group_reduce = arg_parser.add_argument_group(
         'reduce mode', 'Options to reduce configuration file options')
 
     group_reduce.add_argument(
-        '-i', '--input_file_path',
+        '-i',
+        '--input_file_path',
         metavar='<path>',
         type=lambda x: valid_file(arg_parser, x),
         nargs='+',
         action='append',
         help="Path to the unformatted source file. "
-             "Required if mode '%s' is used" % MODES[0]
-    )
+        "Required if mode '%s' is used" % MODES[0])
     group_reduce.add_argument(
-        '-f', '--formatted_file_path',
+        '-f',
+        '--formatted_file_path',
         metavar='<path>',
         type=lambda x: valid_file(arg_parser, x),
         nargs='+',
         action='append',
         help="Path to the formatted source file. "
-             "Required if mode '%s' is used" % MODES[0]
-    )
+        "Required if mode '%s' is used" % MODES[0])
     group_reduce.add_argument(
-        '-l', '--lang',
+        '-l',
+        '--lang',
         metavar='<str>',
         nargs='+',
         required=False,
         action='append',
-        help='Uncrustify processing language for each input file'
-    )
+        help='Uncrustify processing language for each input file')
     group_reduce.add_argument(
-        '-j', '--jobs',
+        '-j',
+        '--jobs',
         metavar='<nr>',
         type=int,
         default=cpu_count(),
-        help='Number of concurrent jobs.'
-    )
+        help='Number of concurrent jobs.')
     group_reduce.add_argument(
-        '-p', '--passes',
+        '-p',
+        '--passes',
         metavar='<nr>',
         type=int,
         default=5,
-        help='Max. number of cleaning passes.'
-    )
+        help='Max. number of cleaning passes.')
 
     group_no_default = arg_parser.add_argument_group(
         'no-default mode', 'Options to remove configuration file option with '
-                           'default values: ~~_Currently only the general'
-                           ' options are used for this mode_~~')
+        'default values: ~~_Currently only the general'
+        ' options are used for this mode_~~')
     FLAGS, unparsed = arg_parser.parse_known_args()
 
     if FLAGS.lang is not None:
@@ -1108,19 +1132,21 @@ if __name__ == "__main__":
 
     if FLAGS.mode == MODES[0]:
         if not FLAGS.input_file_path or not FLAGS.formatted_file_path:
-            arg_parser.error("Flags -f and -i are required in Mode '%s'!"
-                             % MODES[0])
+            arg_parser.error(
+                "Flags -f and -i are required in Mode '%s'!" % MODES[0])
             sys_exit(ERROR_CODE.FLAGS)
 
         # flatten 2 dimensional args: -f p -f p -f p -f p0 p1 p2 -> [[],[], ...]
         FLAGS.input_file_path = [j for i in FLAGS.input_file_path for j in i]
 
-        FLAGS.formatted_file_path = [j for i in
-                                     FLAGS.formatted_file_path for j in i]
+        FLAGS.formatted_file_path = [
+            j for i in FLAGS.formatted_file_path for j in i
+        ]
 
         if len(FLAGS.input_file_path) != len(FLAGS.formatted_file_path):
-            print("Unequal amount of input and formatted file paths.",
-                  file=stderr)
+            print(
+                "Unequal amount of input and formatted file paths.",
+                file=stderr)
             sys_exit(ERROR_CODE.FLAGS)
 
     sys_exit(main())
