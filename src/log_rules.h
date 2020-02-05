@@ -20,18 +20,18 @@ void log_rule(const char *rule);
 void log_rule_B(const char *rule);
 
 #define log_rule(rule)                                                         \
-  do {                                                                         \
-    if (log_sev_on(LSPACE)) {                                                  \
-      log_rule2(__func__, __LINE__, (rule), first, second);                    \
-    }                                                                          \
-  } while (0)
+	do {                                                                         \
+		if (log_sev_on(LSPACE)) {                                                  \
+			log_rule2(__func__, __LINE__, (rule), first, second);                    \
+		}                                                                          \
+	} while (0)
 
 #define log_rule_B(rule)                                                       \
-  do {                                                                         \
-    if (log_sev_on(LSPACE)) {                                                  \
-      log_rule3(__func__, __LINE__, (rule));                                   \
-    }                                                                          \
-  } while (0)
+	do {                                                                         \
+		if (log_sev_on(LSPACE)) {                                                  \
+			log_rule3(__func__, __LINE__, (rule));                                   \
+		}                                                                          \
+	} while (0)
 
 void log_rule2(const char *func, size_t line, const char *rule, chunk_t *first,
                chunk_t *second);
