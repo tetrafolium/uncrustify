@@ -34,7 +34,7 @@ def check_file(file_path):
             pos_option_s = pos_cpd_s + 13
             pos_option_e = pos_cpd_s + pos_cpd_e
 
-            option = line[pos_option_s : pos_option_e]
+            option = line[pos_option_s: pos_option_e]
             union_access = line[pos_option_e + 2]
 
             if option in map_option_type and union_access in map_access_type:
@@ -75,6 +75,6 @@ def main():
     else:
         return EX_DATAERR
 
+
 if __name__ == '__main__':
     exit(main())
-
