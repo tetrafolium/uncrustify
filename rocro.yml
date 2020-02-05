@@ -96,7 +96,7 @@ inspecode:
 
     unused:         ## for C, C++, Python
         options: [ --single-occurrence, --all-likelihoods ]
-        thresholds: { num-issues: 28 }
+        thresholds: { num-issues: 27 }
 
     yapf:           ## for Python
         auto-fix: true
