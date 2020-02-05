@@ -10,14 +10,13 @@
 #ifndef ALIGN_TRAILING_COMMENTS_H_INCLUDED
 #define ALIGN_TRAILING_COMMENTS_H_INCLUDED
 
-#include "chunk_list.h"
 #include "ChunkStack.h"
+#include "chunk_list.h"
 
-enum class comment_align_e : unsigned int
-{
-   REGULAR,
-   BRACE,
-   ENDIF,
+enum class comment_align_e : unsigned int {
+  REGULAR,
+  BRACE,
+  ENDIF,
 };
 
 /**

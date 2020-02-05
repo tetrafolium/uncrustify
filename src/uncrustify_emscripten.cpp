@@ -16,7 +16,8 @@
  * ----------------------------------------------------------------------------
  *   -t ( define via multiple --type )
  *   -d ( define via multiple --define )
- *   --assume ( no files available to guess the lang. based on the filename ending )
+ *   --assume ( no files available to guess the lang. based on the filename
+ * ending )
  *   --files ( no batch processing will be available )
  *   --prefix
  *   --suffix
@@ -72,7 +73,6 @@ using namespace std;
 using namespace emscripten;
 using namespace uncrustify;
 
-
 /**
  * Loads options from a file represented as a single char array.
  * Modifies: input char array, cpd.line_number
@@ -81,39 +81,34 @@ using namespace uncrustify;
  * @param configString char array that holds the whole config
  * @return EXIT_SUCCESS on success
  */
-int load_option_fileChar(char *configString)
-{
-   char *delimPos       = &configString[0];
-   char *subStringStart = &configString[0];
+int load_option_fileChar(char *configString) {
+  char *delimPos = &configString[0];
+  char *subStringStart = &configString[0];
 
-   cpd.line_number = 0;
+  cpd.line_number = 0;
 
-   // TODO: handle compat_level
-   int compat_level = 0;
+  // TODO: handle compat_level
+  int compat_level = 0;
 
-   while (true)
-   {
-      delimPos = strchr(delimPos, '\n');
+  while (true) {
+    delimPos = strchr(delimPos, '\n');
 
-      if (delimPos == nullptr)
-      {
-         break;
-      }
-      // replaces \n with \0 -> string including multiple terminated substrings
-      *delimPos = '\0';
+    if (delimPos == nullptr) {
+      break;
+    }
+    // replaces \n with \0 -> string including multiple terminated substrings
+    *delimPos = '\0';
 
+    process_option_line(subStringStart, "", compat_level);
 
-      process_option_line(subStringStart, "", compat_level);
+    delimPos++;
+    subStringStart = delimPos;
+  }
+  // get last line, expectation: ends with \0
+  process_option_line(subStringStart, "", compat_level);
 
-      delimPos++;
-      subStringStart = delimPos;
-   }
-   //get last line, expectation: ends with \0
-   process_option_line(subStringStart, "", compat_level);
-
-   return(EXIT_SUCCESS);
+  return (EXIT_SUCCESS);
 }
-
 
 /**
  * adds a new keyword to Uncrustify's dynamic keyword map (dkwm, keywords.cpp)
@@ -121,49 +116,32 @@ int load_option_fileChar(char *configString)
  * @param tag:  keyword that is going to be added
  * @param type: type of the keyword
  */
-void _add_keyword(string tag, c_token_t type)
-{
-   if (tag.empty())
-   {
-      LOG_FMT(LERR, "%s: input string is empty\n", __func__);
-      return;
-   }
-   add_keyword(tag, type);
+void _add_keyword(string tag, c_token_t type) {
+  if (tag.empty()) {
+    LOG_FMT(LERR, "%s: input string is empty\n", __func__);
+    return;
+  }
+  add_keyword(tag, type);
 }
-
 
 //! clears Uncrustify's dynamic keyword map (dkwm, keywords.cpp)
-void clear_keywords()
-{
-   clear_keyword_file();
-}
-
+void clear_keywords() { clear_keyword_file(); }
 
 /**
  * Show or hide the severity prefix "<1>"
  *
  * @param b: true=show, false=hide
  */
-void show_log_type(bool b)
-{
-   log_show_sev(b);
-}
-
+void show_log_type(bool b) { log_show_sev(b); }
 
 //! returns the UNCRUSTIFY_VERSION string
-string get_version()
-{
-   return(UNCRUSTIFY_VERSION);
-}
-
+string get_version() { return (UNCRUSTIFY_VERSION); }
 
 //! disables all logging messages
-void set_quiet()
-{
-   // set empty mask
-   log_set_mask({});
+void set_quiet() {
+  // set empty mask
+  log_set_mask({});
 }
-
 
 /**
  * resets value of an option to its default
@@ -171,24 +149,20 @@ void set_quiet()
  * @param name:  name of the option
  * @return options enum value of the found option or -1 if option was not found
  */
-int reset_option(string name)
-{
-   if (name.empty())
-   {
-      LOG_FMT(LERR, "%s: name string is empty\n", __func__);
-      return(-1);
-   }
-   const auto option = find_option(name.c_str());
+int reset_option(string name) {
+  if (name.empty()) {
+    LOG_FMT(LERR, "%s: name string is empty\n", __func__);
+    return (-1);
+  }
+  const auto option = find_option(name.c_str());
 
-   if (option == nullptr)
-   {
-      LOG_FMT(LERR, "Option %s not found\n", name.c_str());
-      return(-1);
-   }
-   option->reset();
-   return(0);
+  if (option == nullptr) {
+    LOG_FMT(LERR, "Option %s not found\n", name.c_str());
+    return (-1);
+  }
+  option->reset();
+  return (0);
 }
-
 
 /**
  * sets value of an option
@@ -197,41 +171,30 @@ int reset_option(string name)
  * @param value: value that is going to be set
  * @return options enum value of the found option or -1 if option was not found
  */
-int set_option(string name, string value)
-{
-   if (name.empty())
-   {
-      LOG_FMT(LERR, "%s: name string is empty\n", __func__);
-      return(-1);
-   }
+int set_option(string name, string value) {
+  if (name.empty()) {
+    LOG_FMT(LERR, "%s: name string is empty\n", __func__);
+    return (-1);
+  }
 
-   if (value.empty())
-   {
-      LOG_FMT(LERR, "%s: value string is empty\n", __func__);
-      return(-1);
-   }
-   const auto option = find_option(name.c_str());
+  if (value.empty()) {
+    LOG_FMT(LERR, "%s: value string is empty\n", __func__);
+    return (-1);
+  }
+  const auto option = find_option(name.c_str());
 
-   if (option == nullptr)
-   {
-      LOG_FMT(LERR, "Option %s not found\n", name.c_str());
-      return(-1);
-   }
+  if (option == nullptr) {
+    LOG_FMT(LERR, "Option %s not found\n", name.c_str());
+    return (-1);
+  }
 
-   if (!option->read(value.c_str()))
-   {
-      LOG_FMT(
-         LERR,
-         "Failed to set value %s for option: %s of type: %s\n",
-         name.c_str(),
-         value.c_str(),
-         to_string(option->type())
-         );
-      return(-1);
-   }
-   return(0);
+  if (!option->read(value.c_str())) {
+    LOG_FMT(LERR, "Failed to set value %s for option: %s of type: %s\n",
+            name.c_str(), value.c_str(), to_string(option->type()));
+    return (-1);
+  }
+  return (0);
 }
-
 
 /**
  * returns value of an option
@@ -239,23 +202,19 @@ int set_option(string name, string value)
  * @param name: name of the option
  * @return currently set value of the option
  */
-string get_option(string name)
-{
-   if (name.empty())
-   {
-      LOG_FMT(LERR, "%s: input string is empty\n", __func__);
-      return("");
-   }
-   const auto option = find_option(name.c_str());
+string get_option(string name) {
+  if (name.empty()) {
+    LOG_FMT(LERR, "%s: input string is empty\n", __func__);
+    return ("");
+  }
+  const auto option = find_option(name.c_str());
 
-   if (option == nullptr)
-   {
-      LOG_FMT(LWARN, "Option %s not found\n", name.c_str());
-      return("");
-   }
-   return(option->str());
+  if (option == nullptr) {
+    LOG_FMT(LWARN, "Option %s not found\n", name.c_str());
+    return ("");
+  }
+  return (option->str());
 }
-
 
 /**
  * returns the config file string based on the current configuration
@@ -266,158 +225,127 @@ string get_option(string name)
  *                          true=containing only options with non default values
  * @return returns the config file string based on the current configuration
  */
-string show_config(bool withDoc, bool only_not_default)
-{
-   char   *buf;
-   size_t len;
+string show_config(bool withDoc, bool only_not_default) {
+  char *buf;
+  size_t len;
 
-   FILE   *stream = open_memstream(&buf, &len);
+  FILE *stream = open_memstream(&buf, &len);
 
-   if (stream == nullptr)
-   {
-      LOG_FMT(LERR, "Failed to open_memstream\n");
-      fflush(stream);
-      fclose(stream);
-      free(buf);
-      return("");
-   }
-   save_option_file(stream, withDoc, only_not_default);
+  if (stream == nullptr) {
+    LOG_FMT(LERR, "Failed to open_memstream\n");
+    fflush(stream);
+    fclose(stream);
+    free(buf);
+    return ("");
+  }
+  save_option_file(stream, withDoc, only_not_default);
 
-   fflush(stream);
-   fclose(stream);
+  fflush(stream);
+  fclose(stream);
 
-   string out(buf);
-   free(buf);
+  string out(buf);
+  free(buf);
 
-   return(out);
+  return (out);
 }
-
 
 /**
- * returns the config file string with all options based on the current configuration
+ * returns the config file string with all options based on the current
+ * configuration
  *
- * @param withDoc: false= without documentation, true=with documentation text lines
- * @return returns the config file string with all options based on the current configuration
+ * @param withDoc: false= without documentation, true=with documentation text
+ * lines
+ * @return returns the config file string with all options based on the current
+ * configuration
  */
-string show_config(bool withDoc)
-{
-   return(show_config(withDoc, false));
+string show_config(bool withDoc) { return (show_config(withDoc, false)); }
+
+//! returns the config file string with all options and without documentation
+//! based on the current configuration
+string show_config() { return (show_config(false, false)); }
+
+std::vector<OptionGroup *> get_groups() {
+  std::vector<OptionGroup *> groups;
+
+  groups.reserve(5);
+
+  for (size_t i = 0; true; ++i) {
+    OptionGroup *group = get_option_group(i);
+
+    if (!group) {
+      break;
+    }
+    groups.push_back(group);
+  }
+
+  return (groups);
 }
 
+std::vector<GenericOption *> get_options() {
+  std::vector<GenericOption *> options;
 
-//!returns the config file string with all options and without documentation based on the current configuration
-string show_config()
-{
-   return(show_config(false, false));
+  options.reserve(get_option_count());
+
+  for (size_t i = 0; true; ++i) {
+    OptionGroup *group = get_option_group(i);
+
+    if (!group) {
+      break;
+    }
+    options.insert(end(options), begin(group->options), end(group->options));
+  }
+
+  return (options);
 }
-
-
-std::vector<OptionGroup *> get_groups()
-{
-   std::vector<OptionGroup *> groups;
-
-   groups.reserve(5);
-
-   for (size_t i = 0; true; ++i)
-   {
-      OptionGroup *group = get_option_group(i);
-
-      if (!group)
-      {
-         break;
-      }
-      groups.push_back(group);
-   }
-
-   return(groups);
-}
-
-
-std::vector<GenericOption *> get_options()
-{
-   std::vector<GenericOption *> options;
-
-   options.reserve(get_option_count());
-
-   for (size_t i = 0; true; ++i)
-   {
-      OptionGroup *group = get_option_group(i);
-
-      if (!group)
-      {
-         break;
-      }
-      options.insert(
-         end(options),
-         begin(group->options),
-         end(group->options)
-         );
-   }
-
-   return(options);
-}
-
 
 //! resets all options to their default values
-void reset_options()
-{
-   auto options = get_options();
+void reset_options() {
+  auto options = get_options();
 
-   for (auto *option : options)
-   {
-      option->reset();
-   }
+  for (auto *option : options) {
+    option->reset();
+  }
 }
-
 
 /**
  * initializes the current libUncrustify instance,
  * used only for emscripten binding here and will be automatically called while
  * module initialization
  */
-void _initialize()
-{
-   register_options();
-   log_init(stdout);
+void _initialize() {
+  register_options();
+  log_init(stdout);
 
-   LOG_FMT(LSYS, "Initialized libUncrustify - " UNCRUSTIFY_VERSION "\n");
+  LOG_FMT(LSYS, "Initialized libUncrustify - " UNCRUSTIFY_VERSION "\n");
 }
-
 
 //! destroys the current libUncrustify instance
-void destruct()
-{
-   clear_keyword_file();
-}
-
+void destruct() { clear_keyword_file(); }
 
 /**
  * reads option file string, sets the defined options
  *
  * @return returns EXIT_SUCCESS on success
  */
-int _loadConfig(intptr_t _cfg)
-{
-   // reset everything in case a config was loaded previously
-   clear_keyword_file();
-   reset_options();
+int _loadConfig(intptr_t _cfg) {
+  // reset everything in case a config was loaded previously
+  clear_keyword_file();
+  reset_options();
 
-   // embind complains about char* so we use an int to get the pointer and cast
-   // it, memory management is done in /emscripten/postfix_module.js
-   char *cfg = reinterpret_cast<char *>(_cfg);
+  // embind complains about char* so we use an int to get the pointer and cast
+  // it, memory management is done in /emscripten/postfix_module.js
+  char *cfg = reinterpret_cast<char *>(_cfg);
 
-   if (load_option_fileChar(cfg) != EXIT_SUCCESS)
-   {
-      LOG_FMT(LERR, "unable to load the config\n");
-      return(EXIT_FAILURE);
-   }
-   // This relies on cpd.filename being the config file name
-   load_header_files();
+  if (load_option_fileChar(cfg) != EXIT_SUCCESS) {
+    LOG_FMT(LERR, "unable to load the config\n");
+    return (EXIT_FAILURE);
+  }
+  // This relies on cpd.filename being the config file name
+  load_header_files();
 
-   LOG_FMT(LSYS, "finished loading config\n");
-   return(EXIT_SUCCESS);
+  LOG_FMT(LSYS, "finished loading config\n");
+  return (EXIT_SUCCESS);
 }
-
 
 /**
  * format string
@@ -429,99 +357,90 @@ int _loadConfig(intptr_t _cfg)
  *
  * @return pointer to the formatted file char* string
  */
-intptr_t _uncrustify(intptr_t _file, lang_flag_e langIDX, bool frag, bool defer)
-{
-   // Problem: uncrustify originally is not a lib and uses global vars such as
-   // cpd.error_count for the whole program execution
-   // to know if errors occurred during the formating step we reset this var here
-   cpd.error_count = 0;
-   cpd.filename    = "stdin";
-   cpd.frag        = frag;
+intptr_t _uncrustify(intptr_t _file, lang_flag_e langIDX, bool frag,
+                     bool defer) {
+  // Problem: uncrustify originally is not a lib and uses global vars such as
+  // cpd.error_count for the whole program execution
+  // to know if errors occurred during the formating step we reset this var here
+  cpd.error_count = 0;
+  cpd.filename = "stdin";
+  cpd.frag = frag;
 
-   if (langIDX == 0)   // 0 == undefined
-   {
-      LOG_FMT(LWARN, "language of input file not defined, C++ will be assumed\n");
-      cpd.lang_flags = LANG_CPP;
-   }
-   else
-   {
-      cpd.lang_flags = langIDX;
-   }
-   // embind complains about char* so we use an intptr_t to get the pointer and
-   // cast it, memory management is done in /emscripten/postfix_module.js
-   char     *file = reinterpret_cast<char *>(_file);
+  if (langIDX == 0) // 0 == undefined
+  {
+    LOG_FMT(LWARN, "language of input file not defined, C++ will be assumed\n");
+    cpd.lang_flags = LANG_CPP;
+  } else {
+    cpd.lang_flags = langIDX;
+  }
+  // embind complains about char* so we use an intptr_t to get the pointer and
+  // cast it, memory management is done in /emscripten/postfix_module.js
+  char *file = reinterpret_cast<char *>(_file);
 
-   file_mem fm;
-   fm.raw.clear();
-   fm.data.clear();
-   fm.enc = char_encoding_e::e_ASCII;
-   fm.raw = vector<UINT8>();
+  file_mem fm;
+  fm.raw.clear();
+  fm.data.clear();
+  fm.enc = char_encoding_e::e_ASCII;
+  fm.raw = vector<UINT8>();
 
-   char c;
+  char c;
 
-   for (auto idx = 0; (c = file[idx]) != 0; ++idx)
-   {
-      fm.raw.push_back(c);
-   }
+  for (auto idx = 0; (c = file[idx]) != 0; ++idx) {
+    fm.raw.push_back(c);
+  }
 
-   if (!decode_unicode(fm.raw, fm.data, fm.enc, fm.bom))
-   {
-      LOG_FMT(LERR, "Failed to read code\n");
-      return(0);
-   }
-   // Done reading from stdin
-   LOG_FMT(LSYS, "Parsing: %d bytes (%d chars) from stdin as language %s\n",
-           (int)fm.raw.size(), (int)fm.data.size(),
-           language_name_from_flags(cpd.lang_flags));
+  if (!decode_unicode(fm.raw, fm.data, fm.enc, fm.bom)) {
+    LOG_FMT(LERR, "Failed to read code\n");
+    return (0);
+  }
+  // Done reading from stdin
+  LOG_FMT(LSYS, "Parsing: %d bytes (%d chars) from stdin as language %s\n",
+          (int)fm.raw.size(), (int)fm.data.size(),
+          language_name_from_flags(cpd.lang_flags));
 
+  char *buf = nullptr;
+  size_t len = 0;
 
-   char   *buf = nullptr;
-   size_t len  = 0;
+  // uncrustify uses FILE instead of streams for its outputs
+  // to redirect FILE writes into a char* open_memstream is used
+  // windows lacks open_memstream, only UNIX/BSD is supported
+  // apparently emscripten has its own implementation, if that is not working
+  // see: stackoverflow.com/questions/10305095#answer-10341073
+  FILE *stream = open_memstream(&buf, &len);
 
-   // uncrustify uses FILE instead of streams for its outputs
-   // to redirect FILE writes into a char* open_memstream is used
-   // windows lacks open_memstream, only UNIX/BSD is supported
-   // apparently emscripten has its own implementation, if that is not working
-   // see: stackoverflow.com/questions/10305095#answer-10341073
-   FILE *stream = open_memstream(&buf, &len);
+  if (stream == nullptr) {
+    LOG_FMT(LERR, "Failed to open_memstream\n");
+    return (0);
+  }
+  // TODO One way to implement the --parsed, -p functionality would
+  // be to let the uncrustify_file function run, throw away the formated
+  // output and return the debug as a string. For this uncrustify_file would
+  // need to accept a stream, FILE or a char array pointer in which the output
+  // will be stored.
+  // Another option would be to check, inside the uncrustify_file function,
+  // if the current filename string matches stdout or stderr and use those as
+  // output locations. This is the easier fix but the debug info in the
+  // browsers console is littered with other unneeded text.
+  // Finally, the ugliest solution, would be also possible to re-route
+  // either stdout or stderr inside the Module var of emscripten to a js
+  // function which passes the debug output into a dedicated output js target.
+  // This therefore would introduce the dependency on the user to always have
+  // the output js target available.
+  uncrustify_file(fm, stream, nullptr, defer);
 
-   if (stream == nullptr)
-   {
-      LOG_FMT(LERR, "Failed to open_memstream\n");
-      return(0);
-   }
-   // TODO One way to implement the --parsed, -p functionality would
-   // be to let the uncrustify_file function run, throw away the formated
-   // output and return the debug as a string. For this uncrustify_file would
-   // need to accept a stream, FILE or a char array pointer in which the output
-   // will be stored.
-   // Another option would be to check, inside the uncrustify_file function,
-   // if the current filename string matches stdout or stderr and use those as
-   // output locations. This is the easier fix but the debug info in the
-   // browsers console is littered with other unneeded text.
-   // Finally, the ugliest solution, would be also possible to re-route
-   // either stdout or stderr inside the Module var of emscripten to a js
-   // function which passes the debug output into a dedicated output js target.
-   // This therefore would introduce the dependency on the user to always have
-   // the output js target available.
-   uncrustify_file(fm, stream, nullptr, defer);
+  fflush(stream);
+  fclose(stream);
 
-   fflush(stream);
-   fclose(stream);
+  if (cpd.error_count != 0) {
+    LOG_FMT(LWARN, "%d errors occurred during formating\n", cpd.error_count);
+  }
 
-   if (cpd.error_count != 0)
-   {
-      LOG_FMT(LWARN, "%d errors occurred during formating\n", cpd.error_count);
-   }
-
-   if (len == 0)
-   {
-      return(0);
-   }
-   // buf is deleted inside js code
-   return(reinterpret_cast<intptr_t>(buf));
+  if (len == 0) {
+    return (0);
+  }
+  // buf is deleted inside js code
+  return (reinterpret_cast<intptr_t>(buf));
 } // uncrustify
-
 
 /**
  * format string
@@ -532,11 +451,9 @@ intptr_t _uncrustify(intptr_t _file, lang_flag_e langIDX, bool frag, bool defer)
  *
  * @return pointer to the formatted file char* string
  */
-intptr_t _uncrustify(intptr_t file, lang_flag_e langIDX, bool frag)
-{
-   return(_uncrustify(file, langIDX, frag, false));
+intptr_t _uncrustify(intptr_t file, lang_flag_e langIDX, bool frag) {
+  return (_uncrustify(file, langIDX, frag, false));
 }
-
 
 /**
  * format string, assume unfragmented code input
@@ -546,11 +463,9 @@ intptr_t _uncrustify(intptr_t file, lang_flag_e langIDX, bool frag)
  *
  * @return pointer to the formatted file char* string
  */
-intptr_t _uncrustify(intptr_t file, lang_flag_e langIDX)
-{
-   return(_uncrustify(file, langIDX, false, false));
+intptr_t _uncrustify(intptr_t file, lang_flag_e langIDX) {
+  return (_uncrustify(file, langIDX, false, false));
 }
-
 
 /**
  * generate debug output
@@ -561,40 +476,36 @@ intptr_t _uncrustify(intptr_t file, lang_flag_e langIDX)
  *
  * @return pointer to the debug file char* string
  */
-intptr_t _debug(intptr_t _file, lang_flag_e langIDX, bool frag)
-{
-   auto formatted_str_ptr = _uncrustify(_file, langIDX, frag, true);
-   char *formatted_str    = reinterpret_cast<char *>(formatted_str_ptr);
+intptr_t _debug(intptr_t _file, lang_flag_e langIDX, bool frag) {
+  auto formatted_str_ptr = _uncrustify(_file, langIDX, frag, true);
+  char *formatted_str = reinterpret_cast<char *>(formatted_str_ptr);
 
-   // Lazy solution: Throw away the formated file output.
-   // Maybe later add option to return both formatted file string and debug
-   // file string together ... somehow.
-   free(formatted_str);
+  // Lazy solution: Throw away the formated file output.
+  // Maybe later add option to return both formatted file string and debug
+  // file string together ... somehow.
+  free(formatted_str);
 
-   char   *buf    = nullptr;
-   size_t len     = 0;
-   FILE   *stream = open_memstream(&buf, &len);
+  char *buf = nullptr;
+  size_t len = 0;
+  FILE *stream = open_memstream(&buf, &len);
 
-   if (stream == nullptr)
-   {
-      LOG_FMT(LERR, "Failed to open_memstream\n");
-      return(0);
-   }
-   output_parsed(stream);
-   fflush(stream);
-   fclose(stream);
+  if (stream == nullptr) {
+    LOG_FMT(LERR, "Failed to open_memstream\n");
+    return (0);
+  }
+  output_parsed(stream);
+  fflush(stream);
+  fclose(stream);
 
-   // start deferred _uncrustify cleanup
-   uncrustify_end();
+  // start deferred _uncrustify cleanup
+  uncrustify_end();
 
-   if (len == 0)
-   {
-      return(0);
-   }
-   // buf is deleted inside js code
-   return(reinterpret_cast<intptr_t>(buf));
+  if (len == 0) {
+    return (0);
+  }
+  // buf is deleted inside js code
+  return (reinterpret_cast<intptr_t>(buf));
 } // uncrustify
-
 
 /**
  * generate debug output, assume unfragmented code input
@@ -604,16 +515,13 @@ intptr_t _debug(intptr_t _file, lang_flag_e langIDX, bool frag)
  *
  * @return pointer to the debug file char* string
  */
-intptr_t _debug(intptr_t _file, lang_flag_e langIDX)
-{
-   return(_debug(_file, langIDX, false));
+intptr_t _debug(intptr_t _file, lang_flag_e langIDX) {
+  return (_debug(_file, langIDX, false));
 }
 
-
-EMSCRIPTEN_BINDINGS(MainModule)
-{
-   // region enum bindings
-   enum_<option_type_e>("OptionType")
+EMSCRIPTEN_BINDINGS(MainModule) {
+  // region enum bindings
+  enum_<option_type_e>("OptionType")
       .value("BOOL", option_type_e::BOOL)
       .value("IARF", option_type_e::IARF)
       .value("LINEEND", option_type_e::LINEEND)
@@ -622,19 +530,19 @@ EMSCRIPTEN_BINDINGS(MainModule)
       .value("UNUM", option_type_e::UNUM)
       .value("STRING", option_type_e::STRING);
 
-   enum_<iarf_e>("IARF")
+  enum_<iarf_e>("IARF")
       .value("IGNORE", iarf_e::IGNORE)
       .value("ADD", iarf_e::ADD)
       .value("REMOVE", iarf_e::REMOVE)
       .value("FORCE", iarf_e::FORCE);
 
-   enum_<line_end_e>("LineEnd")
+  enum_<line_end_e>("LineEnd")
       .value("LF", line_end_e::LF)
       .value("CRLF", line_end_e::CRLF)
       .value("CR", line_end_e::CR)
       .value("AUTO", line_end_e::AUTO);
 
-   enum_<token_pos_e>("TokenPos")
+  enum_<token_pos_e>("TokenPos")
       .value("IGNORE", token_pos_e::IGNORE)
       .value("BREAK", token_pos_e::BREAK)
       .value("FORCE", token_pos_e::FORCE)
@@ -646,7 +554,7 @@ EMSCRIPTEN_BINDINGS(MainModule)
       .value("TRAIL_BREAK", token_pos_e::TRAIL_BREAK)
       .value("TRAIL_FORCE", token_pos_e::TRAIL_FORCE);
 
-   enum_<log_sev_t>("LogType")
+  enum_<log_sev_t>("LogType")
       .value("SYS", log_sev_t::LSYS)
       .value("ERR", log_sev_t::LERR)
       .value("WARN", log_sev_t::LWARN)
@@ -744,7 +652,7 @@ EMSCRIPTEN_BINDINGS(MainModule)
       .value("GUY98", log_sev_t::LGUY98)
       .value("GUY", log_sev_t::LGUY);
 
-   enum_<c_token_t>("TokenType")
+  enum_<c_token_t>("TokenType")
       .value("NONE", c_token_t::CT_NONE)
       .value("EOF", c_token_t::CT_EOF)
       .value("UNKNOWN", c_token_t::CT_UNKNOWN)
@@ -1044,7 +952,7 @@ EMSCRIPTEN_BINDINGS(MainModule)
       .value("NOTHROW", c_token_t::CT_NOTHROW)
       .value("WORD_", c_token_t::CT_WORD_);
 
-   enum_<lang_flag_e>("Language")
+  enum_<lang_flag_e>("Language")
       .value("C", lang_flag_e::LANG_C)
       .value("CPP", lang_flag_e::LANG_CPP)
       .value("D", lang_flag_e::LANG_D)
@@ -1055,109 +963,123 @@ EMSCRIPTEN_BINDINGS(MainModule)
       .value("PAWN", lang_flag_e::LANG_PAWN)
       .value("ECMA", lang_flag_e::LANG_ECMA);
 
-   // endregion enum bindings
+  // endregion enum bindings
 
-   register_vector<std::string>("strings");
+  register_vector<std::string>("strings");
 
-   class_<GenericOption>("GenericOption")
+  class_<GenericOption>("GenericOption")
       .function("type", &GenericOption::type)
-      .function("description", select_overload<std::string(const GenericOption &)>(
-                   [](const GenericOption &o)
-   {
-      return((o.description() != nullptr) ? string(o.description()) : "");
-   }))
-      .function("name", select_overload<std::string(const GenericOption &)>(
-                   [](const GenericOption &o)
-   {
-      return((o.name() != nullptr) ? string(o.name()) : "");
-   }))
-      .function("possible_values", select_overload<std::vector<std::string>(const GenericOption &)>(
-                   [](const GenericOption &o)
-   {
-      std::vector<std::string> strings;
+      .function("description",
+                select_overload<std::string(const GenericOption &)>(
+                    [](const GenericOption &o) {
+                      return ((o.description() != nullptr)
+                                  ? string(o.description())
+                                  : "");
+                    }))
+      .function("name",
+                select_overload<std::string(const GenericOption &)>(
+                    [](const GenericOption &o) {
+                      return ((o.name() != nullptr) ? string(o.name()) : "");
+                    }))
+      .function(
+          "possible_values",
+          select_overload<std::vector<std::string>(const GenericOption &)>(
+              [](const GenericOption &o) {
+                std::vector<std::string> strings;
 
-      auto ptr = o.possibleValues();
+                auto ptr = o.possibleValues();
 
-      for (auto c = *ptr; c; c = *++ptr)
-      {
-         strings.push_back(std::string{ c });
-      }
+                for (auto c = *ptr; c; c = *++ptr) {
+                  strings.push_back(std::string{c});
+                }
 
-      return(strings);
-   }))
+                return (strings);
+              }))
       .function("default", &GenericOption::defaultStr)
       .function("min", &GenericOption::minStr)
       .function("max", &GenericOption::maxStr)
       .function("is_default", &GenericOption::isDefault)
       .function("reset", &GenericOption::reset)
-      .function("set", select_overload<bool(GenericOption &o, const std::string &s)>(
-                   [](GenericOption &o, const std::string &s)
-   {
-      return(o.read(s.c_str()));
-   }))
+      .function("set",
+                select_overload<bool(GenericOption & o, const std::string &s)>(
+                    [](GenericOption &o, const std::string &s) {
+                      return (o.read(s.c_str()));
+                    }))
       .function("value", &GenericOption::str);
 
-   register_vector<GenericOption *>("options");
+  register_vector<GenericOption *>("options");
 
-   class_<Option<iarf_e>, base<GenericOption> >("OptionIARF")
+  class_<Option<iarf_e>, base<GenericOption>>("OptionIARF")
       .function("value", &Option<iarf_e>::operator());
 
-   class_<Option<line_end_e>, base<GenericOption> >("OptionLineEnd")
+  class_<Option<line_end_e>, base<GenericOption>>("OptionLineEnd")
       .function("value", &Option<line_end_e>::operator());
 
-   class_<Option<token_pos_e>, base<GenericOption> >("OptionTokenPos")
+  class_<Option<token_pos_e>, base<GenericOption>>("OptionTokenPos")
       .function("value", &Option<token_pos_e>::operator());
 
-   class_<Option<unsigned>, base<GenericOption> >("OptionUnsigned")
+  class_<Option<unsigned>, base<GenericOption>>("OptionUnsigned")
       .function("value", &Option<unsigned>::operator());
 
-   class_<Option<signed>, base<GenericOption> >("OptionSigned")
+  class_<Option<signed>, base<GenericOption>>("OptionSigned")
       .function("value", &Option<signed>::operator());
 
-   class_<Option<std::string>, base<GenericOption> >("OptionString")
+  class_<Option<std::string>, base<GenericOption>>("OptionString")
       .function("value", &Option<std::string>::operator());
 
-   class_<OptionGroup>("OptionGroup")
-      .property("description", select_overload<std::string(const OptionGroup &)>(
-                   [](const OptionGroup &g)
-   {
-      return(std::string(g.description));
-   }))
+  class_<OptionGroup>("OptionGroup")
+      .property("description",
+                select_overload<std::string(const OptionGroup &)>(
+                    [](const OptionGroup &g) {
+                      return (std::string(g.description));
+                    }))
       .property("options", &OptionGroup::options);
 
-   register_vector<OptionGroup *>("groups");
+  register_vector<OptionGroup *>("groups");
 
-   emscripten::function("get_options", &get_options);
-   emscripten::function("get_groups", &get_groups);
+  emscripten::function("get_options", &get_options);
+  emscripten::function("get_groups", &get_groups);
 
-   emscripten::function("_initialize", &_initialize);
-   emscripten::function("destruct", &destruct);
+  emscripten::function("_initialize", &_initialize);
+  emscripten::function("destruct", &destruct);
 
-   emscripten::function("get_version", &get_version);
+  emscripten::function("get_version", &get_version);
 
-   emscripten::function("add_keyword", &_add_keyword);
-   emscripten::function("clear_keywords", &clear_keywords);
+  emscripten::function("add_keyword", &_add_keyword);
+  emscripten::function("clear_keywords", &clear_keywords);
 
-   emscripten::function("reset_options", &reset_options);
-   emscripten::function("option_reset_value", &reset_option);
-   emscripten::function("option_set_value", &set_option);
-   emscripten::function("option_get_value", &get_option);
+  emscripten::function("reset_options", &reset_options);
+  emscripten::function("option_reset_value", &reset_option);
+  emscripten::function("option_set_value", &set_option);
+  emscripten::function("option_get_value", &get_option);
 
-   emscripten::function("_load_config", &_loadConfig);
-   emscripten::function("show_config", select_overload<string(bool, bool)>(&show_config));
-   emscripten::function("show_config", select_overload<string(bool)>(&show_config));
-   emscripten::function("show_config", select_overload<string()>(&show_config));
+  emscripten::function("_load_config", &_loadConfig);
+  emscripten::function("show_config",
+                       select_overload<string(bool, bool)>(&show_config));
+  emscripten::function("show_config",
+                       select_overload<string(bool)>(&show_config));
+  emscripten::function("show_config", select_overload<string()>(&show_config));
 
-   emscripten::function("log_type_enable", &log_set_sev);
-   emscripten::function("log_type_show_name", &show_log_type);
-   emscripten::function("quiet", &set_quiet);
+  emscripten::function("log_type_enable", &log_set_sev);
+  emscripten::function("log_type_show_name", &show_log_type);
+  emscripten::function("quiet", &set_quiet);
 
-   emscripten::function("_uncrustify", select_overload<intptr_t(intptr_t, lang_flag_e, bool, bool)>(&_uncrustify));
-   emscripten::function("_uncrustify", select_overload<intptr_t(intptr_t, lang_flag_e, bool)>(&_uncrustify));
-   emscripten::function("_uncrustify", select_overload<intptr_t(intptr_t, lang_flag_e)>(&_uncrustify));
+  emscripten::function(
+      "_uncrustify",
+      select_overload<intptr_t(intptr_t, lang_flag_e, bool, bool)>(
+          &_uncrustify));
+  emscripten::function(
+      "_uncrustify",
+      select_overload<intptr_t(intptr_t, lang_flag_e, bool)>(&_uncrustify));
+  emscripten::function(
+      "_uncrustify",
+      select_overload<intptr_t(intptr_t, lang_flag_e)>(&_uncrustify));
 
-   emscripten::function("_debug", select_overload<intptr_t(intptr_t, lang_flag_e, bool)>(&_debug));
-   emscripten::function("_debug", select_overload<intptr_t(intptr_t, lang_flag_e)>(&_debug));
+  emscripten::function(
+      "_debug",
+      select_overload<intptr_t(intptr_t, lang_flag_e, bool)>(&_debug));
+  emscripten::function(
+      "_debug", select_overload<intptr_t(intptr_t, lang_flag_e)>(&_debug));
 };
 
 #endif

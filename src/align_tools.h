@@ -13,7 +13,6 @@
 #include "chunk_list.h"
 #include "uncrustify_types.h"
 
-
 /**
  * @brief return the chunk the follows after a C array
  *

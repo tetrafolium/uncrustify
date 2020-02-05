@@ -11,7 +11,6 @@
 #include "chunk_list.h"
 #include "uncrustify_types.h"
 
-
 /**
  * Change CT_INCDEC_AFTER + WORD to CT_INCDEC_BEFORE
  * Change number/word + CT_ADDR to CT_ARITH
@@ -29,7 +28,6 @@
  */
 void fix_symbols(void);
 
-
 /**
  * Examines the whole file and changes CT_COLON to
  * CT_Q_COLON, CT_LABEL_COLON, or CT_CASE_COLON.
@@ -37,20 +35,16 @@ void fix_symbols(void);
  */
 void combine_labels(void);
 
-
 //! help function for mark_variable_definition...
 bool go_on(chunk_t *pc, chunk_t *start);
-
 
 //! Sets the parent for comments.
 void mark_comments(void);
 
-
 void make_type(chunk_t *pc);
 
-
-void flag_series(chunk_t *start, chunk_t *end, pcf_flags_t set_flags, pcf_flags_t clr_flags = {}, scope_e nav = scope_e::ALL);
-
+void flag_series(chunk_t *start, chunk_t *end, pcf_flags_t set_flags,
+                 pcf_flags_t clr_flags = {}, scope_e nav = scope_e::ALL);
 
 /**
  * Sets the parent of the open paren/brace/square/angle and the closing.
@@ -64,7 +58,6 @@ void flag_series(chunk_t *start, chunk_t *end, pcf_flags_t set_flags, pcf_flags_
  */
 chunk_t *set_paren_parent(chunk_t *start, c_token_t parent);
 
-
 /**
  * This is called on every chunk.
  * First on all non-preprocessor chunks and then on each preprocessor chunk.
@@ -75,14 +68,12 @@ chunk_t *set_paren_parent(chunk_t *start, c_token_t parent);
  */
 void do_symbol_check(chunk_t *prev, chunk_t *pc, chunk_t *next);
 
-
 /**
  * Skips over the rest of the template if ang_open is indeed a CT_ANGLE_OPEN.
  * Points to the chunk after the CT_ANGLE_CLOSE.
  * If the chunk isn't an CT_ANGLE_OPEN, then it is returned.
  */
 chunk_t *skip_template_next(chunk_t *ang_open);
-
 
 /**
  * Skips over the rest of the template if ang_close is indeed a CT_ANGLE_CLOSE.
@@ -91,13 +82,11 @@ chunk_t *skip_template_next(chunk_t *ang_open);
  */
 chunk_t *skip_template_prev(chunk_t *ang_close);
 
-
 /**
  * Skips the rest of the array definitions if ary_def is indeed a
  * CT_TSQUARE or CT_SQUARE_OPEN
  */
 chunk_t *skip_tsquare_next(chunk_t *ary_def);
-
 
 /**
  * If attr is CT_ATTRIBUTE, then skip it and the parens and return the chunk
@@ -106,7 +95,6 @@ chunk_t *skip_tsquare_next(chunk_t *ary_def);
  */
 chunk_t *skip_attribute_next(chunk_t *attr);
 
-
 /**
  * If fp_close is a CT_FPAREN_CLOSE with a parent of CT_ATTRIBUTE, then skip it
  * and the '__attribute__' thingy and return the chunk before CT_ATTRIBUTE.
@@ -114,12 +102,10 @@ chunk_t *skip_attribute_next(chunk_t *attr);
  */
 chunk_t *skip_attribute_prev(chunk_t *fp_close);
 
-
 /**
  * @brief Remove unnecessary returns
  * that is remove 'return;' that appears as the last statement in a function
  */
 void remove_extra_returns(void);
-
 
 #endif /* COMBINE_H_INCLUDED */
