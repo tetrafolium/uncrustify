@@ -16,8 +16,11 @@ inspecode:
         auto-fix: true
         thresholds: { num-issues: 132 }
 
-    cpd:            ## for C, C++, Python
-        thresholds: { num-issues: 999 }
+    ##--------------------------------------------------
+    ##  net.sourceforge.pmd.lang.ast.TokenMgrError: Lexical error in file /home/rocro/src/github.com/tetrafolium/uncrustify/./src/option.cpp at line 32, column 43.  Encountered: "\n" (10), after : "\"___("
+    ##--------------------------------------------------
+    #cpd:            ## for C, C++, Python
+    #    thresholds: { num-issues: 999 }
 
     cppcheck:       ## for C, C++
         thresholds: { num-issues: 31 }
@@ -42,8 +45,13 @@ inspecode:
     grep:           ## for any-languages
         thresholds: { num-issues: 177 }
 
-    infer:          ## for C, C++
-        thresholds: { num-issues: 999 }
+    ##--------------------------------------------------
+    ##  In-source builds are not supported, please remove the `CMakeFiles'
+    ##  folder and `CMakeCache.txt', and create a folder for the build:
+    ##  mkdir build; cd build; cmake ..
+    ##--------------------------------------------------
+    #infer:          ## for C, C++
+    #    thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
         thresholds: { num-issues: 15 }
@@ -74,15 +82,20 @@ inspecode:
     pytest:         ## for Python
         thresholds: { num-issues: 0 }
 
-    scan-build:     ## for C, C++
-        thresholds: { num-issues: 999 }
+    ##--------------------------------------------------
+    ##  In-source builds are not supported, please remove the `CMakeFiles'
+    ##  folder and `CMakeCache.txt', and create a folder for the build:
+    ##  mkdir build; cd build; cmake ..
+    ##--------------------------------------------------
+    #scan-build:     ## for C, C++
+    #    thresholds: { num-issues: 999 }
 
     uncrustify:     ## for C, C++
         auto-fix: true
         thresholds: { num-issues: 95 }
 
     unused:         ## for C, C++, Python
-        thresholds: { num-issues: 999 }
+        thresholds: { num-issues: 28 }
 
     yapf:           ## for Python
         auto-fix: true
