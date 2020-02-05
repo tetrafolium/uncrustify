@@ -23,14 +23,14 @@ using namespace uncrustify;
  * @return the next tabstop column
  */
 size_t align_tab_column(size_t col) {
-  // if (col <= 0)
-  if (col == 0) {
-    col = 1;
-  }
-  log_rule_B("output_tab_size");
+    // if (col <= 0)
+    if (col == 0) {
+        col = 1;
+    }
+    log_rule_B("output_tab_size");
 
-  if ((col % uncrustify::options::output_tab_size()) != 1) {
-    col = next_tab_column(col);
-  }
-  return (col);
+    if ((col % uncrustify::options::output_tab_size()) != 1) {
+        col = next_tab_column(col);
+    }
+    return (col);
 }

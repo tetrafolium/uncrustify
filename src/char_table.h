@@ -15,30 +15,34 @@
  * bit9 = OK for keyword 2+ char
  */
 struct CharTable {
-  static size_t chars[128];
+    static size_t chars[128];
 
-  enum {
-    KW1 = 0x0100,
-    KW2 = 0x0200,
-  };
+    enum {
+        KW1 = 0x0100,
+        KW2 = 0x0200,
+    };
 
-  static inline size_t Get(size_t ch) {
-    if (ch < ARRAY_SIZE(chars)) {
-      return (chars[ch]);
+    static inline size_t Get(size_t ch) {
+        if (ch < ARRAY_SIZE(chars)) {
+            return (chars[ch]);
+        }
+        /*
+         * HACK: If the top bit is set, then we are likely dealing with UTF-8,
+         * and since that is only allowed in identifiers, then assume that is
+         * what this is. This only prevents corruption, it does not properly
+         * handle UTF-8 because the byte length and screen size are assumed to be
+         * the same.
+         */
+        return (KW1 | KW2);
     }
-    /*
-     * HACK: If the top bit is set, then we are likely dealing with UTF-8,
-     * and since that is only allowed in identifiers, then assume that is
-     * what this is. This only prevents corruption, it does not properly
-     * handle UTF-8 because the byte length and screen size are assumed to be
-     * the same.
-     */
-    return (KW1 | KW2);
-  }
 
-  static inline bool IsKw1(size_t ch) { return ((Get(ch) & KW1) != 0); }
+    static inline bool IsKw1(size_t ch) {
+        return ((Get(ch) & KW1) != 0);
+    }
 
-  static inline bool IsKw2(size_t ch) { return ((Get(ch) & KW2) != 0); }
+    static inline bool IsKw2(size_t ch) {
+        return ((Get(ch) & KW2) != 0);
+    }
 };
 
 #ifdef DEFINE_CHAR_TABLE

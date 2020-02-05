@@ -1043,7 +1043,7 @@ extern Option<bool> indent_func_def_param;
 // behave as if it was true if paren position is more than this value
 // if paren position is more than the option value
 extern BoundedOption<unsigned, 0, 160>
-    indent_func_def_param_paren_pos_threshold;
+indent_func_def_param_paren_pos_threshold;
 
 // Whether to indent continued function call prototype one indent level,
 // rather than aligning parameters under the open parenthesis.
@@ -2689,7 +2689,7 @@ extern BoundedOption<unsigned, 0, 255> mod_add_long_function_closebrace_comment;
 // If a namespace body exceeds the specified number of newlines and doesn't
 // have a comment after the close brace, a comment will be added.
 extern BoundedOption<unsigned, 0, 255>
-    mod_add_long_namespace_closebrace_comment;
+mod_add_long_namespace_closebrace_comment;
 
 // If a class body exceeds the specified number of newlines and doesn't have a
 // comment after the close brace, a comment will be added.
@@ -2909,7 +2909,7 @@ extern Option<bool> use_options_overriding_for_qt_macros; // = true
 // (C#) Warning is given if doing tab-to-\t replacement and we have found one
 // in a C# verbatim string literal.
 extern BoundedOption<unsigned, 1, 3>
-    warn_level_tabs_found_in_verbatim_string_literals; // = LWARN
+warn_level_tabs_found_in_verbatim_string_literals; // = LWARN
 
 // END
 
