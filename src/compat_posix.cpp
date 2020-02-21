@@ -12,22 +12,22 @@
 #include <string>
 
 bool unc_getenv(const char *name, std::string &str) {
-    const char *val = getenv(name);
+	const char *val = getenv(name);
 
-    if (val) {
-        str = val;
-        return (true);
-    }
-    return (false);
+	if (val) {
+		str = val;
+		return (true);
+	}
+	return (false);
 }
 
 bool unc_homedir(std::string &home) {
-    return (unc_getenv("HOME", home));
+	return (unc_getenv("HOME", home));
 }
 
 void convert_log_zu2lu(char *fmt) {
-    UNUSED(fmt);
-    // nothing to do
+	UNUSED(fmt);
+	// nothing to do
 }
 
 #endif /* ifndef WIN32 */
