@@ -75,7 +75,7 @@ void log_get_mask(log_mask_t &mask);
  * @param ...  Additional arguments
  */
 void log_fmt(log_sev_t sev, const char *fmt, ...)
-    __attribute__((format(printf, 2, 3)));
+__attribute__((format(printf, 2, 3)));
 
 /**
  * Flushes the cached log text to the stream
@@ -127,9 +127,9 @@ void log_flush(bool force_nl);
  */
 class log_func {
 public:
-  log_func(const char *name, int line);
+    log_func(const char *name, int line);
 
-  ~log_func();
+    ~log_func();
 };
 
 void log_func_stack(log_sev_t sev, const char *prefix = 0,

@@ -18,30 +18,37 @@
 
 // 6-char symbols
 static const chunk_tag_t symbols6[] = {
-    {R"_(??(??))_", CT_TSQUARE,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph []
-    {R"_(??!??!)_", CT_BOOL,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph ||
-    {R"_(??=??=)_", CT_PP,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph ##
+    {   R"_(??(??))_", CT_TSQUARE,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph []
+    {   R"_(??!??!)_", CT_BOOL,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph ||
+    {   R"_(??=??=)_", CT_PP,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph ##
 };
 
 /* 5-char symbols */
 static const chunk_tag_t symbols5[] = {
-    {R"_(??!=)_", CT_ASSIGN,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph |=
-    {R"_(??'=)_", CT_ASSIGN,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph ^=
-    {R"_(??=@)_", CT_POUND,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph #@ MS extension
+    {   R"_(??!=)_", CT_ASSIGN,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph |=
+    {   R"_(??'=)_", CT_ASSIGN,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph ^=
+    {   R"_(??=@)_", CT_POUND,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph #@ MS extension
 };
 
 /* 4-char symbols */
 static const chunk_tag_t symbols4[] = {
     {"!<>=", CT_COMPARE, LANG_D},
     {">>>=", CT_ASSIGN, LANG_D | LANG_JAVA | LANG_PAWN},
-    {R"_(<::>)_", CT_TSQUARE,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG},                     // digraph []
+    {   R"_(<::>)_", CT_TSQUARE,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    },                     // digraph []
     {R"_(%:%:)_", CT_PP, LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // digraph ##
 };
 
@@ -52,29 +59,37 @@ static const chunk_tag_t symbols3[] = {
     {"!==", CT_COMPARE, LANG_D | LANG_ECMA},
     {"!>=", CT_COMPARE, LANG_D},
     {"->*", CT_MEMBER, LANG_C | LANG_CPP | LANG_OC | LANG_D},
-    {"...", CT_ELLIPSIS,
-     LANG_C | LANG_CPP | LANG_OC | LANG_D | LANG_PAWN | LANG_JAVA},
+    {   "...", CT_ELLIPSIS,
+        LANG_C | LANG_CPP | LANG_OC | LANG_D | LANG_PAWN | LANG_JAVA
+    },
     {"<<=", CT_ASSIGN, LANG_ALL},
     {"<>=", CT_COMPARE, LANG_D},
     {"===", CT_COMPARE, LANG_D | LANG_ECMA},
     {">>=", CT_ASSIGN, LANG_ALL},
     {">>>", CT_ARITH, LANG_D | LANG_JAVA | LANG_PAWN | LANG_ECMA},
     {"%:@", CT_POUND, LANG_C | LANG_CPP | LANG_OC}, // digraph  #@ MS extension
-    {R"_(??=)_", CT_POUND,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph #
-    {R"_(??()_", CT_SQUARE_OPEN,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph [
-    {R"_(??))_", CT_SQUARE_CLOSE,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph ]
-    {R"_(??')_", CT_CARET,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph ^
-    {R"_(??<)_", CT_BRACE_OPEN,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph {
-    {R"_(??>)_", CT_BRACE_CLOSE,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG},                     // trigraph }
+    {   R"_(??=)_", CT_POUND,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph #
+    {   R"_(??()_", CT_SQUARE_OPEN,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph [
+    {   R"_(??))_", CT_SQUARE_CLOSE,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph ]
+    {   R"_(??')_", CT_CARET,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph ^
+    {   R"_(??<)_", CT_BRACE_OPEN,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph {
+    {   R"_(??>)_", CT_BRACE_CLOSE,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    },                     // trigraph }
     {R"_(??-)_", CT_INV, LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph ~
-    {R"_(??!)_", CT_ARITH,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // trigraph |
+    {   R"_(??!)_", CT_ARITH,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // trigraph |
 };
 // { R"_(??/)_", CT_UNKNOWN,      LANG_C | LANG_CPP | LANG_OC | FLAG_DIG }, //
 // trigraph '\'
@@ -115,14 +130,18 @@ static const chunk_tag_t symbols2[] = {
     {"~~", CT_COMPARE, LANG_D},
     {"=>", CT_LAMBDA, LANG_VALA | LANG_CS | LANG_D},
     {"??", CT_COMPARE, LANG_CS | LANG_VALA},
-    {R"_(<%)_", CT_BRACE_OPEN,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // digraph {
-    {R"_(%>)_", CT_BRACE_CLOSE,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // digraph }
-    {R"_(<:)_", CT_SQUARE_OPEN,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // digraph [
-    {R"_(:>)_", CT_SQUARE_CLOSE,
-     LANG_C | LANG_CPP | LANG_OC | FLAG_DIG},                      // digraph ]
+    {   R"_(<%)_", CT_BRACE_OPEN,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // digraph {
+    {   R"_(%>)_", CT_BRACE_CLOSE,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // digraph }
+    {   R"_(<:)_", CT_SQUARE_OPEN,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    }, // digraph [
+    {   R"_(:>)_", CT_SQUARE_CLOSE,
+        LANG_C | LANG_CPP | LANG_OC | FLAG_DIG
+    },                      // digraph ]
     {R"_(%:)_", CT_POUND, LANG_C | LANG_CPP | LANG_OC | FLAG_DIG}, // digraph #
 };
 

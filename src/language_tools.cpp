@@ -10,4 +10,6 @@
 /**
  * check if the language(s) is/are set
  */
-bool language_is_set(size_t lang) { return ((cpd.lang_flags & lang) != 0); }
+bool language_is_set(size_t lang) {
+    return ((cpd.lang_flags & lang) != 0);
+}

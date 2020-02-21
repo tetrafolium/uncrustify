@@ -50,7 +50,7 @@ static const chunk_tag_t *kw_static_first(const chunk_tag_t *tag);
 
 // static const chunk_tag_t *kw_static_match(const chunk_tag_t *tag);
 static const chunk_tag_t *kw_static_match(const chunk_tag_t *tag,
-                                          int lang_flags);
+        int lang_flags);
 
 /**
  * interesting static keywords - keep sorted.
@@ -134,8 +134,9 @@ static chunk_tag_t keywords[] = {
     {"__volatile__", CT_QUALIFIER, LANG_C},
     {"__weak", CT_QUALIFIER, LANG_C},
     {"__word__", CT_WORD_, LANG_C},
-    {"abstract", CT_QUALIFIER,
-     LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA},
+    {   "abstract", CT_QUALIFIER,
+        LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA
+    },
     {"add", CT_GETSET, LANG_CS},
     {"alias", CT_QUALIFIER, LANG_D},
     {"align", CT_ALIGN, LANG_D},
@@ -161,16 +162,18 @@ static chunk_tag_t keywords[] = {
     {"callback", CT_QUALIFIER, LANG_VALA},
     {"case", CT_CASE, LANG_ALL}, // PAWN
     {"cast", CT_D_CAST, LANG_D},
-    {"catch", CT_CATCH,
-     LANG_CPP | LANG_CS | LANG_VALA | LANG_D | LANG_JAVA | LANG_ECMA},
+    {   "catch", CT_CATCH,
+        LANG_CPP | LANG_CS | LANG_VALA | LANG_D | LANG_JAVA | LANG_ECMA
+    },
     {"cdouble", CT_TYPE, LANG_D},
     {"cent", CT_TYPE, LANG_D},
     {"cfloat", CT_TYPE, LANG_D},
     {"char", CT_CHAR, LANG_PAWN}, // PAWN
     {"char", CT_TYPE, LANG_ALLC},
     {"checked", CT_QUALIFIER, LANG_CS},
-    {"class", CT_CLASS,
-     LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA},
+    {   "class", CT_CLASS,
+        LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA
+    },
     {"compl", CT_ARITH, LANG_CPP},
     {"const", CT_QUALIFIER, LANG_ALL}, // PAWN
     {"const_cast", CT_TYPE_CAST, LANG_CPP},
@@ -212,8 +215,9 @@ static chunk_tag_t keywords[] = {
     {"false", CT_WORD, LANG_ALL},
     {"file", CT_PP_FILE, LANG_PAWN | FLAG_PP}, // PAWN
     {"final", CT_QUALIFIER, LANG_CPP | LANG_D | LANG_ECMA},
-    {"finally", CT_FINALLY,
-     LANG_D | LANG_CS | LANG_VALA | LANG_ECMA | LANG_JAVA},
+    {   "finally", CT_FINALLY,
+        LANG_D | LANG_CS | LANG_VALA | LANG_ECMA | LANG_JAVA
+    },
     {"fixed", CT_FIXED, LANG_CS},
     {"flags", CT_TYPE, LANG_VALA},
     {"float", CT_TYPE, LANG_ALLC},
@@ -233,18 +237,21 @@ static chunk_tag_t keywords[] = {
     {"ifndef", CT_PP_IF, LANG_ALLC | FLAG_PP},
     {"implements", CT_QUALIFIER, LANG_JAVA | LANG_ECMA},
     {"implicit", CT_QUALIFIER, LANG_CS},
-    {"import", CT_IMPORT,
-     LANG_D | LANG_JAVA | LANG_ECMA}, // fudged to get indenting
-    {"import", CT_PP_INCLUDE,
-     LANG_OC | FLAG_PP}, // ObjectiveC version of include
+    {   "import", CT_IMPORT,
+        LANG_D | LANG_JAVA | LANG_ECMA
+    }, // fudged to get indenting
+    {   "import", CT_PP_INCLUDE,
+        LANG_OC | FLAG_PP
+    }, // ObjectiveC version of include
     {"in", CT_IN, LANG_D | LANG_CS | LANG_VALA | LANG_ECMA | LANG_OC},
     {"include", CT_PP_INCLUDE, LANG_C | LANG_PAWN | FLAG_PP}, // PAWN
     {"inline", CT_QUALIFIER, LANG_C},
     {"inout", CT_QUALIFIER, LANG_D},
     {"instanceof", CT_SIZEOF, LANG_JAVA | LANG_ECMA},
     {"int", CT_TYPE, LANG_ALLC},
-    {"interface", CT_CLASS,
-     LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA},
+    {   "interface", CT_CLASS,
+        LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA
+    },
     {"internal", CT_QUALIFIER, LANG_CS},
     {"invariant", CT_INVARIANT, LANG_D},
     {"ireal", CT_TYPE, LANG_D},
@@ -260,9 +267,10 @@ static chunk_tag_t keywords[] = {
     {"namespace", CT_NAMESPACE, LANG_CPP | LANG_CS | LANG_VALA},
     {"native", CT_NATIVE, LANG_PAWN}, // PAWN
     {"native", CT_QUALIFIER, LANG_JAVA | LANG_ECMA},
-    {"new", CT_NEW,
-     LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_PAWN | LANG_VALA |
-         LANG_ECMA}, // PAWN
+    {   "new", CT_NEW,
+        LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_PAWN | LANG_VALA |
+        LANG_ECMA
+    }, // PAWN
     {"noexcept", CT_NOEXCEPT, LANG_CPP},
     {"nonnull", CT_TYPE, LANG_OC},
     {"not", CT_SARITH, LANG_CPP},
@@ -321,15 +329,18 @@ static chunk_tag_t keywords[] = {
     {"synchronized", CT_SYNCHRONIZED, LANG_JAVA},
     {"tagof", CT_TAGOF, LANG_PAWN}, // PAWN
     {"template", CT_TEMPLATE, LANG_CPP | LANG_D},
-    {"this", CT_THIS,
-     LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA},
-    {"throw", CT_THROW,
-     LANG_CPP | LANG_CS | LANG_VALA | LANG_D | LANG_JAVA | LANG_ECMA},
+    {   "this", CT_THIS,
+        LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_VALA | LANG_ECMA
+    },
+    {   "throw", CT_THROW,
+        LANG_CPP | LANG_CS | LANG_VALA | LANG_D | LANG_JAVA | LANG_ECMA
+    },
     {"throws", CT_QUALIFIER, LANG_JAVA | LANG_ECMA | LANG_VALA},
     {"transient", CT_QUALIFIER, LANG_JAVA | LANG_ECMA},
     {"true", CT_WORD, LANG_ALL},
-    {"try", CT_TRY,
-     LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_ECMA | LANG_VALA},
+    {   "try", CT_TRY,
+        LANG_CPP | LANG_CS | LANG_D | LANG_JAVA | LANG_ECMA | LANG_VALA
+    },
     {"tryinclude", CT_PP_INCLUDE, LANG_PAWN | FLAG_PP}, // PAWN
     {"typedef", CT_TYPEDEF, LANG_C | LANG_D},
     {"typeid", CT_SIZEOF, LANG_CPP | LANG_D},
@@ -367,248 +378,250 @@ static chunk_tag_t keywords[] = {
 };
 
 void init_keywords() {
-  /* Please read comments above keywords array */
+    /* Please read comments above keywords array */
 
-  for (int idx = 1; idx < (int)ARRAY_SIZE(keywords); idx++) {
-    chunk_tag_t *tag = &keywords[idx];
+    for (int idx = 1; idx < (int)ARRAY_SIZE(keywords); idx++) {
+        chunk_tag_t *tag = &keywords[idx];
 
-    if ((tag->lang_flags == LANG_ALL) || (tag->lang_flags == LANG_ALLC)) {
-      continue;
+        if ((tag->lang_flags == LANG_ALL) || (tag->lang_flags == LANG_ALLC)) {
+            continue;
+        }
+
+        if ((tag->lang_flags & LANG_C) != 0) {
+            int lang_flags = LANG_OC;
+            const chunk_tag_t *probe = kw_static_match(tag, lang_flags);
+
+            if (probe == NULL) {
+                tag->lang_flags |= lang_flags;
+            }
+            lang_flags = LANG_CPP;
+            probe = kw_static_match(tag, lang_flags);
+
+            if (probe == NULL) {
+                tag->lang_flags |= lang_flags;
+            }
+        }
     }
-
-    if ((tag->lang_flags & LANG_C) != 0) {
-      int lang_flags = LANG_OC;
-      const chunk_tag_t *probe = kw_static_match(tag, lang_flags);
-
-      if (probe == NULL) {
-        tag->lang_flags |= lang_flags;
-      }
-      lang_flags = LANG_CPP;
-      probe = kw_static_match(tag, lang_flags);
-
-      if (probe == NULL) {
-        tag->lang_flags |= lang_flags;
-      }
-    }
-  }
 }
 
 static int kw_compare(const void *p1, const void *p2) {
-  const chunk_tag_t *t1 = static_cast<const chunk_tag_t *>(p1);
-  const chunk_tag_t *t2 = static_cast<const chunk_tag_t *>(p2);
+    const chunk_tag_t *t1 = static_cast<const chunk_tag_t *>(p1);
+    const chunk_tag_t *t2 = static_cast<const chunk_tag_t *>(p2);
 
-  return (strcmp(t1->tag, t2->tag));
+    return (strcmp(t1->tag, t2->tag));
 }
 
 bool keywords_are_sorted(void) {
-  for (int idx = 1; idx < static_cast<int> ARRAY_SIZE(keywords); idx++) {
-    if (kw_compare(&keywords[idx - 1], &keywords[idx]) > 0) {
-      fprintf(stderr, "%s: bad sort order at idx %d, words '%s' and '%s'\n",
-              __func__, idx - 1, keywords[idx - 1].tag, keywords[idx].tag);
-      // coveralls will always complain.
-      // these lines are only needed for the developper.
-      log_flush(true);
-      cpd.error_count++;
-      return (false);
+    for (int idx = 1; idx < static_cast<int> ARRAY_SIZE(keywords); idx++) {
+        if (kw_compare(&keywords[idx - 1], &keywords[idx]) > 0) {
+            fprintf(stderr, "%s: bad sort order at idx %d, words '%s' and '%s'\n",
+                    __func__, idx - 1, keywords[idx - 1].tag, keywords[idx].tag);
+            // coveralls will always complain.
+            // these lines are only needed for the developper.
+            log_flush(true);
+            cpd.error_count++;
+            return (false);
+        }
     }
-  }
 
-  return (true);
+    return (true);
 }
 
 void add_keyword(const std::string &tag, c_token_t type) {
-  // See if the keyword has already been added
-  dkwmap::iterator it = dkwm.find(tag);
+    // See if the keyword has already been added
+    dkwmap::iterator it = dkwm.find(tag);
 
-  if (it != dkwm.end()) {
-    LOG_FMT(LDYNKW, "%s(%d): changed '%s' to '%s'\n", __func__, __LINE__,
+    if (it != dkwm.end()) {
+        LOG_FMT(LDYNKW, "%s(%d): changed '%s' to '%s'\n", __func__, __LINE__,
+                tag.c_str(), get_token_name(type));
+        (*it).second = type;
+        return;
+    }
+    // Insert the keyword
+    dkwm.insert(dkwmap::value_type(tag, type));
+    LOG_FMT(LDYNKW, "%s(%d): added '%s' as '%s'\n", __func__, __LINE__,
             tag.c_str(), get_token_name(type));
-    (*it).second = type;
-    return;
-  }
-  // Insert the keyword
-  dkwm.insert(dkwmap::value_type(tag, type));
-  LOG_FMT(LDYNKW, "%s(%d): added '%s' as '%s'\n", __func__, __LINE__,
-          tag.c_str(), get_token_name(type));
 }
 
 static const chunk_tag_t *kw_static_first(const chunk_tag_t *tag) {
-  const chunk_tag_t *prev = tag - 1;
+    const chunk_tag_t *prev = tag - 1;
 
-  // TODO: avoid pointer arithmetics
-  // loop over static keyword array
-  while (prev >= &keywords[0] // not at beginning of keyword array
-         && strcmp(prev->tag, tag->tag) == 0) // tags match
-  {
-    tag = prev;
-    prev--;
-  }
-  return (tag);
+    // TODO: avoid pointer arithmetics
+    // loop over static keyword array
+    while (prev >= &keywords[0] // not at beginning of keyword array
+            && strcmp(prev->tag, tag->tag) == 0) // tags match
+    {
+        tag = prev;
+        prev--;
+    }
+    return (tag);
 }
 
 static const chunk_tag_t *kw_static_match(const chunk_tag_t *tag,
-                                          int lang_flags) {
-  bool in_pp = (cpd.in_preproc != CT_NONE && cpd.in_preproc != CT_PP_DEFINE);
+        int lang_flags) {
+    bool in_pp = (cpd.in_preproc != CT_NONE && cpd.in_preproc != CT_PP_DEFINE);
 
-  for (const chunk_tag_t *iter = kw_static_first(tag);
-       iter < &keywords[ARRAY_SIZE(keywords)]; iter++) {
-    bool pp_iter = (iter->lang_flags & FLAG_PP) != 0; // forcing value to bool
+    for (const chunk_tag_t *iter = kw_static_first(tag);
+            iter < &keywords[ARRAY_SIZE(keywords)]; iter++) {
+        bool pp_iter = (iter->lang_flags & FLAG_PP) != 0; // forcing value to bool
 
-    if ((strcmp(iter->tag, tag->tag) == 0) &&
-        language_is_set(iter->lang_flags) && (lang_flags & iter->lang_flags) &&
-        in_pp == pp_iter) {
-      return (iter);
+        if ((strcmp(iter->tag, tag->tag) == 0) &&
+                language_is_set(iter->lang_flags) && (lang_flags & iter->lang_flags) &&
+                in_pp == pp_iter) {
+            return (iter);
+        }
     }
-  }
 
-  return (nullptr);
+    return (nullptr);
 }
 
 c_token_t find_keyword_type(const char *word, size_t len) {
-  if (len <= 0) {
-    return (CT_NONE);
-  }
-  // check the dynamic word list first
-  string ss(word, len);
-  dkwmap::iterator it = dkwm.find(ss);
-
-  if (it != dkwm.end()) {
-    return ((*it).second);
-  }
-  chunk_tag_t key;
-  key.tag = ss.c_str();
-
-  // check the static word list
-  const chunk_tag_t *p_ret = static_cast<const chunk_tag_t *>(bsearch(
-      &key, keywords, ARRAY_SIZE(keywords), sizeof(keywords[0]), kw_compare));
-
-  if (p_ret != nullptr) {
-    if (strcmp(p_ret->tag, "__pragma") == 0 ||
-        strcmp(p_ret->tag, "_Pragma") == 0) {
-      cpd.in_preproc = CT_PREPROC;
+    if (len <= 0) {
+        return (CT_NONE);
     }
-    p_ret = kw_static_match(p_ret, cpd.lang_flags);
-  }
-  return ((p_ret != nullptr) ? p_ret->type : CT_WORD);
+    // check the dynamic word list first
+    string ss(word, len);
+    dkwmap::iterator it = dkwm.find(ss);
+
+    if (it != dkwm.end()) {
+        return ((*it).second);
+    }
+    chunk_tag_t key;
+    key.tag = ss.c_str();
+
+    // check the static word list
+    const chunk_tag_t *p_ret = static_cast<const chunk_tag_t *>(bsearch(
+                                   &key, keywords, ARRAY_SIZE(keywords), sizeof(keywords[0]), kw_compare));
+
+    if (p_ret != nullptr) {
+        if (strcmp(p_ret->tag, "__pragma") == 0 ||
+                strcmp(p_ret->tag, "_Pragma") == 0) {
+            cpd.in_preproc = CT_PREPROC;
+        }
+        p_ret = kw_static_match(p_ret, cpd.lang_flags);
+    }
+    return ((p_ret != nullptr) ? p_ret->type : CT_WORD);
 }
 
 int load_keyword_file(const char *filename) {
-  FILE *pf = fopen(filename, "r");
+    FILE *pf = fopen(filename, "r");
 
-  if (pf == nullptr) {
-    LOG_FMT(LERR, "%s: fopen(%s) failed: %s (%d)\n", __func__, filename,
-            strerror(errno), errno);
-    cpd.error_count++;
-    return (EX_IOERR);
-  }
+    if (pf == nullptr) {
+        LOG_FMT(LERR, "%s: fopen(%s) failed: %s (%d)\n", __func__, filename,
+                strerror(errno), errno);
+        cpd.error_count++;
+        return (EX_IOERR);
+    }
 #define MAXLENGTHOFLINE 256
 #define NUMBEROFARGS 2
-  // maximal length of a line in the file
-  char buf[MAXLENGTHOFLINE];
-  char *args[NUMBEROFARGS];
-  size_t line_no = 0;
+    // maximal length of a line in the file
+    char buf[MAXLENGTHOFLINE];
+    char *args[NUMBEROFARGS];
+    size_t line_no = 0;
 
-  // read file line by line
-  while (fgets(buf, MAXLENGTHOFLINE, pf) != nullptr) {
-    line_no++;
+    // read file line by line
+    while (fgets(buf, MAXLENGTHOFLINE, pf) != nullptr) {
+        line_no++;
 
-    // remove comments after '#' sign
-    char *ptr;
+        // remove comments after '#' sign
+        char *ptr;
 
-    if ((ptr = strchr(buf, '#')) != nullptr) {
-      *ptr = 0; // set string end where comment begins
+        if ((ptr = strchr(buf, '#')) != nullptr) {
+            *ptr = 0; // set string end where comment begins
+        }
+        size_t argc = Args::SplitLine(buf, args, NUMBEROFARGS);
+
+        if (argc > 0) {
+            if (argc == 1 && CharTable::IsKw1(*args[0])) {
+                add_keyword(args[0], CT_TYPE);
+            } else {
+                LOG_FMT(LWARN, "%s:%zu Invalid line (starts with '%s')\n", filename,
+                        line_no, args[0]);
+                cpd.error_count++;
+            }
+        } else {
+            continue; // the line is empty
+        }
     }
-    size_t argc = Args::SplitLine(buf, args, NUMBEROFARGS);
-
-    if (argc > 0) {
-      if (argc == 1 && CharTable::IsKw1(*args[0])) {
-        add_keyword(args[0], CT_TYPE);
-      } else {
-        LOG_FMT(LWARN, "%s:%zu Invalid line (starts with '%s')\n", filename,
-                line_no, args[0]);
-        cpd.error_count++;
-      }
-    } else {
-      continue; // the line is empty
-    }
-  }
-  fclose(pf);
-  return (EX_OK);
+    fclose(pf);
+    return (EX_OK);
 } // load_keyword_file
 
 void print_keywords(FILE *pfile) {
-  for (const auto &keyword_pair : dkwm) {
-    c_token_t tt = keyword_pair.second;
+    for (const auto &keyword_pair : dkwm) {
+        c_token_t tt = keyword_pair.second;
 
-    if (tt == CT_TYPE) {
-      fprintf(pfile, "type %*.s%s\n", MAX_OPTION_NAME_LEN - 4, " ",
-              keyword_pair.first.c_str());
-    } else if (tt == CT_MACRO_OPEN) {
-      fprintf(pfile, "macro-open %*.s%s\n", MAX_OPTION_NAME_LEN - 11, " ",
-              keyword_pair.first.c_str());
-    } else if (tt == CT_MACRO_CLOSE) {
-      fprintf(pfile, "macro-close %*.s%s\n", MAX_OPTION_NAME_LEN - 12, " ",
-              keyword_pair.first.c_str());
-    } else if (tt == CT_MACRO_ELSE) {
-      fprintf(pfile, "macro-else %*.s%s\n", MAX_OPTION_NAME_LEN - 11, " ",
-              keyword_pair.first.c_str());
-    } else {
-      const char *tn = get_token_name(tt);
+        if (tt == CT_TYPE) {
+            fprintf(pfile, "type %*.s%s\n", MAX_OPTION_NAME_LEN - 4, " ",
+                    keyword_pair.first.c_str());
+        } else if (tt == CT_MACRO_OPEN) {
+            fprintf(pfile, "macro-open %*.s%s\n", MAX_OPTION_NAME_LEN - 11, " ",
+                    keyword_pair.first.c_str());
+        } else if (tt == CT_MACRO_CLOSE) {
+            fprintf(pfile, "macro-close %*.s%s\n", MAX_OPTION_NAME_LEN - 12, " ",
+                    keyword_pair.first.c_str());
+        } else if (tt == CT_MACRO_ELSE) {
+            fprintf(pfile, "macro-else %*.s%s\n", MAX_OPTION_NAME_LEN - 11, " ",
+                    keyword_pair.first.c_str());
+        } else {
+            const char *tn = get_token_name(tt);
 
-      fprintf(pfile, "set %s %*.s%s\n", tn,
-              int(MAX_OPTION_NAME_LEN - (4 + strlen(tn))), " ",
-              keyword_pair.first.c_str());
+            fprintf(pfile, "set %s %*.s%s\n", tn,
+                    int(MAX_OPTION_NAME_LEN - (4 + strlen(tn))), " ",
+                    keyword_pair.first.c_str());
+        }
     }
-  }
 }
 
-void clear_keyword_file(void) { dkwm.clear(); }
+void clear_keyword_file(void) {
+    dkwm.clear();
+}
 
 pattern_class_e get_token_pattern_class(c_token_t tok) {
-  // TODO: instead of this switch better assign the pattern class to each
-  // statement
-  switch (tok) {
-  case CT_IF:
-  case CT_ELSEIF:
-  case CT_SWITCH:
-  case CT_FOR:
-  case CT_WHILE:
-  case CT_SYNCHRONIZED:
-  case CT_USING_STMT:
-  case CT_LOCK:
-  case CT_D_WITH:
-  case CT_D_VERSION_IF:
-  case CT_D_SCOPE_IF:
-    return (pattern_class_e::PBRACED);
+    // TODO: instead of this switch better assign the pattern class to each
+    // statement
+    switch (tok) {
+    case CT_IF:
+    case CT_ELSEIF:
+    case CT_SWITCH:
+    case CT_FOR:
+    case CT_WHILE:
+    case CT_SYNCHRONIZED:
+    case CT_USING_STMT:
+    case CT_LOCK:
+    case CT_D_WITH:
+    case CT_D_VERSION_IF:
+    case CT_D_SCOPE_IF:
+        return (pattern_class_e::PBRACED);
 
-  case CT_ELSE:
-    return (pattern_class_e::ELSE);
+    case CT_ELSE:
+        return (pattern_class_e::ELSE);
 
-  case CT_DO:
-  case CT_TRY:
-  case CT_FINALLY:
-  case CT_BODY:
-  case CT_UNITTEST:
-  case CT_UNSAFE:
-  case CT_VOLATILE:
-  case CT_GETSET:
-    return (pattern_class_e::BRACED);
+    case CT_DO:
+    case CT_TRY:
+    case CT_FINALLY:
+    case CT_BODY:
+    case CT_UNITTEST:
+    case CT_UNSAFE:
+    case CT_VOLATILE:
+    case CT_GETSET:
+        return (pattern_class_e::BRACED);
 
-  case CT_CATCH:
-  case CT_D_VERSION:
-  case CT_DEBUG:
-    return (pattern_class_e::OPBRACED);
+    case CT_CATCH:
+    case CT_D_VERSION:
+    case CT_DEBUG:
+        return (pattern_class_e::OPBRACED);
 
-  case CT_NAMESPACE:
-    return (pattern_class_e::VBRACED);
+    case CT_NAMESPACE:
+        return (pattern_class_e::VBRACED);
 
-  case CT_WHILE_OF_DO:
-    return (pattern_class_e::PAREN);
+    case CT_WHILE_OF_DO:
+        return (pattern_class_e::PAREN);
 
-  case CT_INVARIANT:
-    return (pattern_class_e::OPPAREN);
+    case CT_INVARIANT:
+        return (pattern_class_e::OPPAREN);
 
-  default:
-    return (pattern_class_e::NONE);
-  } // switch
+    default:
+        return (pattern_class_e::NONE);
+    } // switch
 } // get_token_pattern_class

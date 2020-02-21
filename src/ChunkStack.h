@@ -13,59 +13,69 @@
 
 class ChunkStack {
 public:
-  struct Entry {
-    Entry() : m_seqnum(0), m_pc(0) {}
+    struct Entry {
+        Entry() : m_seqnum(0), m_pc(0) {}
 
-    Entry(const Entry &ref) : m_seqnum(ref.m_seqnum), m_pc(ref.m_pc) {}
+        Entry(const Entry &ref) : m_seqnum(ref.m_seqnum), m_pc(ref.m_pc) {}
 
-    Entry(size_t sn, chunk_t *pc) : m_seqnum(sn), m_pc(pc) {}
+        Entry(size_t sn, chunk_t *pc) : m_seqnum(sn), m_pc(pc) {}
 
-    size_t m_seqnum;
-    chunk_t *m_pc;
-  };
+        size_t m_seqnum;
+        chunk_t *m_pc;
+    };
 
 protected:
-  std::deque<Entry> m_cse;
-  size_t m_seqnum; //! current sequence number
+    std::deque<Entry> m_cse;
+    size_t m_seqnum; //! current sequence number
 
 public:
-  ChunkStack() : m_seqnum(0) {}
+    ChunkStack() : m_seqnum(0) {}
 
-  ChunkStack(const ChunkStack &cs) { Set(cs); }
+    ChunkStack(const ChunkStack &cs) {
+        Set(cs);
+    }
 
-  virtual ~ChunkStack() {}
+    virtual ~ChunkStack() {}
 
-  void Set(const ChunkStack &cs);
+    void Set(const ChunkStack &cs);
 
-  void Push_Back(chunk_t *pc) { Push_Back(pc, ++m_seqnum); }
+    void Push_Back(chunk_t *pc) {
+        Push_Back(pc, ++m_seqnum);
+    }
 
-  bool Empty() const { return (m_cse.empty()); }
+    bool Empty() const {
+        return (m_cse.empty());
+    }
 
-  size_t Len() const { return (m_cse.size()); }
+    size_t Len() const {
+        return (m_cse.size());
+    }
 
-  const Entry *Top() const;
+    const Entry *Top() const;
 
-  const Entry *Get(size_t idx) const;
+    const Entry *Get(size_t idx) const;
 
-  chunk_t *GetChunk(size_t idx) const;
+    chunk_t *GetChunk(size_t idx) const;
 
-  chunk_t *Pop_Back();
+    chunk_t *Pop_Back();
 
-  void Push_Back(chunk_t *pc, size_t seqnum);
+    void Push_Back(chunk_t *pc, size_t seqnum);
 
-  chunk_t *Pop_Front();
+    chunk_t *Pop_Front();
 
-  void Reset() { m_cse.clear(); }
+    void Reset() {
+        m_cse.clear();
+    }
 
-  /**
-   * Mark an entry to be removed by Collapse()
-   *
-   * @param idx  The item to remove
-   */
-  void Zap(size_t idx);
+    /**
+     * Mark an entry to be removed by Collapse()
+     *
+     * @param idx  The item to remove
+     */
+    void Zap(size_t idx);
 
-  //! Compresses down the stack by removing dead entries
-  void Collapse();
+    //! Compresses down the stack by removing dead entries
+    void Collapse();
 };
 
 #endif /* CHUNKSTACK_H_INCLUDED */

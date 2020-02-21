@@ -39,104 +39,126 @@ namespace uncrustify {
 //-----------------------------------------------------------------------------
 template <typename Enum> class flags {
 public:
-  using enum_t = Enum;
-  using int_t = typename std::underlying_type<enum_t>::type;
+    using enum_t = Enum;
+    using int_t = typename std::underlying_type<enum_t>::type;
 
-  template <typename T>
-  using integral =
-      typename std::enable_if<std::is_integral<T>::value, bool>::type;
+    template <typename T>
+    using integral =
+        typename std::enable_if<std::is_integral<T>::value, bool>::type;
 
-  inline flags() = default;
-  inline flags(Enum flag) : m_i{static_cast<int_t>(flag)} {}
+    inline flags() = default;
+    inline flags(Enum flag) : m_i{static_cast<int_t>(flag)} {}
 
-  inline bool operator==(Enum const &other) {
-    return (m_i == static_cast<int_t>(other));
-  }
-  inline bool operator==(flags const &other) { return (m_i == other.m_i); }
-  inline bool operator!=(Enum const &other) {
-    return (m_i != static_cast<int_t>(other));
-  }
-  inline bool operator!=(flags const &other) { return (m_i != other.m_i); }
+    inline bool operator==(Enum const &other) {
+        return (m_i == static_cast<int_t>(other));
+    }
+    inline bool operator==(flags const &other) {
+        return (m_i == other.m_i);
+    }
+    inline bool operator!=(Enum const &other) {
+        return (m_i != static_cast<int_t>(other));
+    }
+    inline bool operator!=(flags const &other) {
+        return (m_i != other.m_i);
+    }
 
-  template <typename T, integral<T> = true> inline flags &operator&=(T mask) {
-    m_i &= static_cast<int_t>(mask);
-    return (*this);
-  }
+    template <typename T, integral<T> = true> inline flags &operator&=(T mask) {
+        m_i &= static_cast<int_t>(mask);
+        return (*this);
+    }
 
-  inline flags &operator|=(flags f) {
-    m_i |= f.m_i;
-    return (*this);
-  }
-  inline flags &operator|=(Enum f) {
-    m_i |= f;
-    return (*this);
-  }
+    inline flags &operator|=(flags f) {
+        m_i |= f.m_i;
+        return (*this);
+    }
+    inline flags &operator|=(Enum f) {
+        m_i |= f;
+        return (*this);
+    }
 
-  inline flags &operator^=(flags f) {
-    m_i ^= f.m_i;
-    return (*this);
-  }
-  inline flags &operator^=(Enum f) {
-    m_i ^= f;
-    return (*this);
-  }
+    inline flags &operator^=(flags f) {
+        m_i ^= f.m_i;
+        return (*this);
+    }
+    inline flags &operator^=(Enum f) {
+        m_i ^= f;
+        return (*this);
+    }
 
-  inline operator int_t() const { return (m_i); }
-  inline operator enum_t() const { return (static_cast<enum_t>(m_i)); }
+    inline operator int_t() const {
+        return (m_i);
+    }
+    inline operator enum_t() const {
+        return (static_cast<enum_t>(m_i));
+    }
 
-  inline flags operator&(Enum f) const {
-    flags g;
-    g.m_i = m_i & static_cast<int_t>(f);
-    return (g);
-  }
-  inline flags operator&(flags f) const {
-    flags g;
-    g.m_i = m_i & static_cast<int_t>(f);
-    return (g);
-  }
+    inline flags operator&(Enum f) const {
+        flags g;
+        g.m_i = m_i & static_cast<int_t>(f);
+        return (g);
+    }
+    inline flags operator&(flags f) const {
+        flags g;
+        g.m_i = m_i & static_cast<int_t>(f);
+        return (g);
+    }
 
-  template <typename T, integral<T> = true>
-  inline flags operator&(T mask) const {
-    flags g;
-    g.m_i = m_i & static_cast<int_t>(mask);
-    return (g);
-  }
+    template <typename T, integral<T> = true>
+    inline flags operator&(T mask) const {
+        flags g;
+        g.m_i = m_i & static_cast<int_t>(mask);
+        return (g);
+    }
 
-  inline flags operator|(flags f) const {
-    flags g;
-    g.m_i = m_i | f.m_i;
-    return (g);
-  }
-  inline flags operator|(Enum f) const {
-    flags g;
-    g.m_i = m_i | static_cast<int_t>(f);
-    return (g);
-  }
+    inline flags operator|(flags f) const {
+        flags g;
+        g.m_i = m_i | f.m_i;
+        return (g);
+    }
+    inline flags operator|(Enum f) const {
+        flags g;
+        g.m_i = m_i | static_cast<int_t>(f);
+        return (g);
+    }
 
-  inline flags operator^(flags f) const {
-    flags g;
-    g.m_i = m_i ^ f.m_i;
-    return (g);
-  }
-  inline flags operator^(Enum f) const {
-    flags g;
-    g.m_i = m_i ^ static_cast<int_t>(f);
-    return (g);
-  }
+    inline flags operator^(flags f) const {
+        flags g;
+        g.m_i = m_i ^ f.m_i;
+        return (g);
+    }
+    inline flags operator^(Enum f) const {
+        flags g;
+        g.m_i = m_i ^ static_cast<int_t>(f);
+        return (g);
+    }
 
-  inline int_t operator~() const { return (~m_i); }
+    inline int_t operator~() const {
+        return (~m_i);
+    }
 
-  inline operator bool() const { return (m_i); }
-  inline bool operator!() const { return (!m_i); }
+    inline operator bool() const {
+        return (m_i);
+    }
+    inline bool operator!() const {
+        return (!m_i);
+    }
 
-  inline bool test(flags f) const { return ((*this & f) == f); }
-  inline bool test(Enum f) const { return ((*this & f) == f); }
+    inline bool test(flags f) const {
+        return ((*this & f) == f);
+    }
+    inline bool test(Enum f) const {
+        return ((*this & f) == f);
+    }
 
-  inline bool test_any() const { return (m_i != 0); }
-  inline bool test_any(flags f) const { return ((*this & f).test_any()); }
+    inline bool test_any() const {
+        return (m_i != 0);
+    }
+    inline bool test_any(flags f) const {
+        return ((*this & f).test_any());
+    }
 
 protected:
-  int_t m_i = 0;
+    int_t m_i = 0;
 };
 
 } // namespace uncrustify

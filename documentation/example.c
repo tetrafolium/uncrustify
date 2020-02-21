@@ -7,11 +7,12 @@ const char *token_names[] = {
 };
 
 int main(int argc, char *argv[]) {
-  struct junk a[] = {{"version", 0, 0, 0},
-                     {"file", 1, 150, 'f'},
-                     {"config", 1, 0, 'c'},
-                     {"parsed", 25, 0, 'p'},
-                     {NULL, 0, 0, 0}};
+    struct junk a[] = {{"version", 0, 0, 0},
+        {"file", 1, 150, 'f'},
+        {"config", 1, 0, 'c'},
+        {"parsed", 25, 0, 'p'},
+        {NULL, 0, 0, 0}
+    };
 }
 
 color_t colors[] = {
@@ -29,30 +30,30 @@ struct foo_t bars[] = {
 };
 
 void foo(void) {
-  int i;
-  char *name;
+    int i;
+    char *name;
 
-  i = 5;
-  name = "bob";
+    i = 5;
+    name = "bob";
 }
 
 /**
  * This is your typical header comment
  */
 int foo(int bar) {
-  int idx;
-  int res = 0; // trailing comment
-               // that spans two lines
-  for (idx = 1; idx < bar; idx++)
-    /* comment in virtual braces */
-    res += idx;
+    int idx;
+    int res = 0; // trailing comment
+    // that spans two lines
+    for (idx = 1; idx < bar; idx++)
+        /* comment in virtual braces */
+        res += idx;
 
-  res *= idx; // some comment
+    res *= idx; // some comment
 
-  // almost continued, but a NL in between
+    // almost continued, but a NL in between
 
-  // col1 comment in level 1
-  return (res);
+    // col1 comment in level 1
+    return (res);
 }
 
 // col1 comment in level 0
@@ -65,27 +66,28 @@ int foo(int bar) {
   }
 
 void foo(void) {
-  switch (ch) {
-  case 'a': {
-    handle_a();
-    break;
-  }
+    switch (ch) {
+    case 'a': {
+        handle_a();
+        break;
+    }
 
-  case 'b':
-    handle_b();
+    case 'b':
+        handle_b();
+        break;
+
+    case 'c':
+    case 'd':
+        handle_cd();
+        break;
+
+    case 'e': {
+        handle_a();
+    }
     break;
 
-  case 'c':
-  case 'd':
-    handle_cd();
-    break;
-
-  case 'e': {
-    handle_a();
-  } break;
-
-  default:
-    handle_default();
-    break;
-  }
+    default:
+        handle_default();
+        break;
+    }
 }
