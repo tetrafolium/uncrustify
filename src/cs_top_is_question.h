@@ -13,8 +13,6 @@
 #include "ChunkStack.h"
 //#include "uncrustify_types.h"
 
-
 bool cs_top_is_question(ChunkStack &cs, size_t level);
-
 
 #endif /* CS_TOP_IS_QUESTION_H_INCLUDED */

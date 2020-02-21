@@ -18,5 +18,4 @@
  */
 void brace_cleanup(void);
 
-
 #endif /* BRACE_CLEANUP_H_INCLUDED */

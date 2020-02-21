@@ -10,7 +10,6 @@
 
 #include "chunk_list.h"
 
-
 /**
  * Flags everything from the open paren to the close paren.
  *
@@ -22,7 +21,7 @@
  *
  * @return The token after the close paren
  */
-chunk_t *flag_parens(chunk_t *po, pcf_flags_t flags, c_token_t opentype, c_token_t parenttype, bool parent_all);
-
+chunk_t *flag_parens(chunk_t *po, pcf_flags_t flags, c_token_t opentype,
+                     c_token_t parenttype, bool parent_all);
 
 #endif /* FLAG_PARENS_H_INCLUDED */

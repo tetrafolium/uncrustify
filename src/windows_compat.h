@@ -19,23 +19,23 @@
 
 #define NO_MACRO_VARARG
 
-typedef char                 CHAR;
+typedef char CHAR;
 
-typedef signed char          INT8;
-typedef short                INT16;
-typedef int                  INT32;
+typedef signed char INT8;
+typedef short INT16;
+typedef int INT32;
 
-typedef unsigned char        UINT8;
-typedef unsigned short       UINT16;
-typedef unsigned int         UINT32;
-typedef unsigned long long   UINT64;
+typedef unsigned char UINT8;
+typedef unsigned short UINT16;
+typedef unsigned int UINT32;
+typedef unsigned long long UINT64;
 
 #ifndef PRIx64
-#define PRIx64    "llx"
+#define PRIx64 "llx"
 #endif
 
 #ifndef PRIu64
-#define PRIu64    "llu"
+#define PRIu64 "llu"
 #endif
 
 // eliminate GNU's attribute
@@ -47,13 +47,13 @@ typedef unsigned long long   UINT64;
  */
 #ifdef _MSC_VER
 #if _MSC_VER < 1300
-#define __func__    "???"
+#define __func__ "???"
 #else
-#define __func__    __FUNCTION__
+#define __func__ __FUNCTION__
 #endif
 #else // _MSC_VER
 #ifndef __GNUC__
-#define __func__    "???"
+#define __func__ "???"
 #endif // __GNUC__
 #endif // _MSC_VER
 
@@ -61,22 +61,22 @@ typedef unsigned long long   UINT64;
 #include "string.h"
 
 #undef snprintf
-#define snprintf       _snprintf
+#define snprintf _snprintf
 
 #undef vsnprintf
-#define vsnprintf      _vsnprintf
+#define vsnprintf _vsnprintf
 
 #undef strcasecmp
-#define strcasecmp     _strcmpi
+#define strcasecmp _strcmpi
 
 #undef strncasecmp
-#define strncasecmp    _strnicmp
+#define strncasecmp _strnicmp
 
 #undef strdup
-#define strdup         _strdup
+#define strdup _strdup
 
 #undef fileno
-#define fileno         _fileno
+#define fileno _fileno
 
 // includes for _setmode()
 #include <direct.h>
@@ -84,8 +84,8 @@ typedef unsigned long long   UINT64;
 #include <io.h>
 
 // on windows the file permissions have no meaning thus neglect them
-#define mkdir(x, y)    _mkdir(x)
+#define mkdir(x, y) _mkdir(x)
 
-#define PATH_SEP    '\\'
+#define PATH_SEP '\\'
 
 #endif /* WINDOWS_COMPAT_H_INCLUDED */

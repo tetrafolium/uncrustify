@@ -21,12 +21,12 @@
 #ifndef BACKUP_H_INCLUDED
 #define BACKUP_H_INCLUDED
 
-#define UNC_BACKUP_SUFFIX        ".unc-backup~"
-#define UNC_BACKUP_MD5_SUFFIX    ".unc-backup.md5~"
-
+#define UNC_BACKUP_SUFFIX ".unc-backup~"
+#define UNC_BACKUP_MD5_SUFFIX ".unc-backup.md5~"
 
 /**
- * @brief Check the backup-md5 file and copy the input file to a backup if needed.
+ * @brief Check the backup-md5 file and copy the input file to a backup if
+ * needed.
  *
  * If there isn't a FILENAME+UNC_BACKUP_MD5_SUFFIX or the md5 over the data
  * doesn't match what is in FILENAME+UNC_BACKUP_MD5_SUFFIX, then write the
@@ -44,7 +44,6 @@
  */
 int backup_copy_file(const char *filename, const std::vector<UINT8> &data);
 
-
 /**
  * This calculates the MD5 over the file and writes the MD5 to
  * FILENAME+UNC_BACKUP_MD5_SUFFIX.*
@@ -58,6 +57,5 @@ int backup_copy_file(const char *filename, const std::vector<UINT8> &data);
  * @param filename  The file that was written (full path)
  */
 void backup_create_md5_file(const char *filename);
-
 
 #endif /* BACKUP_H_INCLUDED */

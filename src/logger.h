@@ -16,9 +16,8 @@
 #define LOGGER_H_INCLUDED
 
 #include "logmask.h"
-#include <cstdio>      // FILE
-#include <cstring>     // strlen()
-
+#include <cstdio>  // FILE
+#include <cstring> // strlen()
 
 /**
  * Initializes the log subsystem - call this first.
@@ -28,14 +27,12 @@
  */
 void log_init(FILE *log_file);
 
-
 /**
  * Show or hide the severity prefix "<1>"
  *
  * @param show  true=show, false=hide
  */
 void log_show_sev(bool show);
-
 
 /**
  * Returns whether a log severity is active.
@@ -45,7 +42,6 @@ void log_show_sev(bool show);
  * @return true/false
  */
 bool log_sev_on(log_sev_t sev);
-
 
 /**
  * Sets a log sev on or off
@@ -57,14 +53,12 @@ bool log_sev_on(log_sev_t sev);
  */
 void log_set_sev(log_sev_t sev, bool value);
 
-
 /**
  * Sets the log mask
  *
  * @param mask  The mask to copy
  */
 void log_set_mask(const log_mask_t &mask);
-
 
 /**
  * Gets the log mask
@@ -73,7 +67,6 @@ void log_set_mask(const log_mask_t &mask);
  */
 void log_get_mask(log_mask_t &mask);
 
-
 /**
  * Logs a formatted string -- similar to printf()
  *
@@ -81,8 +74,8 @@ void log_get_mask(log_mask_t &mask);
  * @param fmt  The format string
  * @param ...  Additional arguments
  */
-void log_fmt(log_sev_t sev, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
-
+void log_fmt(log_sev_t sev, const char *fmt, ...)
+    __attribute__((format(printf, 2, 3)));
 
 /**
  * Flushes the cached log text to the stream
@@ -91,7 +84,6 @@ void log_fmt(log_sev_t sev, const char *fmt, ...) __attribute__((format(printf, 
  */
 void log_flush(bool force_nl);
 
-
 // it is necessary to make at least one time pro change a check of all the
 // uses of the MACRO LOG_FMT under Linux. This to detect all the used pointers,
 // which might be nullptr.
@@ -99,21 +91,22 @@ void log_flush(bool force_nl);
 // #define NO_MACRO_VARARG
 
 #ifdef NO_MACRO_VARARG
-#define LOG_FMT    log_fmt
+#define LOG_FMT log_fmt
 // TODO during debugging add source file and line number
 #else
-#define LOG_FMT(sev, ...)                                   \
-   do { if (log_sev_on(sev)) { log_fmt(sev, __VA_ARGS__); } \
-   } while (0)
+#define LOG_FMT(sev, ...)                                                      \
+  do {                                                                         \
+    if (log_sev_on(sev)) {                                                     \
+      log_fmt(sev, __VA_ARGS__);                                               \
+    }                                                                          \
+  } while (0)
 #endif
-
 
 #ifdef DEBUG
-#define D_LOG_FMT    LOG_FMT
+#define D_LOG_FMT LOG_FMT
 #else
-#define D_LOG_FMT(sev, ...)    ((void)0) //forces semicolon after macro
+#define D_LOG_FMT(sev, ...) ((void)0) // forces semicolon after macro
 #endif
-
 
 #ifdef DEBUG
 /**
@@ -121,33 +114,28 @@ void log_flush(bool force_nl);
  * It uses the log_func class to add an entry to the function log stack.
  * It is automatically removed when the function returns.
  */
-#define LOG_FUNC_ENTRY()    log_func log_fe = log_func(__func__, __LINE__)
-
+#define LOG_FUNC_ENTRY() log_func log_fe = log_func(__func__, __LINE__)
 
 #else
 #define LOG_FUNC_ENTRY()
 #endif
-
 
 /**
  * This class just adds a entry to the top of the stack on construction and
  * removes it on destruction.
  * RAII for the win.
  */
-class log_func
-{
+class log_func {
 public:
-   log_func(const char *name, int line);
+  log_func(const char *name, int line);
 
-
-   ~log_func();
+  ~log_func();
 };
 
+void log_func_stack(log_sev_t sev, const char *prefix = 0,
+                    const char *suffix = "\n", size_t skip_cnt = 0);
 
-void log_func_stack(log_sev_t sev, const char *prefix = 0, const char *suffix = "\n", size_t skip_cnt = 0);
-
-
-#define log_func_stack_inline(_sev)    log_func_stack((_sev), " [CallStack:", "]\n", 0)
-
+#define log_func_stack_inline(_sev)                                            \
+  log_func_stack((_sev), " [CallStack:", "]\n", 0)
 
 #endif /* LOGGER_H_INCLUDED */

@@ -10,21 +10,17 @@
 
 #include "uncrustify_types.h"
 
-
 /**
  * Marches through the whole file and checks to see how many spaces should be
  * between two chunks
  */
 void space_text(void);
 
-
 //! Marches through the whole file and adds spaces around nested parenthesis
 void space_text_balance_nested_parens(void);
 
-
 //! Determines if a space is required between two chunks
 size_t space_needed(chunk_t *first, chunk_t *second);
-
 
 /**
  * Calculates the column difference between two chunks.
@@ -38,8 +34,6 @@ size_t space_needed(chunk_t *first, chunk_t *second);
  */
 size_t space_col_align(chunk_t *first, chunk_t *second);
 
-
 void space_add_after(chunk_t *pc, size_t count);
-
 
 #endif /* SPACE_H_INCLUDED */
