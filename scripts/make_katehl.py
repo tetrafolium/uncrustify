@@ -70,19 +70,20 @@ def write_tokens(out, args):
 # -----------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser(description='Generate uncrustify.xml')
-    parser.add_argument('output', type=str,
-                        help='location of uncrustify.xml to write')
-    parser.add_argument('template', type=str,
-                        help='location of uncrustify.xml.in ' +
-                             'to use as template')
-    parser.add_argument('version', type=str,
-                        help='location of uncrustify_version.h to read')
-    parser.add_argument('options', type=str,
-                        help='location of options.h to read')
-    parser.add_argument('optvals', type=str,
-                        help='location of option.h to read')
-    parser.add_argument('tokens', type=str,
-                        help='location of token_enum.h to read')
+    parser.add_argument(
+        'output', type=str, help='location of uncrustify.xml to write')
+    parser.add_argument(
+        'template',
+        type=str,
+        help='location of uncrustify.xml.in ' + 'to use as template')
+    parser.add_argument(
+        'version', type=str, help='location of uncrustify_version.h to read')
+    parser.add_argument(
+        'options', type=str, help='location of options.h to read')
+    parser.add_argument(
+        'optvals', type=str, help='location of option.h to read')
+    parser.add_argument(
+        'tokens', type=str, help='location of token_enum.h to read')
     args = parser.parse_args()
 
     # Read version
@@ -150,8 +151,8 @@ def main():
                         line = line.replace('##VERSION##', version)
                     out.write(line)
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if __name__ == '__main__':
     main()

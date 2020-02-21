@@ -15,12 +15,23 @@ default_jobs = min(cpu_count() + 2, cpu_count() * 2)
 
 def main():
     parser = argparse.ArgumentParser(description='Run CTest')
-    parser.add_argument('-q', '--quiet', action='store_true',
-                        help='suppress output of failing tests')
-    parser.add_argument('-j', '--parallel', type=int, default=default_jobs,
-                        help='number of jobs to use for parallel execution')
-    parser.add_argument('args', metavar='ARGS', nargs='*', default=[],
-                        help='additional arguments to pass to CTest')
+    parser.add_argument(
+        '-q',
+        '--quiet',
+        action='store_true',
+        help='suppress output of failing tests')
+    parser.add_argument(
+        '-j',
+        '--parallel',
+        type=int,
+        default=default_jobs,
+        help='number of jobs to use for parallel execution')
+    parser.add_argument(
+        'args',
+        metavar='ARGS',
+        nargs='*',
+        default=[],
+        help='additional arguments to pass to CTest')
     args = parser.parse_args()
 
     if not os.path.exists('CTestTestfile.cmake'):
