@@ -6,26 +6,24 @@ inspecode:
 
     astyle:         ## for C, C++, Python
         auto-fix: true
-        thresholds:
-            num-issues: 90
+        thresholds: { num-issues: 90 }
 
     autopep8:       ## for Python
         auto-fix: true
-        thresholds:
-            num-issues: 9
+        thresholds: { num-issues: 9 }
 
     clang-format:   ## for C, C++
         auto-fix: true
-        thresholds:
-            num-issues: 132
+        thresholds: { num-issues: 132 }
 
+    ##--------------------------------------------------
+    ##  net.sourceforge.pmd.lang.ast.TokenMgrError: Lexical error in file /home/rocro/src/github.com/tetrafolium/uncrustify/./src/option.cpp at line 32, column 43.  Encountered: "\n" (10), after : "\"___("
+    ##--------------------------------------------------
     #cpd:            ## for C, C++, Python
-    #    thresholds:
-    #        num-issues: 999
+    #    thresholds: { num-issues: 999 }
 
     cppcheck:       ## for C, C++
-        thresholds:
-            num-issues: 31
+        thresholds: { num-issues: 31 }
 
     cpplint:        ## for C++
         options:
@@ -37,74 +35,69 @@ inspecode:
             -   -build/header_guard
             -   -runtime/int
             -   -runtime/references
-        thresholds:
-            num-issues: 103
+        thresholds: { num-issues: 103 }
 
     flake8:         ## for Python
         ignore:
         -   scripts/tokenizer.py    # 244 issues
-        thresholds:
-            num-issues: 51
+        thresholds: { num-issues: 51 }
 
     grep:           ## for any-languages
-        thresholds:
-            num-issues: 177
+        thresholds: { num-issues: 177 }
 
+    ##--------------------------------------------------
+    ##  In-source builds are not supported, please remove the `CMakeFiles'
+    ##  folder and `CMakeCache.txt', and create a folder for the build:
+    ##  mkdir build; cd build; cmake ..
+    ##--------------------------------------------------
     #infer:          ## for C, C++
-    #    thresholds:
-    #        num-issues: 999
+    #    thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
-        thresholds:
-            num-issues: 15
+        thresholds: { num-issues: 15 }
 
     misspell:       ## for any-languages
         auto-fix: true
-        thresholds:
-            num-issues: 17
+        thresholds: { num-issues: 17 }
 
     nose2:          ## for Python
-        thresholds:
-            num-issues: 0
+        thresholds: { num-issues: 0 }
 
     prospector:     ## for Python
-        thresholds:
-            num-issues: 74
+        thresholds: { num-issues: 74 }
 
     pycodestyle:    ## for Python
         ignore:
         -   scripts/tokenizer.py    # 243 issues
-        thresholds:
-            num-issues: 44
+        thresholds: { num-issues: 44 }
 
     pyflakes:       ## for Python
-        thresholds:
-            num-issues: 8
+        thresholds: { num-issues: 8 }
 
     pylint:         ## for Python
         ignore:
         -   scripts/tokenizer.py    # 399 issues
-        thresholds:
-            num-issues: 393
+        thresholds: { num-issues: 393 }
 
     pytest:         ## for Python
-        thresholds:
-            num-issues: 0
+        thresholds: { num-issues: 0 }
 
+    ##--------------------------------------------------
+    ##  In-source builds are not supported, please remove the `CMakeFiles'
+    ##  folder and `CMakeCache.txt', and create a folder for the build:
+    ##  mkdir build; cd build; cmake ..
+    ##--------------------------------------------------
     #scan-build:     ## for C, C++
-    #    thresholds:
-    #        num-issues: 999
+    #    thresholds: { num-issues: 999 }
 
     uncrustify:     ## for C, C++
         auto-fix: true
-        thresholds:
-            num-issues: 95
+        thresholds: { num-issues: 95 }
 
-    #unused:         ## for C, C++, Python
-    #    thresholds:
-    #        num-issues: 999
+    unused:         ## for C, C++, Python
+        options: [ --single-occurrence, --all-likelihoods ]
+        thresholds: { num-issues: 27 }
 
     yapf:           ## for Python
         auto-fix: true
-        thresholds:
-            num-issues: 14
+        thresholds: { num-issues: 14 }
