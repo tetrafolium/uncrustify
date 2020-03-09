@@ -137,10 +137,10 @@ void log_flush(bool force_nl);
 class log_func
 {
 public:
-   log_func(const char *name, int line);
+    log_func(const char *name, int line);
 
 
-   ~log_func();
+    ~log_func();
 };
 
 
