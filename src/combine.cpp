@@ -2182,7 +2182,7 @@ void fix_symbols(void)
 		{
 			mark_lvalue(pc);
 		}
-		// a brace immediately preceeded by word in C++11 is an initializer list though it may also
+		// a brace immediately preceded by word in C++11 is an initializer list though it may also
 		// by a type casting initializer list if the word is really a type; sadly unucustify knows
 		// only builtin types and knows nothing of user-defined types
 		chunk_t *prev = chunk_get_prev_ncnlni(pc); // Issue #2279

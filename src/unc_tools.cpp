@@ -18,8 +18,8 @@
 /*
  * the test suite Coveralls: https://coveralls.io
  * will complains because these functions are only
- * used at developement time.
- * Don't worry about unsed lines for the functions:
+ * used at development time.
+ * Don't worry about used lines for the functions:
  *   prot_the_line
  *   prot_the_source
  *   examine_Data

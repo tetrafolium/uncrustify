@@ -1534,7 +1534,7 @@ static void newlines_if_for_while_switch_post_blank_lines(chunk_t *start, iarf_e
 			{
 				LOG_FMT(LNEWLINE, "%s(%d): nl_count is 1\n", __func__, __LINE__);
 
-				// if we have a preceeding vbrace, add one after it
+				// if we have a preceding vbrace, add one after it
 				if (have_pre_vbrace_nl)
 				{
 					LOG_FMT(LNEWLINE, "%s(%d): have_pre_vbrace_nl is TRUE\n", __func__, __LINE__);
@@ -2322,11 +2322,11 @@ static void newlines_brace_pair(chunk_t *br_open)
 
 	if (chunk_is_token(br_open, CT_BRACE_OPEN))
 	{
-		chunk_t *chunk_closeing_brace = chunk_skip_to_match(br_open, scope_e::ALL);
+		chunk_t *chunk_closing_brace = chunk_skip_to_match(br_open, scope_e::ALL);
 
-		if (chunk_closeing_brace != nullptr)
+		if (chunk_closing_brace != nullptr)
 		{
-			if (chunk_closeing_brace->orig_line > br_open->orig_line)
+			if (chunk_closing_brace->orig_line > br_open->orig_line)
 			{
 				chunk_t *prev = chunk_get_prev_nc(br_open);
 
