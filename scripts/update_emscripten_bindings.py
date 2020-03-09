@@ -11,7 +11,6 @@ from contextlib import contextmanager
 from threading import Timer
 import re
 
-
 ROOT_DIR = dirname(dirname(abspath(__file__)))
 
 # ==============================================================================
@@ -21,7 +20,6 @@ FILE_TS = "%s/emscripten/libUncrustify.d.ts" % ROOT_DIR
 
 REGION_START = "region enum bindings"
 REGION_END = "endregion enum bindings"
-
 ''' Enums which values need to be updated in the binding code '''
 ENUMS_INFO = [
     {
@@ -73,9 +71,12 @@ ENUMS_INFO = [
         'suffix_chars': 3,
     },
     {
-        'name': 'lang_flag_e',
-        'substitute_name': 'Language',
-        'filepath': '%s/src/uncrustify_types.h' % ROOT_DIR,
+        'name':
+        'lang_flag_e',
+        'substitute_name':
+        'Language',
+        'filepath':
+        '%s/src/uncrustify_types.h' % ROOT_DIR,
         'extra_arg': ["-extra-arg=-std=c++1z", "-extra-arg=-DEMSCRIPTEN"],
         'filter_values': [
             'LANG_ALLC',
@@ -84,7 +85,8 @@ ENUMS_INFO = [
             'FLAG_DIG',
             'FLAG_PP',
         ],
-        'suffix_chars': 5,
+        'suffix_chars':
+        5,
     },
 ]
 
@@ -162,25 +164,33 @@ def get_enum_lines(enum_info):
     """
     cut_len = len(enum_info['name'])
 
-    proc_args = ["clang-check", enum_info['filepath'], "-ast-dump",
-                 '-ast-dump-filter=%s' % enum_info['name']]
+    proc_args = [
+        "clang-check", enum_info['filepath'], "-ast-dump",
+        '-ast-dump-filter=%s' % enum_info['name']
+    ]
     proc_args += enum_info['extra_arg']
 
     output = proc_output(proc_args)
     if output is None or len(output) == 0:
-        print("ScriptError: %s - empty clang-check return" % get_enum_lines.__name__,
-              file=stderr)
+        print(
+            "ScriptError: %s - empty clang-check return" %
+            get_enum_lines.__name__,
+            file=stderr)
         return ()
 
     reg_obj = re.compile("EnumConstantDecl.+col:\d+ (referenced )?(\w+)")
 
-    lines = [m.group(2) for l in output.splitlines()
-             for m in [re.search(reg_obj, l)] if m]
+    lines = [
+        m.group(2) for l in output.splitlines()
+        for m in [re.search(reg_obj, l)] if m
+    ]
     lines = [line for line in lines if line not in enum_info['filter_values']]
 
     if len(lines) == 0:
-        print("ScriptError: %s - no enum_info names found" % get_enum_lines.__name__,
-              file=stderr)
+        print(
+            "ScriptError: %s - no enum_info names found" %
+            get_enum_lines.__name__,
+            file=stderr)
         return ()
     return lines
 
@@ -204,17 +214,13 @@ def write_ts(opened_file_obj, enum_info):
     opened_file_obj.write(
         '    export interface %sValue extends EmscriptenEnumTypeObject {}\n'
         '    export interface %s extends EmscriptenEnumType\n'
-        '    {\n'
-        % (enum_info['substitute_name'], enum_info['substitute_name'])
-    )
+        '    {\n' % (enum_info['substitute_name'],
+                     enum_info['substitute_name']))
     for line in lines:
         opened_file_obj.write(
-            '        %s : %sValue;\n'
-            % (line[enum_info['suffix_chars']:], enum_info['substitute_name'])
-        )
-    opened_file_obj.write(
-        '    }\n\n'
-    )
+            '        %s : %sValue;\n' % (line[enum_info['suffix_chars']:],
+                                         enum_info['substitute_name']))
+    opened_file_obj.write('    }\n\n')
     return True
 
 
@@ -233,18 +239,13 @@ def write_bindings(opened_file_obj, enum_info):
     if len(lines) == 0:
         return False
 
-    opened_file_obj.write(
-        '   enum_<%s>("%s")' % (
-            enum_info['name'], enum_info['substitute_name'])
-    )
+    opened_file_obj.write('   enum_<%s>("%s")' %
+                          (enum_info['name'], enum_info['substitute_name']))
     for line in lines:
         opened_file_obj.write(
-            '\n      .value("%s", %s::%s)'
-            % (line[enum_info['suffix_chars']:], enum_info['name'], line)
-        )
-    opened_file_obj.write(
-        ';\n\n'
-    )
+            '\n      .value("%s", %s::%s)' % (line[enum_info['suffix_chars']:],
+                                              enum_info['name'], line))
+    opened_file_obj.write(';\n\n')
     return True
 
 
@@ -275,21 +276,21 @@ def update_file(file_path, writer_func, enums_info):
                 match = None if reg_obj is None else re.search(reg_obj, line)
 
                 if match is None and not in_target_region:
-                    fw.write(line)                # write out of region code
+                    fw.write(line)  # write out of region code
 
                 elif match is not None and not in_target_region:
-                    fw.write(line)                # hit the start region
+                    fw.write(line)  # hit the start region
 
                     in_target_region = True
                     reg_obj = reg_obj_end
 
                     for enum in enums_info:
                         succes_flag = writer_func(fw, enum)
-                        if not succes_flag:       # abort, keep input file clean
+                        if not succes_flag:  # abort, keep input file clean
                             return False
 
                 elif match is None and in_target_region:
-                    pass                          # ignore old binding code
+                    pass  # ignore old binding code
 
                 elif match and in_target_region:  # hit the endregion
                     fw.write(line)
@@ -297,7 +298,7 @@ def update_file(file_path, writer_func, enums_info):
                     in_target_region = False
                     reg_obj = None
 
-        copy2(tmp_file_path, file_path)           # overwrite input file
+        copy2(tmp_file_path, file_path)  # overwrite input file
         return True
 
 

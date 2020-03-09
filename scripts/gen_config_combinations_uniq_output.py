@@ -6,7 +6,6 @@ from glob import iglob
 from shutil import rmtree
 from json import loads as json_loads, dump as json_dump
 from sys import stderr, argv, path as sys_path
-
 """
 gen_config_combinations_uniq_output.py
 
@@ -20,7 +19,6 @@ Expects arg1 to be a filepath to a json config file
 :author:  Daniel Chumak
 :license: GPL v2+
 """
-
 
 # config = {
 #     "option_settings": {
@@ -155,17 +153,21 @@ def gen_equal_output_map(config):
             # extract substring form config gile name (removes __unc.cfg)
             splits_file = cfg_path.split("__unc")
             if len(splits_file) < 1:
-                raise Exception('split with "__unc" | Wrong split len: %d'
-                                % len(splits_file))
+                raise Exception('split with "__unc" | Wrong split len: %d' %
+                                len(splits_file))
 
             out_path = ("%s__%d" % (splits_file[0], in_file_idx))
 
             # gen formatted files with uncrustify binary
-            proc = Popen([config["unc_bin"],
-                          "-c", cfg_path,
-                          "-f", config["in_files"][in_file_idx],
-                          "-o", out_path,
-                          ])
+            proc = Popen([
+                config["unc_bin"],
+                "-c",
+                cfg_path,
+                "-f",
+                config["in_files"][in_file_idx],
+                "-o",
+                out_path,
+            ])
             proc.wait()
             if proc.returncode != 0:
                 continue
@@ -212,10 +214,12 @@ def gen_output_dict(config, equal_output_map):
                          ]
     """
 
-    output_dict = {"option_settings": config["option_settings"],
-                   "options": config["options"],
-                   "files": config["in_files"],
-                   "groups": []}
+    output_dict = {
+        "option_settings": config["option_settings"],
+        "options": config["options"],
+        "files": config["in_files"],
+        "groups": []
+    }
 
     options_len = len(output_dict["options"])
     files_len = len(output_dict["files"])
@@ -236,8 +240,9 @@ def gen_output_dict(config, equal_output_map):
                 continue
 
             file_idx = int(split[split_len - 1])
-            file_combinations = [int(i)
-                                 for i in split[options_len:split_len-1]]
+            file_combinations = [
+                int(i) for i in split[options_len:split_len - 1]
+            ]
 
             group_dict[file_idx].append(file_combinations)
 
@@ -262,8 +267,8 @@ def write_output_dict_pretty(out_dict, out_path):
 
         f.write("Files:\n")
         for in_file_idx in range(len(out_dict["files"])):
-            f.write("    %d: %s\n" % (in_file_idx,
-                                      out_dict["files"][in_file_idx]))
+            f.write(
+                "    %d: %s\n" % (in_file_idx, out_dict["files"][in_file_idx]))
 
         f.write("\nOptions:\n")
         for option_idx in range(options_len):
@@ -284,11 +289,11 @@ def write_output_dict_pretty(out_dict, out_path):
 
                         combination_id = combinations[combination_idx]
                         combination_string = out_dict["option_settings"][
-                            out_dict["options"][combination_idx]["type"]][
-                            combination_id]
+                            out_dict["options"][combination_idx]
+                            ["type"]][combination_id]
                         combination_strings.append(str(combination_string))
-                    f.write("    (%s: %s)\n" % (file_idx,
-                                                " - ".join(combination_strings)))
+                    f.write("    (%s: %s)\n" %
+                            (file_idx, " - ".join(combination_strings)))
             f.write("\n")
 
 
@@ -347,8 +352,9 @@ def check_config(config, cfg_path=""):
         if "type" not in option_obj:
             raise Exception("config file: 'options[{}]' type missing")
         if option_obj["type"] not in config["option_settings"]:
-            raise Exception("config file: 'options[{type='%s'}]' not in option_"
-                            "settings" % option_obj["type"])
+            raise Exception(
+                "config file: 'options[{type='%s'}]' not in option_"
+                "settings" % option_obj["type"])
 
     # --------------------------------------------------------------------------
 
@@ -372,13 +378,12 @@ def check_config(config, cfg_path=""):
     for file_idx in range(len(config['in_files'])):
         if extend_relative_paths and not path.isabs(
                 config['in_files'][file_idx]):
-            config['in_files'][file_idx] = make_abs_path(cfg_path,
-                                                         config['in_files'][
-                                                             file_idx])
+            config['in_files'][file_idx] = make_abs_path(
+                cfg_path, config['in_files'][file_idx])
 
         if not path.isfile(config['in_files'][file_idx]):
-            raise Exception("config file: '%s' is not a file"
-                            % config['in_files'][file_idx])
+            raise Exception("config file: '%s' is not a file" %
+                            config['in_files'][file_idx])
 
     # --------------------------------------------------------------------------
 
@@ -425,16 +430,17 @@ def cleanup(level, eq_map, clean_target_dir, keep_files=()):
         rmtree(clean_target_dir)
 
     if level == 1:
-        rm_files = [clean_target_dir + "/" + f for f in
-                    listdir(clean_target_dir)]
+        rm_files = [
+            clean_target_dir + "/" + f for f in listdir(clean_target_dir)
+        ]
 
         for f in keep_files:
             rm_files.remove(f)
 
         for idx in eq_map:
             old_path = eq_map[idx][0]
-            new_path = ("%s/g_%d" %
-                        (path.dirname(path.abspath(old_path)), idx))
+            new_path = (
+                "%s/g_%d" % (path.dirname(path.abspath(old_path)), idx))
             rename(old_path, new_path)
 
             try:
@@ -462,8 +468,8 @@ def main(args):
     if not path.isdir(config["out_dir"]):
         makedirs(config["out_dir"])
     elif not config["force_cleanup"] and config["cleanup_lvl"] > 0:
-        raise Exception("cleanup_lvl > 0 on an existing directory: %s"
-                        % config["out_dir"])
+        raise Exception(
+            "cleanup_lvl > 0 on an existing directory: %s" % config["out_dir"])
 
     write_config_files(config)
     eq_map = gen_equal_output_map(config)

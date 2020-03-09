@@ -34,13 +34,14 @@ def check_file(file_path):
             pos_option_s = pos_cpd_s + 13
             pos_option_e = pos_cpd_s + pos_cpd_e
 
-            option = line[pos_option_s: pos_option_e]
+            option = line[pos_option_s:pos_option_e]
             union_access = line[pos_option_e + 2]
 
             if option in map_option_type and union_access in map_access_type:
                 if map_option_type[option] != map_access_type[union_access]:
-                    print("%s [%d] %s should use %s not %s" % (file_path, line_no, option,
-                                                               map_option_type[option], map_access_type[union_access]))
+                    print("%s [%d] %s should use %s not %s" %
+                          (file_path, line_no, option, map_option_type[option],
+                           map_access_type[union_access]))
                     problems += 1
     return problems
 
