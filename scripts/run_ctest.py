@@ -11,6 +11,8 @@ from multiprocessing import cpu_count
 default_jobs = min(cpu_count() + 2, cpu_count() * 2)
 
 # -----------------------------------------------------------------------------
+
+
 def main():
     parser = argparse.ArgumentParser(description='Run CTest')
     parser.add_argument('-q', '--quiet', action='store_true',
