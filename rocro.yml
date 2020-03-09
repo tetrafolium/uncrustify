@@ -12,9 +12,12 @@ inspecode:
         auto-fix: true
         thresholds: { num-issues: 9 }
 
-    clang-format:   ## for C, C++
-        auto-fix: true
-        thresholds: { num-issues: 132 }
+    ##--------------------------------------------------
+    ##  ClangFormat was aborted unexpectedly. (issue #1747)
+    ##--------------------------------------------------
+    #clang-format:   ## for C, C++
+    #    auto-fix: true
+    #    thresholds: { num-issues: 132 }
 
     ##--------------------------------------------------
     ##  net.sourceforge.pmd.lang.ast.TokenMgrError: Lexical error in file /home/rocro/src/github.com/tetrafolium/uncrustify/./src/option.cpp at line 32, column 43.  Encountered: "\n" (10), after : "\"___("
