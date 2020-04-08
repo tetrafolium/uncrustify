@@ -1,0 +1,7 @@
+inspecode:
+  thresholds:
+    ck-metrics:
+      cbo: 5
+      rfc: 20
+      wmc: 10
+  understand: default
