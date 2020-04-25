@@ -19,8 +19,9 @@ inspecode:
     ##--------------------------------------------------
     ##  net.sourceforge.pmd.lang.ast.TokenMgrError: Lexical error in file /home/rocro/src/github.com/tetrafolium/uncrustify/./src/option.cpp at line 32, column 43.  Encountered: "\n" (10), after : "\"___("
     ##--------------------------------------------------
-    #cpd:            ## for C, C++, Python
-    #    thresholds: { num-issues: 999 }
+    cpd:            ## for C, C++, Python
+        options: [ --skiplexical-errors ]
+        thresholds: { num-issues: 999 }
 
     cppcheck:       ## for C, C++
         thresholds: { num-issues: 31 }
