@@ -21,7 +21,7 @@ inspecode:
         thresholds: { num-issues: 12 }
 
     cppcheck:       ## for C, C++
-        thresholds: { num-issues: 31 }
+        thresholds: { num-issues: 2 }
 
     cpplint:        ## for C++
         options:
@@ -38,7 +38,7 @@ inspecode:
     flake8:         ## for Python
         ignore:
         -   scripts/tokenizer.py    # 244 issues
-        thresholds: { num-issues: 51 }
+        thresholds: { num-issues: 52 }
 
     grep:           ## for any-languages
         thresholds: { num-issues: 177 }
@@ -52,7 +52,7 @@ inspecode:
     #    thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
-        thresholds: { num-issues: 15 }
+        thresholds: { num-issues: 14 }
 
     misspell:       ## for any-languages
         auto-fix: true
@@ -62,12 +62,12 @@ inspecode:
         thresholds: { num-issues: 0 }
 
     prospector:     ## for Python
-        thresholds: { num-issues: 74 }
+        thresholds: { num-issues: 69 }
 
     pycodestyle:    ## for Python
         ignore:
         -   scripts/tokenizer.py    # 243 issues
-        thresholds: { num-issues: 44 }
+        thresholds: { num-issues: 45 }
 
     pyflakes:       ## for Python
         thresholds: { num-issues: 8 }
@@ -75,7 +75,7 @@ inspecode:
     pylint:         ## for Python
         ignore:
         -   scripts/tokenizer.py    # 399 issues
-        thresholds: { num-issues: 393 }
+        thresholds: { num-issues: 302 }
 
     pytest:         ## for Python
         thresholds: { num-issues: 0 }
