@@ -22,245 +22,245 @@ template<class T>
 class ListManager
 {
 protected:
-   T *first; //! pointer to the head of list
-   T *last;  //! pointer to tail of list
+    T *first; //! pointer to the head of list
+    T *last;  //! pointer to tail of list
 
 private:
-   // Hide copy constructor
-   ListManager(const ListManager &ref)
-   {
-      first = NULL;
-      last  = NULL;
-   }
+    // Hide copy constructor
+    ListManager(const ListManager &ref)
+    {
+        first = NULL;
+        last  = NULL;
+    }
 
 public:
-   ListManager()
-   {
-      first = NULL;
-      last  = NULL;
-   }
+    ListManager()
+    {
+        first = NULL;
+        last  = NULL;
+    }
 
 
-   /**
-    * @brief return the first element of the linked list
-    *
-    * @return pointer to first element or nullptr if list is empty
-    */
-   T *GetHead()
-   {
-      return(first);
-   }
+    /**
+     * @brief return the first element of the linked list
+     *
+     * @return pointer to first element or nullptr if list is empty
+     */
+    T *GetHead()
+    {
+        return(first);
+    }
 
 
-   /**
-    * @brief return the last element of the linked list
-    *
-    * @return pointer to last element or nullptr if list is empty
-    */
-   T *GetTail()
-   {
-      return(last);
-   }
+    /**
+     * @brief return the last element of the linked list
+     *
+     * @return pointer to last element or nullptr if list is empty
+     */
+    T *GetTail()
+    {
+        return(last);
+    }
 
 
-   /**
-    *  @brief return the next element of the linked list
-    *
-    * @param[in] ref  pointer to current list element
-    *
-    * @return pointer to next element or nullptr if no next element exists
-    */
-   T *GetNext(T *ref)
-   {
-      return((ref != NULL) ? ref->next : NULL);
-   }
+    /**
+     *  @brief return the next element of the linked list
+     *
+     * @param[in] ref  pointer to current list element
+     *
+     * @return pointer to next element or nullptr if no next element exists
+     */
+    T *GetNext(T *ref)
+    {
+        return((ref != NULL) ? ref->next : NULL);
+    }
 
 
-   /**
-    * @brief return the previous element of the linked list
-    *
-    * @param[in] ref  pointer to current list element
-    *
-    * @return pointer to previous element or nullptr if no previous element exists
-    */
-   T *GetPrev(T *ref)
-   {
-      return((ref != NULL) ? ref->prev : NULL);
-   }
+    /**
+     * @brief return the previous element of the linked list
+     *
+     * @param[in] ref  pointer to current list element
+     *
+     * @return pointer to previous element or nullptr if no previous element exists
+     */
+    T *GetPrev(T *ref)
+    {
+        return((ref != NULL) ? ref->prev : NULL);
+    }
 
 
-   void InitEntry(T *obj) const
-   {
-      if (obj != NULL)
-      {
-         obj->next = NULL;
-         obj->prev = NULL;
-      }
-   }
+    void InitEntry(T *obj) const
+    {
+        if (obj != NULL)
+        {
+            obj->next = NULL;
+            obj->prev = NULL;
+        }
+    }
 
 
-   /**
-    * @brief remove an element from a linked list
-    *
-    * @param[in] obj  list element to remove
-    */
-   void Pop(T *obj)
-   {
-      if (obj != NULL)
-      {
-         if (first == obj)
-         {
-            first = obj->next;
-         }
+    /**
+     * @brief remove an element from a linked list
+     *
+     * @param[in] obj  list element to remove
+     */
+    void Pop(T *obj)
+    {
+        if (obj != NULL)
+        {
+            if (first == obj)
+            {
+                first = obj->next;
+            }
 
-         if (last == obj)
-         {
-            last = obj->prev;
-         }
+            if (last == obj)
+            {
+                last = obj->prev;
+            }
 
-         if (obj->next != NULL)
-         {
-            obj->next->prev = obj->prev;
-         }
+            if (obj->next != NULL)
+            {
+                obj->next->prev = obj->prev;
+            }
 
-         if (obj->prev != NULL)
-         {
-            obj->prev->next = obj->next;
-         }
-         obj->next = NULL;
-         obj->prev = NULL;
-      }
-   }
-
-
-   //! swap two elements of a list
-   void Swap(T *obj1, T *obj2)
-   {
-      if (obj1 != NULL && obj2 != NULL)
-      {
-         if (obj1->prev == obj2)
-         {
-            Pop(obj1);
-            AddBefore(obj1, obj2);
-         }
-         else if (obj2->prev == obj1)
-         {
-            Pop(obj2);
-            AddBefore(obj2, obj1);
-         }
-         else
-         {
-            T *prev1 = obj1->prev;
-            Pop(obj1);
-
-            T *prev2 = obj2->prev;
-            Pop(obj2);
-
-            AddAfter(obj1, prev2);
-            AddAfter(obj2, prev1);
-         }
-      }
-   }
+            if (obj->prev != NULL)
+            {
+                obj->prev->next = obj->next;
+            }
+            obj->next = NULL;
+            obj->prev = NULL;
+        }
+    }
 
 
-   /**
-    * @brief add a new element after a reference position in a list
-    *
-    * @param obj  new element to add to list
-    * @param ref  chunk after which to insert new object
-    */
-   void AddAfter(T *obj, T *ref)
-   {
-      if (obj != NULL && ref != NULL)
-      {
-         Pop(obj); // TODO: is this necessary?
-         obj->next = ref->next;
-         obj->prev = ref;
+    //! swap two elements of a list
+    void Swap(T *obj1, T *obj2)
+    {
+        if (obj1 != NULL && obj2 != NULL)
+        {
+            if (obj1->prev == obj2)
+            {
+                Pop(obj1);
+                AddBefore(obj1, obj2);
+            }
+            else if (obj2->prev == obj1)
+            {
+                Pop(obj2);
+                AddBefore(obj2, obj1);
+            }
+            else
+            {
+                T *prev1 = obj1->prev;
+                Pop(obj1);
 
-         if (ref->next != NULL)
-         {
-            ref->next->prev = obj;
-         }
-         else
-         {
-            last = obj;
-         }
-         ref->next = obj;
-      }
-   }
+                T *prev2 = obj2->prev;
+                Pop(obj2);
+
+                AddAfter(obj1, prev2);
+                AddAfter(obj2, prev1);
+            }
+        }
+    }
 
 
-   /**
-    * @brief add a new element before a reference position in a list
-    *
-    * @param obj  new element to add to list
-    * @param ref  chunk before to insert new object
-    */
-   void AddBefore(T *obj, T *ref)
-   {
-      if (obj != NULL && ref != NULL)
-      {
-         Pop(obj);
-         obj->next = ref;
-         obj->prev = ref->prev;
+    /**
+     * @brief add a new element after a reference position in a list
+     *
+     * @param obj  new element to add to list
+     * @param ref  chunk after which to insert new object
+     */
+    void AddAfter(T *obj, T *ref)
+    {
+        if (obj != NULL && ref != NULL)
+        {
+            Pop(obj); // TODO: is this necessary?
+            obj->next = ref->next;
+            obj->prev = ref;
 
-         if (ref->prev != NULL)
-         {
-            ref->prev->next = obj;
-         }
-         else
-         {
+            if (ref->next != NULL)
+            {
+                ref->next->prev = obj;
+            }
+            else
+            {
+                last = obj;
+            }
+            ref->next = obj;
+        }
+    }
+
+
+    /**
+     * @brief add a new element before a reference position in a list
+     *
+     * @param obj  new element to add to list
+     * @param ref  chunk before to insert new object
+     */
+    void AddBefore(T *obj, T *ref)
+    {
+        if (obj != NULL && ref != NULL)
+        {
+            Pop(obj);
+            obj->next = ref;
+            obj->prev = ref->prev;
+
+            if (ref->prev != NULL)
+            {
+                ref->prev->next = obj;
+            }
+            else
+            {
+                first = obj;
+            }
+            ref->prev = obj;
+        }
+    }
+
+
+    /**
+     * @brief add a new element to the tail of a lis
+     *
+     * @param obj  new element to add to the list
+     */
+    void AddTail(T *obj)
+    {
+        obj->next = NULL;
+        obj->prev = last;
+
+        if (last == NULL)
+        {
+            last  = obj;
             first = obj;
-         }
-         ref->prev = obj;
-      }
-   }
+        }
+        else
+        {
+            last->next = obj;
+        }
+        last = obj;
+    }
 
 
-   /**
-    * @brief add a new element to the tail of a lis
-    *
-    * @param obj  new element to add to the list
-    */
-   void AddTail(T *obj)
-   {
-      obj->next = NULL;
-      obj->prev = last;
+    /**
+     * @brief add a new element to the head of a list
+     *
+     * @param obj  new element to add to the list
+     */
+    void AddHead(T *obj)
+    {
+        obj->next = first;
+        obj->prev = NULL;
 
-      if (last == NULL)
-      {
-         last  = obj;
-         first = obj;
-      }
-      else
-      {
-         last->next = obj;
-      }
-      last = obj;
-   }
-
-
-   /**
-    * @brief add a new element to the head of a list
-    *
-    * @param obj  new element to add to the list
-    */
-   void AddHead(T *obj)
-   {
-      obj->next = first;
-      obj->prev = NULL;
-
-      if (first == NULL)
-      {
-         last  = obj;
-         first = obj;
-      }
-      else
-      {
-         first->prev = obj;
-      }
-      first = obj;
-   }
+        if (first == NULL)
+        {
+            last  = obj;
+            first = obj;
+        }
+        else
+        {
+            first->prev = obj;
+        }
+        first = obj;
+    }
 };
 
 
