@@ -1,101 +1,128 @@
 inspecode:
 
-    experimental:
-        ignore:
-        -   tests/
+  global:
+    ignore:
+      - 'tests/'
+
+  tools:
 
     astyle:         ## for C, C++, Python
-        auto-fix: true
-        thresholds: { num-issues: 90 }
+      auto-fix: true
+      thresholds: { num-issues: 90 }
 
     autopep8:       ## for Python
-        auto-fix: true
-        thresholds: { num-issues: 9 }
+      auto-fix: true
+      thresholds: { num-issues: 9 }
 
     clang-format:   ## for C, C++
-        auto-fix: true
-        thresholds: { num-issues: 135 }
+      auto-fix: true
+      thresholds: { num-issues: 135 }
+
+    coverity:
+      options:
+        # --work-dir: build
+        --commands:
+          - mkdir build
+          - cd build
+          - cmake ..
+          - make
+      thresholds: { num-issues: 999 }
 
     cpd:            ## for C, C++, Python
-        options: [ --skip-lexical-errors ]
-        thresholds: { num-issues: 12 }
+      options: [ --skip-lexical-errors ]
+      thresholds: { num-issues: 12 }
 
     cppcheck:       ## for C, C++
-        thresholds: { num-issues: 2 }
+      thresholds: { num-issues: 2 }
 
     cpplint:        ## for C++
-        options:
-            --filter:
-            -   -whitespace
-            -   -legal/copyright
-            -   -readability/todo
-            -   -build/include
-            -   -build/header_guard
-            -   -runtime/int
-            -   -runtime/references
-        thresholds: { num-issues: 128 }
+      options:
+        --filter:
+          - -whitespace
+          - -legal/copyright
+          - -readability/todo
+          - -build/include
+          - -build/header_guard
+          - -runtime/int
+          - -runtime/references
+      thresholds: { num-issues: 128 }
 
     flake8:         ## for Python
-        ignore:
-        -   scripts/tokenizer.py    # 244 issues
-        thresholds: { num-issues: 52 }
+      ignore:
+        - scripts/tokenizer.py    # 244 issues
+      thresholds: { num-issues: 52 }
+
+    # fortify:
 
     grep:           ## for any-languages
-        thresholds: { num-issues: 177 }
+      thresholds: { num-issues: 177 }
 
     ##--------------------------------------------------
     ##  In-source builds are not supported, please remove the `CMakeFiles'
     ##  folder and `CMakeCache.txt', and create a folder for the build:
     ##  mkdir build; cd build; cmake ..
     ##--------------------------------------------------
-    #infer:          ## for C, C++
-    #    thresholds: { num-issues: 999 }
+    infer:          ## for C, C++
+      options:
+        - --: [mkdir, build]
+        - --: [cd, build]
+        - --: [cmake, '..']
+        - --: [make]
+      thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
-        thresholds: { num-issues: 14 }
+      thresholds: { num-issues: 14 }
 
     misspell:       ## for any-languages
-        auto-fix: true
-        thresholds: { num-issues: 17 }
+      auto-fix: true
+      thresholds: { num-issues: 17 }
 
     nose2:          ## for Python
-        thresholds: { num-issues: 0 }
+      thresholds: { num-issues: 0 }
 
     prospector:     ## for Python
-        thresholds: { num-issues: 69 }
+      thresholds: { num-issues: 69 }
 
     pycodestyle:    ## for Python
-        ignore:
-        -   scripts/tokenizer.py    # 243 issues
-        thresholds: { num-issues: 45 }
+      ignore:
+        - scripts/tokenizer.py    # 243 issues
+      thresholds: { num-issues: 45 }
 
     pyflakes:       ## for Python
-        thresholds: { num-issues: 8 }
+      thresholds: { num-issues: 8 }
 
     pylint:         ## for Python
-        ignore:
-        -   scripts/tokenizer.py    # 399 issues
-        thresholds: { num-issues: 302 }
+      ignore:
+        - scripts/tokenizer.py    # 399 issues
+      thresholds: { num-issues: 302 }
 
     pytest:         ## for Python
-        thresholds: { num-issues: 0 }
+      thresholds: { num-issues: 0 }
 
     ##--------------------------------------------------
     ##  In-source builds are not supported, please remove the `CMakeFiles'
     ##  folder and `CMakeCache.txt', and create a folder for the build:
     ##  mkdir build; cd build; cmake ..
     ##--------------------------------------------------
-    #scan-build:     ## for C, C++
-    #    thresholds: { num-issues: 999 }
+    scan-build:     ## for C, C++
+      options:
+        - --keep-going
+        - --: [mkdir, build]
+        - --: [cd, build]
+        - --: [cmake, '..']
+        - --: [make]
+      thresholds: { num-issues: 999 }
 
     uncrustify:     ## for C, C++
-        auto-fix: true
-        thresholds: { num-issues: 95 }
+      auto-fix: true
+      thresholds: { num-issues: 95 }
+
+    # understand:
 
     unused:         ## for C, C++, Python
-        options: [ --single-occurrence, --all-likelihoods ]
-        thresholds: { num-issues: 27 }
+      options: [ --single-occurrence, --all-likelihoods ]
+      thresholds: { num-issues: 27 }
 
     yapf:           ## for Python
-        auto-fix: true
-        thresholds: { num-issues: 14 }
+      auto-fix: true
+      thresholds: { num-issues: 14 }
