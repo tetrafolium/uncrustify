@@ -23,13 +23,11 @@
 #if defined(__cplusplus)
 //#       include "lint_cppmac.h"
 #else
-#       include "lint_cmac.h"
+#include "lint_cmac.h"
 #endif
-
 
 /* If the macros given by the generated macro files must be adjusted
    in order for Lint to cope, then you can do so here.  */
-
 
 #endif /* _lint      */
 #endif /* CO_GCC_H_ */

@@ -10,7 +10,6 @@
 
 #include "uncrustify_types.h"
 
-
 void align_all(void);
 
 #endif /* ALIGN_H_INCLUDED */

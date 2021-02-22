@@ -15,23 +15,18 @@
 #include "prototypes.h"
 #include "uncrustify_types.h"
 
-
-void prot_the_line(const char *func_name, int theLine, unsigned int actual_line, size_t partNumber);
-
+void prot_the_line(const char *func_name, int theLine, unsigned int actual_line,
+                   size_t partNumber);
 
 void prot_the_source(int theLine);
 
-
 void examine_Data(const char *func_name, int theLine, int what);
-
 
 //! dump the chunk list to a file
 void dump_out(unsigned int type);
 
-
 //! create chunk list from a file
 void dump_in(unsigned int type);
-
 
 #endif /* DEVELOP_ONLY */
 #endif /* UNC_TOOLS_H_INCLUDED */

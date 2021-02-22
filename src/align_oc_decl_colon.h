@@ -10,7 +10,6 @@
 #ifndef ALIGN_OC_DECL_COLON_H_INCLUDED
 #define ALIGN_OC_DECL_COLON_H_INCLUDED
 
-
 /**
  * Aligns OC declarations on the colon
  * -(void) doSomething: (NSString*) param1

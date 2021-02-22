@@ -10,7 +10,6 @@
 
 #include "uncrustify_types.h"
 
-
 /**
  * Removes superfluous semicolons:
  *  - after brace close whose parent is IF, ELSE, SWITCH, WHILE, FOR, NAMESPACE
@@ -21,6 +20,5 @@
  *  - when not in a #DEFINE
  */
 void remove_extra_semicolons(void);
-
 
 #endif /* SEMICOLONS_H_INCLUDED */
