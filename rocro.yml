@@ -20,10 +20,8 @@ inspecode:
 
     coverity:
       options:
-        # --work-dir: build
+        --work-dir: build
         --commands:
-          - mkdir build
-          - cd build
           - cmake ..
           - make
       thresholds: { num-issues: 999 }
@@ -64,10 +62,8 @@ inspecode:
     ##--------------------------------------------------
     infer:          ## for C, C++
       options:
-        - --: [mkdir, build]
-        - --: [cd, build]
-        - --: [cmake, '..']
-        - --: [make]
+        - --force-integration: make
+        - --: '( mkdir build ; cd build ; cmake .. && make )'
       thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
@@ -106,11 +102,7 @@ inspecode:
     ##--------------------------------------------------
     scan-build:     ## for C, C++
       options:
-        - --keep-going
-        - --: [mkdir, build]
-        - --: [cd, build]
-        - --: [cmake, '..']
-        - --: [make]
+        - --: '( mkdir build ; cd build ; cmake .. && make )'
       thresholds: { num-issues: 999 }
 
     uncrustify:     ## for C, C++
