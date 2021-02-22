@@ -15,22 +15,22 @@
 
 void align_oc_msg_spec(size_t span)
 {
-    LOG_FUNC_ENTRY();
+	LOG_FUNC_ENTRY();
 
-    AlignStack as;
-    as.Start(span, 0);
+	AlignStack as;
+	as.Start(span, 0);
 
-    for (chunk_t *pc = chunk_get_head(); pc != nullptr; pc = chunk_get_next(pc))
-    {
-        if (chunk_is_newline(pc))
-        {
-            as.NewLines(pc->nl_count);
-        }
-        else if (chunk_is_token(pc, CT_OC_MSG_SPEC))
-        {
-            as.Add(pc);
-        }
-    }
+	for (chunk_t *pc = chunk_get_head(); pc != nullptr; pc = chunk_get_next(pc))
+	{
+		if (chunk_is_newline(pc))
+		{
+			as.NewLines(pc->nl_count);
+		}
+		else if (chunk_is_token(pc, CT_OC_MSG_SPEC))
+		{
+			as.Add(pc);
+		}
+	}
 
-    as.End();
+	as.End();
 } // void align_oc_msg_spec
