@@ -62,7 +62,6 @@ inspecode:
     ##--------------------------------------------------
     infer:          ## for C, C++
       options:
-        - --force-integration: make
         - --: '( mkdir build ; cd build ; cmake .. && make )'
       thresholds: { num-issues: 999 }
 
