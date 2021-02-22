@@ -217,7 +217,8 @@ def same_expected_generated(formatted_path, unc_bin_path, cfg_file_path,
     with open(formatted_path, 'rb') as f:
         expected_string = f.read()
 
-    formatted_string = uncrustify(unc_bin_path, cfg_file_path, input_path, lang)
+    formatted_string = uncrustify(
+        unc_bin_path, cfg_file_path, input_path, lang)
 
     return True if formatted_string == expected_string else False
 

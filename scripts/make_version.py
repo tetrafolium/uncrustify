@@ -16,35 +16,42 @@ if os_name == 'nt':
 else:
     from os import EX_IOERR, EX_OK, EX_USAGE
 
+
 def main(args):
     root = dirname(dirname(abspath(__file__)))
     git_path = join(root, '.git')
     hg_path = join(root, '.hg')
 
     txt = ""
-    error_txt= ""
+    error_txt = ""
 
     if exists(git_path):
         try:
-            proc = Popen(['git', 'describe', '--always', '--dirty'], stdout=PIPE, stderr=PIPE, cwd=root)
+            proc = Popen(['git', 'describe', '--always', '--dirty'],
+                         stdout=PIPE, stderr=PIPE, cwd=root)
             txt_b, error_txt_b = proc.communicate()
             txt = txt_b.decode("UTF-8").strip().lower()
-            error_txt = "%d: %s" % (proc.returncode, error_txt_b.decode("UTF-8").strip().lower())
+            error_txt = "%d: %s" % (
+                proc.returncode, error_txt_b.decode("UTF-8").strip().lower())
         except:
             print("Failed to retrieve version from git")
             exit(EX_IOERR)
     elif exists(hg_path):
         try:
             check_call(['hg', 'gexport'])
-            proc0 = Popen(['hg', '--config', 'defaults.log=', 'log', '-r', '.', '--template', '{gitnode}'], stdout=PIPE, stderr=PIPE, cwd=root)
+            proc0 = Popen(['hg', '--config', 'defaults.log=', 'log', '-r', '.',
+                           '--template', '{gitnode}'], stdout=PIPE, stderr=PIPE, cwd=root)
             node_b, error_txt_b = proc0.communicate()
             node = node_b.decode("UTF-8")
-            error_txt = "%d: %s" % (proc0.returncode, error_txt_b.decode("UTF-8").strip().lower())
+            error_txt = "%d: %s" % (
+                proc0.returncode, error_txt_b.decode("UTF-8").strip().lower())
 
-            proc1 = Popen(['git', '--git-dir=.hg/git', 'describe', '--long', '--tags', '--always', node], stdout=PIPE, stderr=PIPE, cwd=root)
+            proc1 = Popen(['git', '--git-dir=.hg/git', 'describe', '--long',
+                           '--tags', '--always', node], stdout=PIPE, stderr=PIPE, cwd=root)
             txt_b, error_txt_b = proc1.communicate()
             txt = txt_b.decode("UTF-8").lower()
-            error_txt += ", %d: %s" % (proc1.returncode, error_txt_b.decode("UTF-8").strip().lower())
+            error_txt += ", %d: %s" % (proc1.returncode,
+                                       error_txt_b.decode("UTF-8").strip().lower())
         except:
             print("Failed to retrieve version from hg")
             exit(EX_IOERR)
@@ -83,7 +90,6 @@ def main(args):
 
     if r_match.group(9) is not None:
         string_groups.append(r_match.group(9))
-
 
     for g in string_groups:
         if g is None:
