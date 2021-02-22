@@ -66,11 +66,11 @@ inspecode:
     ##  folder and `CMakeCache.txt', and create a folder for the build:
     ##  mkdir build; cd build; cmake ..
     ##--------------------------------------------------
-    infer:          ## for C, C++
-      options:
-        # - --: '( mkdir build ; cd build ; cmake .. && make )'
-        - --: '.rocro/build.sh'
-      thresholds: { num-issues: 999 }
+    # infer:          ## for C, C++
+    #   options:
+    #     # - --: '( mkdir build ; cd build ; cmake .. && make )'
+    #     - --: '.rocro/build.sh'
+    #   thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
       thresholds: { num-issues: 14 }
