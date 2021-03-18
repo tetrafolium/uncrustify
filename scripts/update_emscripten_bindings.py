@@ -234,7 +234,8 @@ def write_bindings(opened_file_obj, enum_info):
         return False
 
     opened_file_obj.write(
-        '   enum_<%s>("%s")' % (enum_info['name'], enum_info['substitute_name'])
+        '   enum_<%s>("%s")' % (
+            enum_info['name'], enum_info['substitute_name'])
     )
     for line in lines:
         opened_file_obj.write(

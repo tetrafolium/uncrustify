@@ -236,7 +236,8 @@ def gen_output_dict(config, equal_output_map):
                 continue
 
             file_idx = int(split[split_len - 1])
-            file_combinations = [int(i) for i in split[options_len:split_len-1]]
+            file_combinations = [int(i)
+                                 for i in split[options_len:split_len-1]]
 
             group_dict[file_idx].append(file_combinations)
 
@@ -283,8 +284,8 @@ def write_output_dict_pretty(out_dict, out_path):
 
                         combination_id = combinations[combination_idx]
                         combination_string = out_dict["option_settings"][
-                                out_dict["options"][combination_idx]["type"]][
-                                            combination_id]
+                            out_dict["options"][combination_idx]["type"]][
+                            combination_id]
                         combination_strings.append(str(combination_string))
                     f.write("    (%s: %s)\n" % (file_idx,
                                                 " - ".join(combination_strings)))
@@ -432,7 +433,8 @@ def cleanup(level, eq_map, clean_target_dir, keep_files=()):
 
         for idx in eq_map:
             old_path = eq_map[idx][0]
-            new_path = ("%s/g_%d" % (path.dirname(path.abspath(old_path)), idx))
+            new_path = ("%s/g_%d" %
+                        (path.dirname(path.abspath(old_path)), idx))
             rename(old_path, new_path)
 
             try:
