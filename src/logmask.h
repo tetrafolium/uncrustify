@@ -13,7 +13,7 @@
 #include "log_levels.h"
 
 #include <bitset>
-#include <cstring>     // memset()
+#include <cstring> // memset()
 
 /*
  * the test suite Coveralls: https://coveralls.io
@@ -27,7 +27,6 @@
 //! A simple array of 256 bits
 typedef std::bitset<256> log_mask_t;
 
-
 /**
  * Tests whether a sev bit is set in the mask
  *
@@ -36,11 +35,9 @@ typedef std::bitset<256> log_mask_t;
  *
  * @return true (is set) or false (not set)
  */
-static inline bool logmask_test(const log_mask_t &mask, log_sev_t sev)
-{
-	return(mask.test(sev));
+static inline bool logmask_test(const log_mask_t &mask, log_sev_t sev) {
+  return (mask.test(sev));
 }
-
 
 /**
  * Sets a set bit in the mask
@@ -49,11 +46,10 @@ static inline bool logmask_test(const log_mask_t &mask, log_sev_t sev)
  * @param sev    The severity to check
  * @param value  true (set bit) or false (clear bit)
  */
-static inline void logmask_set_sev(log_mask_t &mask, log_sev_t sev, bool value)
-{
-	mask.set(sev, value);
+static inline void logmask_set_sev(log_mask_t &mask, log_sev_t sev,
+                                   bool value) {
+  mask.set(sev, value);
 }
-
 
 /**
  * Sets all bits to the same value
@@ -61,18 +57,13 @@ static inline void logmask_set_sev(log_mask_t &mask, log_sev_t sev, bool value)
  * @param mast   log mask to operate on
  * @param value  true (set bit) or false (clear bit)
  */
-static inline void logmask_set_all(log_mask_t &mask, bool value)
-{
-	if (value)
-	{
-		mask.set();
-	}
-	else
-	{
-		mask.reset();
-	}
+static inline void logmask_set_all(log_mask_t &mask, bool value) {
+  if (value) {
+    mask.set();
+  } else {
+    mask.reset();
+  }
 }
-
 
 #ifdef DEVELOP_ONLY
 /**
@@ -90,7 +81,6 @@ char *logmask_to_str(const log_mask_t &mask, char *buf, int size);
 
 #endif /* DEVELOP_ONLY */
 
-
 /**
  * Parses a string into a log severity
  *
@@ -98,6 +88,5 @@ char *logmask_to_str(const log_mask_t &mask, char *buf, int size);
  * @param mask  bit mask to populate with log levels
  */
 void logmask_from_string(const char *str, log_mask_t &mask);
-
 
 #endif /* LOGMASK_H_INCLUDED */

@@ -25,7 +25,6 @@ void init_keywords(void);
  */
 int load_keyword_file(const char *filename);
 
-
 /**
  * Search first the dynamic and then the static table for a matching keyword
  *
@@ -36,7 +35,6 @@ int load_keyword_file(const char *filename);
  */
 c_token_t find_keyword_type(const char *word, size_t len);
 
-
 /**
  * Adds a keyword to the list of dynamic keywords
  *
@@ -45,18 +43,13 @@ c_token_t find_keyword_type(const char *word, size_t len);
  */
 void add_keyword(const std::string &tag, c_token_t type);
 
-
 void print_keywords(FILE *pfile);
 
-
 void clear_keyword_file(void);
-
 
 //! Returns the pattern that the keyword needs based on the token
 pattern_class_e get_token_pattern_class(c_token_t tok);
 
-
 bool keywords_are_sorted(void);
-
 
 #endif /* KEYWORDS_H_INCLUDED */

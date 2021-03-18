@@ -9,7 +9,6 @@
 
 #include "uncrustify_types.h"
 
-
 /**
  * check if the language(s) is/are set
  */

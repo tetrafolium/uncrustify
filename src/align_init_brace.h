@@ -30,8 +30,8 @@
  *    {"green", {  0, 0, 255}}, {"purple", {255, 255, 0}},
  * };
  *
- * For the C99 indexed array assignment, the leading []= is skipped (no aligning)
- * struct foo_t bars[] =
+ * For the C99 indexed array assignment, the leading []= is skipped (no
+ * aligning) struct foo_t bars[] =
  * {
  *    [0] = { .name = "bar",
  *            .age  = 21 },

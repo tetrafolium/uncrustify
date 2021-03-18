@@ -9,7 +9,6 @@
 #ifndef ALIGN_ASM_COLON_H_INCLUDED
 #define ALIGN_ASM_COLON_H_INCLUDED
 
-
 /**
  * Aligns asm declarations on the colon
  * asm volatile (
