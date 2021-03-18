@@ -52,247 +52,247 @@ static void fl_trash_tos(void);
 //! Logs one parse frame
 static void fl_log(log_sev_t logsev, const ParseFrame &frm)
 {
-    LOG_FMT(logsev, "[%s] BrLevel=%zu Level=%zu PseTos=%zu\n",
-            get_token_name(frm.in_ifdef), frm.brace_level, frm.level, frm.size() - 1);
+	LOG_FMT(logsev, "[%s] BrLevel=%zu Level=%zu PseTos=%zu\n",
+	        get_token_name(frm.in_ifdef), frm.brace_level, frm.level, frm.size() - 1);
 
-    LOG_FMT(logsev, " *");
+	LOG_FMT(logsev, " *");
 
-    for (size_t idx = 1; idx < frm.size(); idx++)
-    {
-        LOG_FMT(logsev, " [%s-%u]", get_token_name(frm.at(idx).type),
-                static_cast<unsigned int>(frm.at(idx).stage));
-    }
+	for (size_t idx = 1; idx < frm.size(); idx++)
+	{
+		LOG_FMT(logsev, " [%s-%u]", get_token_name(frm.at(idx).type),
+		        static_cast<unsigned int>(frm.at(idx).stage));
+	}
 
-    LOG_FMT(logsev, "\n");
+	LOG_FMT(logsev, "\n");
 }
 
 
 static void fl_log_frms(log_sev_t logsev, const char *txt, const ParseFrame &frm)
 {
-    LOG_FMT(logsev, "%s Parse Frames(%zu):", txt, cpd.frames.size());
+	LOG_FMT(logsev, "%s Parse Frames(%zu):", txt, cpd.frames.size());
 
-    for (size_t idx = 0; idx < cpd.frames.size(); idx++)
-    {
-        LOG_FMT(logsev, " [%s-%zu]", get_token_name(cpd.frames.at(idx).in_ifdef),
-                cpd.frames.at(idx).ref_no);
-    }
+	for (size_t idx = 0; idx < cpd.frames.size(); idx++)
+	{
+		LOG_FMT(logsev, " [%s-%zu]", get_token_name(cpd.frames.at(idx).in_ifdef),
+		        cpd.frames.at(idx).ref_no);
+	}
 
-    LOG_FMT(logsev, "-[%s-%zu]\n", get_token_name(frm.in_ifdef), frm.ref_no);
+	LOG_FMT(logsev, "-[%s-%zu]\n", get_token_name(frm.in_ifdef), frm.ref_no);
 }
 
 
 static void fl_log_all(log_sev_t logsev)
 {
-    LOG_FMT(logsev, "##=- Parse Frame : %zu entries\n", cpd.frames.size());
+	LOG_FMT(logsev, "##=- Parse Frame : %zu entries\n", cpd.frames.size());
 
-    for (size_t idx = 0; idx < cpd.frames.size(); idx++)
-    {
-        LOG_FMT(logsev, "##  idx is %zu, ", idx);
+	for (size_t idx = 0; idx < cpd.frames.size(); idx++)
+	{
+		LOG_FMT(logsev, "##  idx is %zu, ", idx);
 
-        fl_log(logsev, cpd.frames.at(idx));
-    }
+		fl_log(logsev, cpd.frames.at(idx));
+	}
 
-    LOG_FMT(logsev, "##=-\n");
+	LOG_FMT(logsev, "##=-\n");
 }
 
 
 static void fl_copy_tos(ParseFrame &pf)
 {
-    if (!cpd.frames.empty())
-    {
-        pf = *std::prev(std::end(cpd.frames));
-    }
-    LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
+	if (!cpd.frames.empty())
+	{
+		pf = *std::prev(std::end(cpd.frames));
+	}
+	LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
 }
 
 
 static void fl_copy_2nd_tos(ParseFrame &pf)
 {
-    if (cpd.frames.size() > 1)
-    {
-        pf = *std::prev(std::end(cpd.frames), 2);
-    }
-    LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
+	if (cpd.frames.size() > 1)
+	{
+		pf = *std::prev(std::end(cpd.frames), 2);
+	}
+	LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
 }
 
 
 static void fl_trash_tos(void)
 {
-    if (!cpd.frames.empty())
-    {
-        cpd.frames.pop_back();
-    }
-    LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
+	if (!cpd.frames.empty())
+	{
+		cpd.frames.pop_back();
+	}
+	LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
 }
 
 
 void fl_push(ParseFrame &frm)
 {
-    static int ref_no = 1;
+	static int ref_no = 1;
 
-    cpd.frames.push_back(frm);
-    frm.ref_no = ref_no++;
+	cpd.frames.push_back(frm);
+	frm.ref_no = ref_no++;
 
-    LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
+	LOG_FMT(LPF, "%s(%d): frame_count is %zu\n", __func__, __LINE__, cpd.frames.size());
 }
 
 
 void fl_pop(ParseFrame &pf)
 {
-    if (!cpd.frames.empty())
-    {
-        fl_copy_tos(pf);
-        fl_trash_tos();
-    }
+	if (!cpd.frames.empty())
+	{
+		fl_copy_tos(pf);
+		fl_trash_tos();
+	}
 }
 
 
 int fl_check(ParseFrame &frm, chunk_t *pc)
 {
-    if (pc->type != CT_PREPROC)
-    {
-        return(cpd.pp_level);
-    }
-    chunk_t *next = chunk_get_next(pc);
+	if (pc->type != CT_PREPROC)
+	{
+		return(cpd.pp_level);
+	}
+	chunk_t *next = chunk_get_next(pc);
 
-    if (next == nullptr)
-    {
-        return(cpd.pp_level);
-    }
+	if (next == nullptr)
+	{
+		return(cpd.pp_level);
+	}
 
-    if (get_chunk_parent_type(pc) != next->type)
-    {
-        LOG_FMT(LNOTE, "%s(%d): Preproc parent not set correctly on orig_line %zu: got %s expected %s\n",
-                __func__, __LINE__, pc->orig_line, get_token_name(get_chunk_parent_type(pc)),
-                get_token_name(next->type));
-        set_chunk_parent(pc, next->type);
-    }
-    LOG_FMT(LPFCHK, "%s(%d): %zu] %s\n",
-            __func__, __LINE__, pc->orig_line, get_token_name(get_chunk_parent_type(pc)));
-    fl_log_frms(LPFCHK, "TOP", frm);
+	if (get_chunk_parent_type(pc) != next->type)
+	{
+		LOG_FMT(LNOTE, "%s(%d): Preproc parent not set correctly on orig_line %zu: got %s expected %s\n",
+		        __func__, __LINE__, pc->orig_line, get_token_name(get_chunk_parent_type(pc)),
+		        get_token_name(next->type));
+		set_chunk_parent(pc, next->type);
+	}
+	LOG_FMT(LPFCHK, "%s(%d): %zu] %s\n",
+	        __func__, __LINE__, pc->orig_line, get_token_name(get_chunk_parent_type(pc)));
+	fl_log_frms(LPFCHK, "TOP", frm);
 
 
-    int             pp_level = cpd.pp_level;
-    const c_token_t in_ifdef = frm.in_ifdef;
-    const size_t    b4_cnt   = cpd.frames.size();
+	int pp_level = cpd.pp_level;
+	const c_token_t in_ifdef = frm.in_ifdef;
+	const size_t b4_cnt   = cpd.frames.size();
 
-    const char      *txt = nullptr;
+	const char      *txt = nullptr;
 
-    if (pc->flags.test(PCF_IN_PREPROC))
-    {
-        LOG_FMT(LPF, " <In> ");
-        fl_log(LPF, frm);
+	if (pc->flags.test(PCF_IN_PREPROC))
+	{
+		LOG_FMT(LPF, " <In> ");
+		fl_log(LPF, frm);
 
-        if (get_chunk_parent_type(pc) == CT_PP_IF)
-        {
-            // An #if pushes a copy of the current frame on the stack
-            cpd.pp_level++;
-            fl_push(frm);
-            frm.in_ifdef = CT_PP_IF;
-            txt          = "if-push";
-        }
-        else if (get_chunk_parent_type(pc) == CT_PP_ELSE)
-        {
-            if (pp_level == 0)
-            {
-                fprintf(stderr, "%s(%d): pp_level is ZERO, cannot be decremented, at line %zu, column %zu\n",
-                        __func__, __LINE__, pc->orig_line, pc->orig_col);
-                log_flush(true);
-                exit(EX_SOFTWARE);
-            }
-            pp_level--;
+		if (get_chunk_parent_type(pc) == CT_PP_IF)
+		{
+			// An #if pushes a copy of the current frame on the stack
+			cpd.pp_level++;
+			fl_push(frm);
+			frm.in_ifdef = CT_PP_IF;
+			txt          = "if-push";
+		}
+		else if (get_chunk_parent_type(pc) == CT_PP_ELSE)
+		{
+			if (pp_level == 0)
+			{
+				fprintf(stderr, "%s(%d): pp_level is ZERO, cannot be decremented, at line %zu, column %zu\n",
+				        __func__, __LINE__, pc->orig_line, pc->orig_col);
+				log_flush(true);
+				exit(EX_SOFTWARE);
+			}
+			pp_level--;
 
-            /*
-             * For #else of #elif, we want to keep the #if part and throw out the
-             * else parts.
-             * We check to see what the top type is to see if we just push or
-             * pop and then push.
-             * We need to use the copy right before the if.
-             */
-            if (frm.in_ifdef == CT_PP_IF)
-            {
-                // we have [...] [base]-[if], so push an [else]
-                fl_push(frm);
-                frm.in_ifdef = CT_PP_ELSE;
-            }
-            // we have [...] [base] [if]-[else], copy [base] over [else]
-            fl_copy_2nd_tos(frm);
-            frm.in_ifdef = CT_PP_ELSE;
-            txt          = "else-push";
-        }
-        else if (get_chunk_parent_type(pc) == CT_PP_ENDIF)
-        {
-            /*
-             * we may have [...] [base] [if]-[else] or [...] [base]-[if].
-             * Throw out the [else].
-             */
-            if (cpd.pp_level == 0)
-            {
-                // cpd.pp_level is ZERO, cannot be decremented.
-                fprintf(stderr, "%s(%d): #endif found, at line %zu, column %zu, without corresponding #if\n",
-                        __func__, __LINE__, pc->orig_line, pc->orig_col);
-                log_flush(true);
-                exit(EX_SOFTWARE);
-            }
-            cpd.pp_level--;
+			/*
+			 * For #else of #elif, we want to keep the #if part and throw out the
+			 * else parts.
+			 * We check to see what the top type is to see if we just push or
+			 * pop and then push.
+			 * We need to use the copy right before the if.
+			 */
+			if (frm.in_ifdef == CT_PP_IF)
+			{
+				// we have [...] [base]-[if], so push an [else]
+				fl_push(frm);
+				frm.in_ifdef = CT_PP_ELSE;
+			}
+			// we have [...] [base] [if]-[else], copy [base] over [else]
+			fl_copy_2nd_tos(frm);
+			frm.in_ifdef = CT_PP_ELSE;
+			txt          = "else-push";
+		}
+		else if (get_chunk_parent_type(pc) == CT_PP_ENDIF)
+		{
+			/*
+			 * we may have [...] [base] [if]-[else] or [...] [base]-[if].
+			 * Throw out the [else].
+			 */
+			if (cpd.pp_level == 0)
+			{
+				// cpd.pp_level is ZERO, cannot be decremented.
+				fprintf(stderr, "%s(%d): #endif found, at line %zu, column %zu, without corresponding #if\n",
+				        __func__, __LINE__, pc->orig_line, pc->orig_col);
+				log_flush(true);
+				exit(EX_SOFTWARE);
+			}
+			cpd.pp_level--;
 
-            if (pp_level == 0)
-            {
-                fprintf(stderr, "%s(%d): pp_level is ZERO, cannot be decremented, at line %zu, column %zu\n",
-                        __func__, __LINE__, pc->orig_line, pc->orig_col);
-                log_flush(true);
-                exit(EX_SOFTWARE);
-            }
-            pp_level--;
+			if (pp_level == 0)
+			{
+				fprintf(stderr, "%s(%d): pp_level is ZERO, cannot be decremented, at line %zu, column %zu\n",
+				        __func__, __LINE__, pc->orig_line, pc->orig_col);
+				log_flush(true);
+				exit(EX_SOFTWARE);
+			}
+			pp_level--;
 
-            if (frm.in_ifdef == CT_PP_ELSE)
-            {
-                /*
-                 * We have: [...] [base] [if]-[else]
-                 * We want: [...]-[if]
-                 */
-                fl_copy_tos(frm);     // [...] [base] [if]-[if]
+			if (frm.in_ifdef == CT_PP_ELSE)
+			{
+				/*
+				 * We have: [...] [base] [if]-[else]
+				 * We want: [...]-[if]
+				 */
+				fl_copy_tos(frm); // [...] [base] [if]-[if]
 
-                if (cpd.frames.size() < 2)
-                {
-                    fprintf(stderr, "Number of 'frame' is too small.\n");
-                    fprintf(stderr, "Please make a report.\n");
-                    log_flush(true);
-                    exit(EX_SOFTWARE);
-                }
-                frm.in_ifdef = cpd.frames[cpd.frames.size() - 2].in_ifdef;
-                fl_trash_tos();       // [...] [base]-[if]
-                fl_trash_tos();       // [...]-[if]
+				if (cpd.frames.size() < 2)
+				{
+					fprintf(stderr, "Number of 'frame' is too small.\n");
+					fprintf(stderr, "Please make a report.\n");
+					log_flush(true);
+					exit(EX_SOFTWARE);
+				}
+				frm.in_ifdef = cpd.frames[cpd.frames.size() - 2].in_ifdef;
+				fl_trash_tos(); // [...] [base]-[if]
+				fl_trash_tos(); // [...]-[if]
 
-                txt = "endif-trash/pop";
-            }
-            else if (frm.in_ifdef == CT_PP_IF)
-            {
-                /*
-                 * We have: [...] [base] [if]
-                 * We want: [...] [base]
-                 */
-                fl_pop(frm);
-                txt = "endif-pop";
-            }
-            else
-            {
-                txt = "???";
-            }
-        }
-    }
+				txt = "endif-trash/pop";
+			}
+			else if (frm.in_ifdef == CT_PP_IF)
+			{
+				/*
+				 * We have: [...] [base] [if]
+				 * We want: [...] [base]
+				 */
+				fl_pop(frm);
+				txt = "endif-pop";
+			}
+			else
+			{
+				txt = "???";
+			}
+		}
+	}
 
-    if (txt != nullptr)
-    {
-        LOG_FMT(LPF, "%s(%d): orig_line is %zu, type is %s: %s in_ifdef is %d/%d, counts is %zu, frame_count is %zu\n",
-                __func__, __LINE__, pc->orig_line,
-                get_token_name(get_chunk_parent_type(pc)), txt, static_cast<int>(in_ifdef),
-                static_cast<int>(frm.in_ifdef), b4_cnt, cpd.frames.size());
-        fl_log_all(LPF);
-        LOG_FMT(LPF, " <Out>");
-        fl_log(LPF, frm);
-    }
-    fl_log_frms(LPFCHK, "END", frm);
+	if (txt != nullptr)
+	{
+		LOG_FMT(LPF, "%s(%d): orig_line is %zu, type is %s: %s in_ifdef is %d/%d, counts is %zu, frame_count is %zu\n",
+		        __func__, __LINE__, pc->orig_line,
+		        get_token_name(get_chunk_parent_type(pc)), txt, static_cast<int>(in_ifdef),
+		        static_cast<int>(frm.in_ifdef), b4_cnt, cpd.frames.size());
+		fl_log_all(LPF);
+		LOG_FMT(LPF, " <Out>");
+		fl_log(LPF, frm);
+	}
+	fl_log_frms(LPFCHK, "END", frm);
 
-    return(pp_level);
+	return(pp_level);
 } // pf_check

@@ -10,30 +10,30 @@
 
 struct lookup_entry_t
 {
-    char              ch;
-    char              left_in_group;
-    UINT16            next_idx;
-    const chunk_tag_t *tag;
+	char ch;
+	char left_in_group;
+	UINT16 next_idx;
+	const chunk_tag_t *tag;
 
-    struct comperator
-    {
-        static char get_char(const lookup_entry_t &v)
-        {
-            return(v.ch);
-        }
+	struct comperator
+	{
+		static char get_char(const lookup_entry_t &v)
+		{
+			return(v.ch);
+		}
 
 
-        static char get_char(char t)
-        {
-            return(t);
-        }
+		static char get_char(char t)
+		{
+			return(t);
+		}
 
-        template<typename T1, typename T2>
-        bool operator()(T1 const &t1, T2 const &t2)
-        {
-            return(get_char(t1) < get_char(t2));
-        }
-    };
+		template<typename T1, typename T2>
+		bool operator()(T1 const &t1, T2 const &t2)
+		{
+			return(get_char(t1) < get_char(t2));
+		}
+	};
 };
 
 

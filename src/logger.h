@@ -103,8 +103,8 @@ void log_flush(bool force_nl);
 // TODO during debugging add source file and line number
 #else
 #define LOG_FMT(sev, ...)                                   \
-   do { if (log_sev_on(sev)) { log_fmt(sev, __VA_ARGS__); } \
-   } while (0)
+	do { if (log_sev_on(sev)) { log_fmt(sev, __VA_ARGS__); } \
+	} while (0)
 #endif
 
 
@@ -137,10 +137,10 @@ void log_flush(bool force_nl);
 class log_func
 {
 public:
-    log_func(const char *name, int line);
+log_func(const char *name, int line);
 
 
-    ~log_func();
+~log_func();
 };
 
 
