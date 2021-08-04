@@ -73,7 +73,7 @@ inspecode:
     #   thresholds: { num-issues: 999 }
 
     jscpd:          ## for C, C++, Python
-      thresholds: { num-issues: 14 }
+      thresholds: { num-issues: 17 }
 
     misspell:       ## for any-languages
       auto-fix: true
@@ -106,11 +106,11 @@ inspecode:
     ##  folder and `CMakeCache.txt', and create a folder for the build:
     ##  mkdir build; cd build; cmake ..
     ##--------------------------------------------------
-    scan-build:     ## for C, C++
-      options:
-        # - --: '( mkdir build ; cd build ; cmake .. && make )'
-        - --: '.rocro/build.sh'
-      thresholds: { num-issues: 999 }
+    # scan-build:     ## for C, C++
+    #   options:
+    #     # - --: '( mkdir build ; cd build ; cmake .. && make )'
+    #     - --: '.rocro/build.sh'
+    #   thresholds: { num-issues: 999 }
 
     uncrustify:     ## for C, C++
       auto-fix: true
