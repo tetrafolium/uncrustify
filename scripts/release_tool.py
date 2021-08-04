@@ -78,8 +78,7 @@ def generate(repo, version, path, *args):
         c = subprocess.check_call(args, stdout=f)
     print('Created: {}'.format(path))
 
-    alter(repo, path,
-          r'Uncrustify-[0-9.]+(-[0-9]+-[0-9a-f]+(-dirty)?)?',
+    alter(repo, path, r'Uncrustify-[0-9.]+(-[0-9]+-[0-9a-f]+(-dirty)?)?',
           r'Uncrustify-{}'.format(version))
 
 
@@ -108,11 +107,9 @@ def cmd_update(repo, args):
     v = get_version_str(repo)
     c = get_option_count(args.executable)
 
-    alter(repo, 'CMakeLists.txt',
-          r'(set *[(] *UNCRUSTIFY_VERSION +")[0-9.]+',
+    alter(repo, 'CMakeLists.txt', r'(set *[(] *UNCRUSTIFY_VERSION +")[0-9.]+',
           r'\g<1>{}'.format(v))
-    alter(repo, 'package.json',
-          r'("version" *): *"[0-9.]+"',
+    alter(repo, 'package.json', r'("version" *): *"[0-9.]+"',
           r'\g<1>: "{}"'.format(v))
     alter(repo, 'README.md',
           r'[0-9]+ configurable options as of version [0-9.]+',
@@ -121,14 +118,13 @@ def cmd_update(repo, args):
           r'[0-9]+ configurable options as of version [0-9.]+',
           r'{} configurable options as of version {}'.format(c, v))
 
-    generate(repo, v, 'etc/defaults.cfg',
-             args.executable, '--show-config')
-    generate(repo, v, 'documentation/htdocs/default.cfg',
-             args.executable, '--show-config')
-    generate(repo, v, 'documentation/htdocs/config.txt',
-             args.executable, '--show-config')
-    generate(repo, v, 'etc/uigui_uncrustify.ini',
-             args.executable, '--universalindent')
+    generate(repo, v, 'etc/defaults.cfg', args.executable, '--show-config')
+    generate(repo, v, 'documentation/htdocs/default.cfg', args.executable,
+             '--show-config')
+    generate(repo, v, 'documentation/htdocs/config.txt', args.executable,
+             '--show-config')
+    generate(repo, v, 'etc/uigui_uncrustify.ini', args.executable,
+             '--universalindent')
 
 
 # -----------------------------------------------------------------------------
@@ -193,20 +189,22 @@ def main():
         description='Perform release-related actions')
 
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    parser.add_argument('--repo', type=str, default=root,
+    parser.add_argument('--repo',
+                        type=str,
+                        default=root,
                         help='path to uncrustify git repository')
 
     subparsers = parser.add_subparsers(title='subcommands',
                                        help='action to perform')
 
-    parser_init = subparsers.add_parser(
-        'init', help='initialize new version')
+    parser_init = subparsers.add_parser('init', help='initialize new version')
     parser_init.set_defaults(func=cmd_init)
-    parser_init.add_argument('-v', '--version',
+    parser_init.add_argument('-v',
+                             '--version',
                              help='version number for release')
 
-    parser_update = subparsers.add_parser(
-        'update', help='update version information')
+    parser_update = subparsers.add_parser('update',
+                                          help='update version information')
     parser_update.set_defaults(func=cmd_update)
     parser_update.add_argument('executable',
                                help='path to uncrustify executable')
@@ -214,24 +212,36 @@ def main():
     parser_commit = subparsers.add_parser(
         'commit', help='commit changes for new version')
     parser_commit.set_defaults(func=cmd_commit)
-    parser_commit.add_argument('-a', '--amend', action='store_true',
+    parser_commit.add_argument('-a',
+                               '--amend',
+                               action='store_true',
                                help='amend a previous release commit')
 
     parser_tag = subparsers.add_parser(
         'tag', help='tag release and push tag to github')
     parser_tag.set_defaults(func=cmd_tag)
-    parser_tag.add_argument('--ssh', action='store_true',
+    parser_tag.add_argument('--ssh',
+                            action='store_true',
                             help='use ssh (instead of HTTPS) to push')
-    parser_tag.add_argument('-s', '--server', default='github.com',
+    parser_tag.add_argument('-s',
+                            '--server',
+                            default='github.com',
                             help='push to specified server')
-    parser_tag.add_argument('-o', '--organization', default='uncrustify',
+    parser_tag.add_argument('-o',
+                            '--organization',
+                            default='uncrustify',
                             help='push to specified user or organization')
-    parser_tag.add_argument('-p', '--project', default='uncrustify',
+    parser_tag.add_argument('-p',
+                            '--project',
+                            default='uncrustify',
                             help='push to specified project')
-    parser_tag.add_argument('-c', '--commit',
+    parser_tag.add_argument('-c',
+                            '--commit',
                             help='tag specified commit '
-                                 '(instead of latest \'master\')')
-    parser_tag.add_argument('-f', '--force', action='store_true',
+                            '(instead of latest \'master\')')
+    parser_tag.add_argument('-f',
+                            '--force',
+                            action='store_true',
                             help='force push the tag')
 
     args = parser.parse_args()
