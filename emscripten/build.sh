@@ -11,7 +11,7 @@ out="libUncrustify.js"
 #https://github.com/kripken/emscripten/blob/master/src/settings.js
 
 em++ -O3                                                                       \
-    ${COMMENT# initialy increase memory for big input files }                  \
+    ${COMMENT# initially increase memory for big input files }                  \
     -s TOTAL_MEMORY=67108864                                                   \
     ${COMMENT# let the memory grow dynamically if even more is needed  }       \
     -s ALLOW_MEMORY_GROWTH=1                                                   \
