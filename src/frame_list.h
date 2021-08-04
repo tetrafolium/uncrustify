@@ -12,13 +12,11 @@
 #include "ParseFrame.h"
 #include "uncrustify_types.h"
 
-
 /**
  * Push a copy of a ParseFrame onto the frames list.
  * This is called on #if and #ifdef.
  */
 void fl_push(ParseFrame &pf);
-
 
 /**
  * Pop the top element off the frame list and copy it into the ParseFrame.
@@ -29,9 +27,7 @@ void fl_push(ParseFrame &pf);
  */
 void fl_pop(ParseFrame &pf);
 
-
 //! Returns the pp_indent to use for this line
 int fl_check(ParseFrame &frm, chunk_t *pc);
-
 
 #endif /* PARSE_FRAME_H_INCLUDED */

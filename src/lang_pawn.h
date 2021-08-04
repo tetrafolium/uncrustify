@@ -10,7 +10,6 @@
 
 #include "uncrustify_types.h"
 
-
 /**
  * Does a scan of level 0 BEFORE stuff in combine.cpp is called.
  * At this point, VSemis have been added only in VBraces.
@@ -20,9 +19,7 @@
  */
 void pawn_prescan(void);
 
-
 void pawn_add_virtual_semicolons(void);
-
 
 /**
  * We are in a virtual brace and hit a newline.
@@ -34,16 +31,13 @@ void pawn_add_virtual_semicolons(void);
  */
 chunk_t *pawn_check_vsemicolon(chunk_t *pc);
 
-
 /**
  * Turns certain virtual semicolons invisible.
  *  - after a close brace with a parent of switch, case, else, if
  */
 void pawn_scrub_vsemi(void);
 
-
 //! add a semicolon after ...
 chunk_t *pawn_add_vsemi_after(chunk_t *pc);
-
 
 #endif /* LONG_PAWN_H_INCLUDED */

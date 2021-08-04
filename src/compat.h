@@ -10,12 +10,9 @@
 
 #include "uncrustify_types.h"
 
-
 bool unc_getenv(const char *name, std::string &str);
 
-
 bool unc_homedir(std::string &home);
-
 
 /*
  * even if we prefer the format %zu, we have to change to %lu

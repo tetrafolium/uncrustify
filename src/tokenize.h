@@ -10,7 +10,6 @@
 
 #include "uncrustify_types.h"
 
-
 /**
  * @brief Parse the text into chunks
  *
@@ -25,6 +24,5 @@
  * at the end of the list.  Line numbers are relative to the start of the data.
  */
 void tokenize(const std::deque<int> &data, chunk_t *ref);
-
 
 #endif /* TOKENIZE_H_INCLUDED */
