@@ -65,6 +65,8 @@ def enum_value(enum, value):
     return value
 
 # -----------------------------------------------------------------------------
+
+
 def write_banner(out, args):
     out.write(
         u'/**\n'
