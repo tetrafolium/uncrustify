@@ -18,19 +18,20 @@ inspecode:
       auto-fix: true
       thresholds: { num-issues: 135 }
 
-    coverity:
-    - input: &clang-sources     # for C, C++
-        - '**/*.h'
-        - '**/*.c'
-        - '**/*.cpp'
-      options:
-        --work-dir: build
-        --commands:
-          - cmake ..
-          - make
-      thresholds: { num-issues: 999 }
-    - ignore: *clang-sources    # fot languages excludes C, C++
-      thresholds: { num-issues: 999 }
+    #### temporary disabled ... Timed Out
+    # coverity:
+    # - input: &clang-sources     # for C, C++
+    #     - '**/*.h'
+    #     - '**/*.c'
+    #     - '**/*.cpp'
+    #   options:
+    #     --work-dir: build
+    #     --commands:
+    #       - cmake ..
+    #       - make
+    #   thresholds: { num-issues: 999 }
+    # - ignore: *clang-sources    # fot languages excludes C, C++
+    #   thresholds: { num-issues: 999 }
 
     cpd:            ## for C, C++, Python
       options: [ --skip-lexical-errors ]
